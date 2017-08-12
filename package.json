@@ -1,0 +1,23 @@
+{
+  "name": "mdeditor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZaninAndrea/mdeditor.git"
+  },
+  "keywords": [
+    "markdown",
+    "editor"
+  ],
+  "author": "ZaninAndrea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZaninAndrea/mdeditor/issues"
+  },
+  "homepage": "https://github.com/ZaninAndrea/mdeditor#readme"
+}
