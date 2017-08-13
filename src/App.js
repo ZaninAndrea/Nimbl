@@ -8,6 +8,7 @@ import {Button, Radio} from 'antd';
 
 const electron = window.require('electron');
 const fs = electron.remote.require('fs');
+const dialog = electron.remote.dialog
 // const ipcRenderer = electron.ipcRenderer;
 
 const buildTree = dir => {
@@ -37,22 +38,23 @@ const buildTree = dir => {
 class App extends Component {
     constructor(props) {
         super(props);
-        const dir = "D:\\docs\\reusable"
-        const file = "D:\\docs\\reusable\\test.md"
-        const tree = buildTree(dir)
-        const value = file
-            ? fs.readFileSync(file).toString()
-            : ""
+        const dir = ""
+        const file = ""
+        const tree = {
+            dir: dir,
+            files: [],
+            subfolders: []
+        }
+        const value = ""
         const unsavedChanges = false
-        const saving = false
+
         this.handleChange = this.handleChange.bind(this)
         this.handleDirChange = this.handleDirChange.bind(this)
         this.handleTreeSelect = this.handleTreeSelect.bind(this)
         this.handleSave = this.handleSave.bind(this)
+        this.handleOpenDir = this.handleOpenDir.bind(this)
 
-        const watcher = fs.watch(dir, {
-            recursive: true
-        }, this.handleDirChange)
+        const watcher = null
 
         this.state = {
             value,
@@ -60,8 +62,7 @@ class App extends Component {
             tree,
             dir,
             watcher,
-            unsavedChanges,
-            saving
+            unsavedChanges
         };
 
     }
@@ -102,10 +103,23 @@ class App extends Component {
         fs.writeFile(this.state.file, this.state.value, callback);
     }
 
+    handleOpenDir(){
+        dialog.showOpenDialog({title:"Open a notebook", properties: ['openDirectory']},
+            folders => {
+                if (this.state.watcher!==null){
+                    this.state.watcher.close()
+                }
+
+                this.setState({dir:folders[0], tree:buildTree(folders[0]), file:"", value:"", unsavedChanges: false, watcher: fs.watch(folders[0], {
+                    recursive: true
+                }, this.handleDirChange)})
+            })
+    }
+
     render() {
         let editor = this.state.file.endsWith("md")
             ? <EditorPreview value={this.state.value} handleChange={this.handleChange}/>
-            : "file not supported"
+            : "SELECT A SUPPORTED FILE"
 
         let saveButton = <Button type={this.state.unsavedChanges ? "primary" : ""} shape="circle" size={"large"} onClick={this.handleSave}>
             <i className="fa fa-floppy-o" aria-hidden="true"></i>
@@ -114,6 +128,9 @@ class App extends Component {
             <div className="App">
                 <div className="AppBar row">
                     {saveButton}
+                    <Button shape="circle" size={"large"} onClick={this.handleOpenDir}>
+                        <i className="fa fa-folder-open" aria-hidden="true"></i>
+                    </Button>
                 </div>
 
                 <div className="AppBody row">
