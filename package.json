@@ -1,23 +1,50 @@
 {
-  "name": "mdeditor",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ZaninAndrea/mdeditor.git"
-  },
-  "keywords": [
-    "markdown",
-    "editor"
-  ],
-  "author": "ZaninAndrea",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ZaninAndrea/mdeditor/issues"
-  },
-  "homepage": "https://github.com/ZaninAndrea/mdeditor#readme"
+    "name": "mdsteroids",
+    "version": "0.1.0",
+    "author": "ZaninAndrea",
+    "homepage": "./",
+    "main": "public/electron.js",
+    "build": {
+        "appId": "com.example.electron-cra",
+        "files": [
+            "build/**/*",
+            "node_modules/**/*"
+        ],
+        "directories": {
+            "buildResources": "assets"
+        }
+    },
+    "dependencies": {
+        "brace": "^0.10.0",
+        "electron-is-dev": "^0.3.0",
+        "highlight.js": "^9.12.0",
+        "markdown-it": "^8.3.1",
+        "markdown-it-anchor": "^4.0.0",
+        "markdown-it-block-image": "0.0.3",
+        "markdown-it-container": "^2.0.0",
+        "markdown-it-katex": "^2.0.3",
+        "markdown-it-smartarrows": "^1.0.1",
+        "markdown-it-table-of-contents": "^0.3.2",
+        "markdown-it-task-checkbox": "^1.0.4",
+        "react": "^15.6.1",
+        "react-ace": "^5.1.0",
+        "react-ace-wrapper": "^1.0.1",
+        "react-dom": "^15.6.1",
+        "react-scripts": "1.0.10"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject",
+        "electron-dev": "concurrently \"SET BROWSER=$null && yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+        "electron-pack": "build --em.main=build/electron.js",
+        "preelectron-pack": "yarn build"
+    },
+    "devDependencies": {
+        "concurrently": "^3.5.0",
+        "electron": "^1.7.5",
+        "electron-builder": "^19.20.1",
+        "wait-on": "^2.0.2"
+    }
 }
