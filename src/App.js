@@ -1,152 +1,74 @@
-import React, { Component } from 'react';
-import {findDOMNode} from "react-dom";
-import logo from './logo.svg';
-import './App.css';
-import './highlight.css';
-import AceEditor  from 'react-ace';
-import brace from 'brace'
-import 'brace/snippets/markdown';
-import 'brace/ext/language_tools'
-import {snippetManager} from 'brace/ext/language_tools';
-import 'brace/mode/markdown';
-import 'brace/theme/solarized_dark';
-import 'brace/ext/searchbox';
-brace.define("ace/snippets/markdown", ["require", "exports", "module"], function(e, t, n) {
-  "use strict";
-  t.snippetText = 'snippet tbl\n	${1: }|${2: }\n	---|---\n	${3: }|${4: }\n\nsnippet note\n	:::note ${1: }\n	${2: }\n	:::\n	\n\nsnippet alert\n	:::alert ${1: }\n	${2: }\n	:::\n	\nsnippet \$\n	\$${1: }\$\n\nsnippet \$\$\n	\$\$\n	${1: }\n	\$\$\n',
-  t.scope = "markdown"
-})
+import React, {Component} from 'react';
+import './stylesheets/App.css';
+import './stylesheets/EditorPreview.css';
+import './stylesheets/highlight.css';
+import EditorPreview from "./components/EditorPreview.js"
+import Tree from "./components/Tree.js"
+const electron = window.require('electron');
+const fs = electron.remote.require('fs');
+const ipcRenderer = electron.ipcRenderer;
 
-
-// setup markdown parser
-var hljs = require('highlight.js');
-var md = require('markdown-it')({
-  html: true,
-  linkify: true,
-  typographer: false,
-  breaks: true,
-  highlight: function (str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(lang, str).value;
-      } catch (__) {}
+const buildTree = dir => {
+    let tree = {
+        dir: dir,
+        files: [],
+        subfolders: []
     }
 
-    return ''; // use external default escaping
-  }
-})
-md.use(require('markdown-it-task-checkbox'))
-md.use(require("./markdown-it-anchor.js"))
-md.use(require("markdown-it-table-of-contents"), {"includeLevel":[1,2,3,4]})
-md.use(require('markdown-it-katex'), {"throwOnError" : false, "errorColor" : " #cc0000"})
-md.use(require('markdown-it-smartarrows'))
-md.use(require('markdown-it-container'), 'alert', {
+    const list = fs.readdirSync(dir);
+    list.forEach(function(element) {
+        // Full path of that file
+        let path = dir + "/" + element;
+        // Get the file's stats
+        const stat = fs.statSync(path);
+        if (stat && stat.isDirectory())
+            // Dive into the directory
+            tree.subfolders.push(buildTree(path));
+        else
+            // Call the action
+            tree.files.push(element)
+        });
 
-  validate: function(params) {
-    return params.trim().match(/^alert\s+(.*)$/);
-  },
-
-  render: function (tokens, idx) {
-    var m = tokens[idx].info.trim().match(/^alert\s+(.*)$/);
-
-    if (tokens[idx].nesting === 1) {
-      // opening tag
-      return '<div class="md-container warning"><h3><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ' + md.utils.escapeHtml(m[1]) + '</h3>\n';
-
-    } else {
-      // closing tag
-      return '</div>\n';
-    }
-  }
-});
-md.use(require('markdown-it-container'), 'note', {
-
-  validate: function(params) {
-    return params.trim().match(/^note\s+(.*)$/);
-  },
-
-  render: function (tokens, idx) {
-    var m = tokens[idx].info.trim().match(/^note\s+(.*)$/);
-
-    if (tokens[idx].nesting === 1) {
-      // opening tag
-      return '<div class="md-container note"><h3><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ' + md.utils.escapeHtml(m[1]) + '</h3>\n';
-
-    } else {
-      // closing tag
-      return '</div>\n';
-    }
-  }
-});
-
-function wrap(old_func){
-  return function (string, env){
-    var result = old_func.bind(this)(string,env)
-    console.log(result)
-    return result
-  }
+    return tree
 }
-// add row signaling classes, used to sync editor and preview
-md.parse = wrap(md.parse)
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: '', mdContainer:null};
+    constructor(props) {
+        super(props);
+        let dir = "D:\\docs\\reusable"
+        let file = "test.md"
+        let tree = buildTree(dir)
+        let value = file
+            ? fs.readFileSync(file).toString()
+            : ""
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSelection = this.handleSelection.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
-  }
+        console.log(tree);
+        this.state = {
+            value: value,
+            file: file,
+            tree: tree,
+            dir: dir
+        };
 
-  handleChange(newValue) {
-    this.setState({value: newValue});
-  }
+        this.handleChange = this.handleChange.bind(this)
+    }
 
-  handleSelection(e){
-    var preview = findDOMNode(this.refs["markdown-container"])
-    var ratio = e.doc.$lines.length == 1 ? 1 : e.anchor.row / (e.doc.$lines.length-1) // avoids division by 0 and allows for ratio 1
-    var scrollTarget = preview.scrollHeight * ratio
-    preview.scrollTop = scrollTarget
-  }
+    handleChange(newValue) {
+        this.setState({value: newValue});
+    }
 
-  handleScroll(){
-    var preview = findDOMNode(this.refs["markdown-container"])
-    var editor = findDOMNode(this.refs["editor"])
-    var ratio = editor.env.document.doc.$lines.length == 1 ? 1 : editor.env.editor.selection.getCursor().row / (editor.env.document.doc.$lines.length-1) // avoids division by 0 and allows for ratio 1
-    var scrollTarget = preview.scrollHeight * ratio
-    preview.scrollTop = scrollTarget
-  }
-
-  render() {
-    return (
-      <div className="App row">
-      <div className="editorWrapper col-xs-6">
-      <AceEditor
-        ref="editor"
-        onSelectionChange={this.handleSelection}
-        onScroll={this.handleScroll}
-        mode="markdown"
-        theme="solarized_dark"
-        onChange={this.handleChange}
-        name="editor"
-        value={this.state.value}
-        editorProps={{$blockScrolling: true}}
-        showGutter={false}
-        showPrintMargin={false}
-        highlightActiveLine={false}
-        height="100%"
-        width="100%"
-        setOptions={{"enableSnippets": true}}
-      />
-      </div>
-
-      <div className="markdown-container col-xs-6" ref="markdown-container">
-      <div className="markdown-body" dangerouslySetInnerHTML={{__html: md.render(this.state.value)}}></div>
-      </div></div>
-
-    );
-  }
+    render() {
+        return (
+            <div className="App row">
+                <div className="sidebar col-xs-2">
+                    <Tree tree={this.state.tree}/>
+                </div>
+                <div className="mainEditor col-xs-10">
+                    <EditorPreview value={this.state.value} handleChange={this.handleChange}/>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
