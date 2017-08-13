@@ -4,7 +4,7 @@ import AceEditor from 'react-ace';
 import brace from 'brace'
 import 'brace/snippets/markdown';
 import 'brace/ext/language_tools'
-import {snippetManager} from 'brace/ext/language_tools';
+// import {snippetManager} from 'brace/ext/language_tools';
 import 'brace/mode/markdown';
 import 'brace/theme/solarized_dark';
 import 'brace/ext/searchbox';
@@ -12,8 +12,7 @@ import 'brace/ext/searchbox';
 brace.define("ace/snippets/markdown", [
     "require", "exports", "module"
 ], function(e, t, n) {
-    "use strict";
-    t.snippetText = 'snippet tbl\n	${1: }|${2: }\n	---|---\n	${3: }|${4: }\n\nsnippet note\n	:::note ${1: }\n	${2: }\n	:::\n	\n\nsnippet alert\n	:::alert ${1: }\n	${2: }\n	:::\n	\nsnippet \$\n	\$${1: }\$\n\nsnippet \$\$\n	\$\$\n	${1: }\n	\$\$\n',
+    t.snippetText = 'snippet tbl\n	${1: }|${2: }\n	---|---\n	${3: }|${4: }\n\nsnippet note\n	:::note ${1: }\n	${2: }\n	:::\n	\n\nsnippet alert\n	:::alert ${1: }\n	${2: }\n	:::\n	\nsnippet $\n	$${1: }$\n\nsnippet $$\n	$$\n	${1: }\n	$$\n'
     t.scope = "markdown"
 })
 
@@ -96,7 +95,7 @@ class EditorPreview extends Component {
 
     handleSelection(e) {
         var preview = findDOMNode(this.refs["markdown-container"])
-        var ratio = e.doc.$lines.length == 1
+        var ratio = e.doc.$lines.length === 1
             ? 1
             : e.anchor.row / (e.doc.$lines.length - 1) // avoids division by 0 and allows for ratio 1
         var scrollTarget = preview.scrollHeight * ratio
@@ -106,7 +105,7 @@ class EditorPreview extends Component {
     handleScroll() {
         var preview = findDOMNode(this.refs["markdown-container"])
         var editor = findDOMNode(this.refs["editor"])
-        var ratio = editor.env.document.doc.$lines.length == 1
+        var ratio = editor.env.document.doc.$lines.length === 1
             ? 1
             : editor.env.editor.selection.getCursor().row / (editor.env.document.doc.$lines.length - 1) // avoids division by 0 and allows for ratio 1
         var scrollTarget = preview.scrollHeight * ratio

@@ -1,15 +1,30 @@
 import React, {Component} from 'react';
+import {Tree} from 'antd';
+import path from "path"
+const TreeNode = Tree.TreeNode;
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-    }
-
+class TreeComponent extends Component {
     render() {
+        const buildTree = tree => {
+            let nodes = []
+            for (let idx in tree.subfolders) {
+                nodes.push(
+                    <TreeNode title={path.basename(tree.subfolders[idx].dir)} key={tree.subfolders[idx].dir}>{buildTree(tree.subfolders[idx])}</TreeNode>
+                )
+            }
+
+            for (let idx in tree.files) {
+                nodes.push(<TreeNode title={tree.files[idx]} key={path.normalize(path.join(tree.dir, tree.files[idx]))}/>)
+            }
+            return nodes
+        }
+
         return (
-            <div>{JSON.stringify(this.props.tree, null, 2)}</div>
+            <Tree className="draggable-tree" draggable defaultExpandedKeys={[]} onDrop={info => console.log(info)} onSelect={this.props.onSelect}>
+                {buildTree(this.props.tree)}
+            </Tree>
         );
     }
 }
 
-export default App;
+export default TreeComponent;

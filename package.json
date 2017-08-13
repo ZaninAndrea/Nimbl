@@ -3,6 +3,8 @@
     "version": "0.1.0",
     "author": "ZaninAndrea",
     "homepage": "./",
+    "license": "MIT",
+    "description": "Note taking app for markdown lovers",
     "main": "public/electron.js",
     "build": {
         "appId": "com.example.electron-cra",
@@ -15,6 +17,7 @@
         }
     },
     "dependencies": {
+        "antd": "^2.12.6",
         "brace": "^0.10.0",
         "electron-is-dev": "^0.3.0",
         "highlight.js": "^9.12.0",
