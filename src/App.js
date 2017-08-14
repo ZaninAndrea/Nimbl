@@ -80,8 +80,12 @@ class App extends Component {
         if (node.length !== 0) {
             // nesting ifs so that statSync doesn't get called with undefined as argument
             if (!fs.statSync(node[0]).isDirectory() && node[0] !== this.state.file) {
+                let value = mime.lookup(node[0]) === "text/x-markdown"
+                    ? fs.readFileSync(node[0]).toString()
+                    : mime.lookup(node[0]).startsWith("image")
+                    ? "data:" + mime.lookup(node[0]) + ";base64," + fs.readFileSync(node[0]).toString("base64")
+                    : ""
                 console.log(mime.lookup(node[0]));
-                const value = fs.readFileSync(node[0]).toString()
                 this.setState({value: value, file: node[0]})
             }
         }
@@ -103,6 +107,9 @@ class App extends Component {
             title: "Open a notebook",
             properties: ['openDirectory']
         }, folders => {
+            if (!folders) {
+                return
+            }
             if (this.state.watcher !== null) {
                 this.state.watcher.close()
             }
@@ -145,7 +152,7 @@ class App extends Component {
             : mime.lookup(this.state.file).startsWith("image")
             ? <div className="imagePreview">
                 <div className="imageContainer">
-                    <img className="img-responsive" src={"data:" + mime.lookup(this.state.file) + ";base64," + fs.readFileSync(this.state.file).toString("base64")}/>
+                    <img className="img-responsive" src={this.state.value}/>
                 </div>
             </div>
             : "SELECT A SUPPORTED FILE"
