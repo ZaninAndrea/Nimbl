@@ -8,13 +8,14 @@ import "./stylesheets/bootstrap/css/bootstrap.min.css"
 import "./stylesheets/github-markdown/github-markdown.css"
 import EditorPreview from "./components/EditorPreview.js"
 import Tree from "./components/Tree.js"
-import {Button, Radio} from 'antd';
 import "source-code-pro/source-code-pro.css"
+import {Button, Radio} from 'antd';
+const ButtonGroup = Button.Group;
 
 const electron = window.require('electron');
 const fs = electron.remote.require('fs');
 const dialog = electron.remote.dialog
-// const ipcRenderer = electron.ipcRenderer;
+const ipcRenderer = electron.ipcRenderer;
 
 const buildTree = dir => {
     let tree = {
@@ -52,14 +53,16 @@ class App extends Component {
         }
         const value = ""
         const unsavedChanges = false
+        const addedChanges = false
+        const watcher = null
 
         this.handleChange = this.handleChange.bind(this)
         this.handleDirChange = this.handleDirChange.bind(this)
         this.handleTreeSelect = this.handleTreeSelect.bind(this)
         this.handleSave = this.handleSave.bind(this)
         this.handleOpenDir = this.handleOpenDir.bind(this)
+        this.handleCommit = this.handleCommit.bind(this)
 
-        const watcher = null
 
         this.state = {
             value,
@@ -67,10 +70,11 @@ class App extends Component {
             tree,
             dir,
             watcher,
-            unsavedChanges
+            unsavedChanges,
+            addedChanges
         };
-
     }
+
     handleChange(newValue) {
         this.setState({value: newValue, unsavedChanges: true});
     }
@@ -101,24 +105,42 @@ class App extends Component {
         let callback = (err) => {
             if (err)
                 throw err;
-            this.setState({saving:false, unsavedChanges: false})
+            this.setState({saving: false, unsavedChanges: false})
         }
         callback = callback.bind(this)
-        this.setState({saving:true})
+        this.setState({saving: true})
         fs.writeFile(this.state.file, this.state.value, callback);
     }
 
-    handleOpenDir(){
-        dialog.showOpenDialog({title:"Open a notebook", properties: ['openDirectory']},
-            folders => {
-                if (this.state.watcher!==null){
-                    this.state.watcher.close()
-                }
+    handleOpenDir() {
+        dialog.showOpenDialog({
+            title: "Open a notebook",
+            properties: ['openDirectory']
+        }, folders => {
+            if (this.state.watcher !== null) {
+                this.state.watcher.close()
+            }
 
-                this.setState({dir:folders[0], tree:buildTree(folders[0]), file:"", value:"", unsavedChanges: false, watcher: fs.watch(folders[0], {
+            this.setState({
+                dir: folders[0],
+                tree: buildTree(folders[0]),
+                file: "",
+                value: "",
+                unsavedChanges: false,
+                watcher: fs.watch(folders[0], {
                     recursive: true
-                }, this.handleDirChange)})
+                }, this.handleDirChange)
             })
+        })
+    }
+
+    handleCommit(){
+        console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
+
+        ipcRenderer.on('asynchronous-reply', (event, arg) => {
+            console.log(arg) // prints "pong"
+        })
+        ipcRenderer.send('asynchronous-message', 'ping')
     }
 
     render() {
@@ -126,16 +148,27 @@ class App extends Component {
             ? <EditorPreview value={this.state.value} handleChange={this.handleChange}/>
             : "SELECT A SUPPORTED FILE"
 
-        let saveButton = <Button type={this.state.unsavedChanges ? "primary" : ""} shape="circle" size={"large"} onClick={this.handleSave}>
+        let saveButton =
+        <Button type={this.state.unsavedChanges ? "primary" : ""} onClick={this.handleSave}>
             <i className="fa fa-floppy-o" aria-hidden="true"></i>
         </Button>
+
+        let commitButton =
+        <Button type={this.state.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
+            <i className="fa fa-arrow-up" aria-hidden="true"></i>
+
+        </Button>
+
         return (
             <div className="App">
                 <div className="AppBar">
-                    {saveButton}
-                    <Button shape="circle" size={"large"} onClick={this.handleOpenDir}>
-                        <i className="fa fa-folder-open" aria-hidden="true"></i>
-                    </Button>
+                    <ButtonGroup size="large">
+                        <Button onClick={this.handleOpenDir}>
+                            <i className="fa fa-folder-open" aria-hidden="true"></i>
+                        </Button>
+                        {saveButton}
+                        {commitButton}
+                    </ButtonGroup>
                 </div>
 
                 <div className="AppBody row">
