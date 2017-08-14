@@ -1,7 +1,4 @@
 @import '~antd/dist/antd.css';
-body, .markdown-body pre>code {
-    font-family: 'Source Code Pro', monospace;
-}
 
 #root {
     height: 100vh;
@@ -10,13 +7,13 @@ body, .markdown-body pre>code {
 
 .AppBar {
     width: 100vw;
-    height: 5%;
+    height: 40px;
     margin: 0px;
     background-color: blue
 }
 
 .AppBody {
-    height: 95%;
+    height: calc(100% - 40px);
     width: 100vw;
     margin: 0px;
 }

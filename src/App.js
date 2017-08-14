@@ -2,9 +2,14 @@ import React, {Component} from 'react';
 import './stylesheets/App.css';
 import './stylesheets/EditorPreview.css';
 import './stylesheets/highlight.css';
+import "./stylesheets/font-awesome/css/font-awesome.min.css"
+import "./stylesheets/katex/katex.min.css"
+import "./stylesheets/bootstrap/css/bootstrap.min.css"
+import "./stylesheets/github-markdown/github-markdown.css"
 import EditorPreview from "./components/EditorPreview.js"
 import Tree from "./components/Tree.js"
 import {Button, Radio} from 'antd';
+require("source-code-pro")
 
 const electron = window.require('electron');
 const fs = electron.remote.require('fs');
@@ -126,7 +131,7 @@ class App extends Component {
         </Button>
         return (
             <div className="App">
-                <div className="AppBar row">
+                <div className="AppBar">
                     {saveButton}
                     <Button shape="circle" size={"large"} onClick={this.handleOpenDir}>
                         <i className="fa fa-folder-open" aria-hidden="true"></i>

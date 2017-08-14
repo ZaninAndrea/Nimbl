@@ -66,3 +66,7 @@ pre {
   margin-bottom: 5px;
   border: none;
 }
+
+body, .markdown-body pre>code {
+    font-family: 'Source Code Pro', monospace;
+}
