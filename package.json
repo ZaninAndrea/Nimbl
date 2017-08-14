@@ -33,7 +33,8 @@
         "react-ace": "^5.1.0",
         "react-ace-wrapper": "^1.0.1",
         "react-dom": "^15.6.1",
-        "react-scripts": "1.0.10"
+        "react-scripts": "1.0.10",
+        "source-code-pro": "git://github.com/adobe-fonts/source-code-pro.git#release"
     },
     "scripts": {
         "start": "react-scripts start",

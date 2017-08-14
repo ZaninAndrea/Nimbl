@@ -9,7 +9,7 @@ import "./stylesheets/github-markdown/github-markdown.css"
 import EditorPreview from "./components/EditorPreview.js"
 import Tree from "./components/Tree.js"
 import {Button, Radio} from 'antd';
-require("source-code-pro")
+import "source-code-pro/source-code-pro.css"
 
 const electron = window.require('electron');
 const fs = electron.remote.require('fs');
