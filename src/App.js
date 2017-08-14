@@ -30,10 +30,10 @@ const buildTree = dir => {
         let path = dir + "/" + element;
         // Get the file's stats
         const stat = fs.statSync(path);
-        if (stat && stat.isDirectory())
+        if (stat && stat.isDirectory() && !path.endsWith(".git"))
             // Dive into the directory
             tree.subfolders.push(buildTree(path));
-        else
+        else if (!path.endsWith(".git"))
             // Call the action
             tree.files.push(element)
     });
