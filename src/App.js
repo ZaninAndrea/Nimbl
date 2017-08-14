@@ -135,7 +135,7 @@ class App extends Component {
     }
 
     handleCommit(){
-        ipcRenderer.on('gitFlow-reply', (event, arg) => {
+        ipcRenderer.on('asynchronous-reply', (event, arg) => {
             console.log(arg)
         })
         ipcRenderer.send('gitFlow', this.state.dir, this.state.file)
