@@ -135,12 +135,10 @@ class App extends Component {
     }
 
     handleCommit(){
-        console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
-
-        ipcRenderer.on('asynchronous-reply', (event, arg) => {
-            console.log(arg) // prints "pong"
+        ipcRenderer.on('gitFlow-reply', (event, arg) => {
+            console.log(arg)
         })
-        ipcRenderer.send('asynchronous-message', 'ping')
+        ipcRenderer.send('gitFlow', this.state.dir, this.state.file)
     }
 
     render() {
