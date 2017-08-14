@@ -17,7 +17,7 @@ brace.define("ace/snippets/markdown", [
     t.scope = "markdown"
 })
 
-class EditorPreview extends Component {
+class MDEditorPreview extends Component {
     constructor(props) {
         super(props);
 
@@ -45,24 +45,34 @@ class EditorPreview extends Component {
     }
 
     render() {
-        return (
-            <div className="EditorPreview row">
-                <div className="editorWrapper col-xs-6">
-                    <AceEditor ref="editor" onSelectionChange={this.handleSelection} onScroll={this.handleScroll} mode="markdown" theme="solarized_dark" onChange={this.props.handleChange} name="editor" value={this.props.value} editorProps={{
-                        $blockScrolling: true
-                    }} showGutter={false} showPrintMargin={false} highlightActiveLine={false} height="100%" width="100%" setOptions={{
-                        "enableSnippets": true
-                    }}/>
+        let aceEditor = <AceEditor ref="editor" onSelectionChange={this.handleSelection} onScroll={this.handleScroll} mode="markdown" theme="solarized_dark" onChange={this.props.handleChange} name="editor" value={this.props.value} editorProps={{
+            $blockScrolling: true
+        }} showGutter={false} showPrintMargin={false} highlightActiveLine={false} height="100%" width="100%" setOptions={{
+            "enableSnippets": true
+        }}/>
+        if (this.props.preview){
+            return (
+                <div className="MDEditorPreview row">
+                    <div className="editorWrapper col-xs-6">
+                        {aceEditor}
+                    </div>
+                    <div className="markdown-container col-xs-6" ref="markdown-container">
+                        <div className="markdown-body" dangerouslySetInnerHTML={{
+                            __html: md.render(this.props.value)
+                        }}></div>
+                    </div>
                 </div>
-                <div className="markdown-container col-xs-6" ref="markdown-container">
-                    <div className="markdown-body" dangerouslySetInnerHTML={{
-                        __html: md.render(this.props.value)
-                    }}></div>
-                </div>
-            </div>
 
-        );
+            );
+        }
+        else{
+            return (<div className="MDEditorPreview row">
+                <div className="editorWrapper col-xs-12">
+                    {aceEditor}
+                </div>
+            </div>)
+        }
     }
 }
 
-export default EditorPreview;
+export default MDEditorPreview;

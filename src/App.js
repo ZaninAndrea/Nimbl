@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
-import EditorPreview from "./components/EditorPreview.js"
+import PanelGroup from "react-panelgroup";
+import mime from "mime"
+import MDEditorPreview from "./components/MDEditorPreview.js"
 import Tree from "./components/Tree.js"
 import buildTree from "./utilities/buildTree.js"
 import buildSite from "./utilities/buildSite.js"
-import './stylesheets/App.css';
-import './stylesheets/EditorPreview.css';
-import './stylesheets/highlight.css';
 import "./stylesheets/font-awesome/css/font-awesome.min.css"
 import "./stylesheets/katex/katex.min.css"
 import "./stylesheets/bootstrap/css/bootstrap.min.css"
 import "./stylesheets/github-markdown/github-markdown.css"
 import "source-code-pro/source-code-pro.css"
-import {Button, Radio} from 'antd';
+import './stylesheets/App.css';
+import './stylesheets/MDEditorPreview.css';
+import './stylesheets/highlight.css';
+import {Button, Radio, Checkbox} from 'antd';
 const ButtonGroup = Button.Group;
 
 const electron = window.require('electron');
@@ -34,6 +36,8 @@ class App extends Component {
         const unsavedChanges = false
         const addedChanges = false
         const watcher = null
+        const preview = true
+        const sidebar = true
 
         this.handleChange = this.handleChange.bind(this)
         this.handleDirChange = this.handleDirChange.bind(this)
@@ -42,6 +46,8 @@ class App extends Component {
         this.handleOpenDir = this.handleOpenDir.bind(this)
         this.handleCommit = this.handleCommit.bind(this)
         this.handleSiteBuild = this.handleSiteBuild.bind(this)
+        this.handleSidebarToggle = this.handleSidebarToggle.bind(this)
+        this.handlePreviewToggle = this.handlePreviewToggle.bind(this)
 
         this.state = {
             value,
@@ -50,7 +56,9 @@ class App extends Component {
             dir,
             watcher,
             unsavedChanges,
-            addedChanges
+            addedChanges,
+            preview,
+            sidebar
         };
     }
 
@@ -69,11 +77,10 @@ class App extends Component {
     }
 
     handleTreeSelect(node, data) {
-        console.log(node);
-        console.log(data);
         if (node.length !== 0) {
             // nesting ifs so that statSync doesn't get called with undefined as argument
             if (!fs.statSync(node[0]).isDirectory() && node[0] !== this.state.file) {
+                console.log(mime.lookup(node[0]));
                 const value = fs.readFileSync(node[0]).toString()
                 this.setState({value: value, file: node[0]})
             }
@@ -124,21 +131,24 @@ class App extends Component {
         buildSite(this.state.dir)
     }
 
+    handleSidebarToggle(){
+        this.setState((oldState, props) => ({sidebar:!oldState.sidebar}))
+    }
+
+    handlePreviewToggle(){
+        this.setState((oldState, props) => ({preview:!oldState.preview}))
+    }
+
     render() {
-        let editor = this.state.file.endsWith("md")
-            ? <EditorPreview value={this.state.value} handleChange={this.handleChange}/>
+        let editor = mime.lookup(this.state.file) === "text/x-markdown"
+            ? <MDEditorPreview value={this.state.value} handleChange={this.handleChange} preview={this.state.preview}/>
+            : mime.lookup(this.state.file).startsWith("image")
+            ? <div className="imagePreview">
+                <div className="imageContainer">
+                    <img className="img-responsive" src={"data:" + mime.lookup(this.state.file) + ";base64," + fs.readFileSync(this.state.file).toString("base64")}/>
+                </div>
+            </div>
             : "SELECT A SUPPORTED FILE"
-
-        let saveButton =
-        <Button type={this.state.unsavedChanges ? "primary" : ""} onClick={this.handleSave}>
-            <i className="fa fa-floppy-o" aria-hidden="true"></i>
-        </Button>
-
-        let commitButton =
-        <Button type={this.state.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
-            <i className="fa fa-arrow-up" aria-hidden="true"></i>
-
-        </Button>
 
         return (
             <div className="App">
@@ -147,21 +157,31 @@ class App extends Component {
                         <Button onClick={this.handleOpenDir}>
                             <i className="fa fa-folder-open" aria-hidden="true"></i>
                         </Button>
-                        {saveButton}
-                        {commitButton}
+                        <Button type={this.state.unsavedChanges ? "primary" : ""} onClick={this.handleSave} disabled={this.state.file === ""}>
+                            <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                        </Button>
+                        <Button type={this.state.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
+                            <i className="fa fa-arrow-up" aria-hidden="true"></i>
+                        </Button>
                     </ButtonGroup>
                     <Button onClick={this.handleSiteBuild} disabled={this.state.dir === ""}>
                         <i className="fa fa-paper-plane" aria-hidden="true"></i>
                     </Button>
+                    <Checkbox checked={this.state.sidebar} onClick={this.handleSidebarToggle}>
+                        sidebar
+                    </Checkbox>
+                    <Checkbox checked={this.state.preview} onClick={this.handlePreviewToggle}>
+                        preview
+                    </Checkbox>
                 </div>
 
-                <div className="AppBody row">
-                    <div className="sidebar col-xs-2">
-                        <Tree className="sidebarTree" tree={this.state.tree} onSelect={this.handleTreeSelect}/>
-                    </div>
-                    <div className="mainEditor col-xs-10">
+                <div className="AppBody">
+                    <PanelGroup borderColor="grey" panelWidths={[
+                        {size: 150, minSize:100}
+                    ]}>
+                        {this.state.sidebar ? <Tree tree={this.state.tree} onSelect={this.handleTreeSelect}/> : null}
                         {editor}
-                    </div>
+                    </PanelGroup>
                 </div>
             </div>
         );

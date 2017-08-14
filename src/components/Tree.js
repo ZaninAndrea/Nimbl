@@ -20,7 +20,7 @@ class TreeComponent extends Component {
         }
 
         return (
-            <Tree className="draggable-tree" draggable defaultExpandedKeys={[]} onDrop={info => console.log(info)} onSelect={this.props.onSelect}>
+            <Tree className="sidebar" draggable defaultExpandedKeys={[]} onDrop={info => console.log(info)} onSelect={this.props.onSelect}>
                 {buildTree(this.props.tree)}
             </Tree>
         );
