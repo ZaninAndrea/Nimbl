@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import EditorPreview from "./components/EditorPreview.js"
+import Tree from "./components/Tree.js"
+import buildTree from "./utilities/buildTree.js"
+import buildSite from "./utilities/buildSite.js"
 import './stylesheets/App.css';
 import './stylesheets/EditorPreview.css';
 import './stylesheets/highlight.css';
@@ -6,8 +10,6 @@ import "./stylesheets/font-awesome/css/font-awesome.min.css"
 import "./stylesheets/katex/katex.min.css"
 import "./stylesheets/bootstrap/css/bootstrap.min.css"
 import "./stylesheets/github-markdown/github-markdown.css"
-import EditorPreview from "./components/EditorPreview.js"
-import Tree from "./components/Tree.js"
 import "source-code-pro/source-code-pro.css"
 import {Button, Radio} from 'antd';
 const ButtonGroup = Button.Group;
@@ -17,29 +19,6 @@ const fs = electron.remote.require('fs');
 const dialog = electron.remote.dialog
 const ipcRenderer = electron.ipcRenderer;
 
-const buildTree = dir => {
-    let tree = {
-        dir: dir,
-        files: [],
-        subfolders: []
-    }
-
-    const list = fs.readdirSync(dir);
-    list.forEach(function(element) {
-        // Full path of that file
-        let path = dir + "/" + element;
-        // Get the file's stats
-        const stat = fs.statSync(path);
-        if (stat && stat.isDirectory() && !path.endsWith(".git"))
-            // Dive into the directory
-            tree.subfolders.push(buildTree(path));
-        else if (!path.endsWith(".git"))
-            // Call the action
-            tree.files.push(element)
-    });
-
-    return tree
-}
 
 class App extends Component {
     constructor(props) {
@@ -62,7 +41,7 @@ class App extends Component {
         this.handleSave = this.handleSave.bind(this)
         this.handleOpenDir = this.handleOpenDir.bind(this)
         this.handleCommit = this.handleCommit.bind(this)
-
+        this.handleSiteBuild = this.handleSiteBuild.bind(this)
 
         this.state = {
             value,
@@ -141,6 +120,10 @@ class App extends Component {
         ipcRenderer.send('gitFlow', this.state.dir, this.state.file)
     }
 
+    handleSiteBuild(){
+        buildSite(this.state.dir)
+    }
+
     render() {
         let editor = this.state.file.endsWith("md")
             ? <EditorPreview value={this.state.value} handleChange={this.handleChange}/>
@@ -167,6 +150,9 @@ class App extends Component {
                         {saveButton}
                         {commitButton}
                     </ButtonGroup>
+                    <Button onClick={this.handleSiteBuild} disabled={this.state.dir === ""}>
+                        <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                    </Button>
                 </div>
 
                 <div className="AppBody row">
