@@ -11,6 +11,7 @@ import "./stylesheets/bootstrap/css/bootstrap.min.css"
 import "./stylesheets/github-markdown/github-markdown.css"
 import "source-code-pro/source-code-pro.css"
 import './stylesheets/App.css';
+import './stylesheets/Tree.css';
 import './stylesheets/MDEditorPreview.css';
 import './stylesheets/highlight.css';
 import {Button, Radio, Checkbox} from 'antd';
