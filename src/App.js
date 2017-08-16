@@ -66,20 +66,17 @@ class App extends Component {
         };
 
         // refresh when receiving notification of a fetched linkPreview
-        const handlePreviewReady = (event) => {this.forceUpdate()}
+        const handlePreviewReady = (event) => {this.renderMd()}
         handlePreviewReady.bind(this)
         ipcRenderer.on("linkPreviewReady", handlePreviewReady)
     }
 
     renderMd(){
-        console.log("RENDER");
         this.setState((oldState, props) => {
-            console.log("STATE");
             let newApp = {...oldState.app}
             newApp.preview = md.render(oldState.app.value)
             return {app:newApp}
-        }, ()=> console.log("AFTER STATE"))
-        console.log("AFTER RENDER");
+        })
     }
 
     handleChange(newValue) { // update editor continuously, update preview only after `refreshRate` milliseconds of idle
@@ -199,9 +196,11 @@ class App extends Component {
             newSettings.showPreview = !oldState.settings.showPreview
 
             if (newSettings.showPreview){ // if preview enable, render markdown
-                console.log("CALLED RENDER");
-                this.renderMd()
+                let newApp = {...oldState.app}
+                newApp.preview = md.render(oldState.app.value)
+                return {settings:newSettings, app:newApp}
             }
+
             return {settings:newSettings}
         })
 
