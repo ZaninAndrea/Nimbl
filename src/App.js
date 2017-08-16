@@ -16,7 +16,8 @@ import './stylesheets/Tree.css';
 import './stylesheets/MDEditorPreview.css';
 import './stylesheets/highlight.css';
 import './stylesheets/customMD.css';
-import {Button, Radio, Checkbox, Slider, InputNumber} from 'antd';
+import {Button, Radio, Checkbox, Slider, InputNumber, Select} from 'antd';
+const { Option, OptGroup } = Select;
 const ButtonGroup = Button.Group;
 
 const electron = window.require('electron'); // little trick to import electron in react
@@ -40,6 +41,7 @@ class App extends Component {
         this.handleShowPreviewToggle = this.handleShowPreviewToggle.bind(this)
         this.renderMd = this.renderMd.bind(this)
         this.handleRefreshRateChange = this.handleRefreshRateChange.bind(this)
+        this.handleThemeChange = this.handleThemeChange.bind(this)
 
         // default values
         this.state = {
@@ -61,7 +63,8 @@ class App extends Component {
             settings: {
                 showPreview : true,
                 showSidebar : true,
-                refreshRate : 500
+                refreshRate : 500,
+                editorTheme : "solarized_dark"
             }
         };
 
@@ -214,10 +217,18 @@ class App extends Component {
         })
     }
 
+    handleThemeChange(newVal){
+        this.setState((oldState, props) => {
+            let newSettings = {...oldState.settings}
+            newSettings.editorTheme = newVal
+            return {settings:newSettings}
+        })
+    }
+
     render() {
         // selected the correct editor / preview for the current file
         let editor = mime.lookup(this.state.app.file) === "text/x-markdown"
-            ? <MDEditorPreview value={this.state.app.value} handleChange={this.handleChange} preview={this.state.app.preview} showPreview={this.state.settings.showPreview}/>
+            ? <MDEditorPreview theme={this.state.settings.editorTheme} value={this.state.app.value} handleChange={this.handleChange} preview={this.state.app.preview} showPreview={this.state.settings.showPreview}/>
             : mime.lookup(this.state.app.file).startsWith("image")
             ? <div className="imagePreview">
                 <div className="imageContainer">
@@ -256,7 +267,29 @@ class App extends Component {
                        style={{ marginLeft: 6 }}
                        value={this.state.settings.refreshRate/1000}
                        onChange={this.handleRefreshRateChange}
-                   /> {this.state.settings.refreshRate<500 ? <i className="fa fa-exclamation-triangle" aria-hidden="true"></i> : ""} preview refresh rate
+                    /> {this.state.settings.refreshRate<500 ? <i className="fa fa-exclamation-triangle" aria-hidden="true"></i> : ""} preview refresh rate
+                    <Select
+                        defaultValue="solarized_dark"
+                        value={this.state.settings.editorTheme}
+                        style={{ width: 200 }}
+                        onChange={this.handleThemeChange}
+                    >
+                        <OptGroup label="Dark">
+                            <Option value="monokai">Monokai</Option>
+                            <Option value="twilight">Twilight</Option>
+                            <Option value="terminal">Terminal</Option>
+                            <Option value="solarized_dark">Solarized Dark</Option>
+                        </OptGroup>
+                        <OptGroup label="Light">
+                            <Option value="github">Github</Option>
+                            <Option value="tomorrow">Tomorrow</Option>
+                            <Option value="kuroir">Kuroir</Option>
+                            <Option value="xcode">XCode</Option>
+                            <Option value="textmate">TextMate</Option>
+                            <Option value="solarized_light">Solarized Light</Option>
+                        </OptGroup>
+                    </Select>
+                    theme
                 </div>
 
                 <div className="AppBody">
