@@ -19,6 +19,7 @@
     "dependencies": {
         "antd": "^2.12.6",
         "brace": "^0.10.0",
+        "cheerio": "^1.0.0-rc.2",
         "electron-is-dev": "^0.3.0",
         "highlight.js": "^9.12.0",
         "markdown-it": "^8.3.1",
@@ -36,6 +37,7 @@
         "react-dom": "^15.6.1",
         "react-panelgroup": "^1.0.2",
         "react-scripts": "1.0.10",
+        "request": "^2.81.0",
         "source-code-pro": "git://github.com/adobe-fonts/source-code-pro.git#release"
     },
     "scripts": {

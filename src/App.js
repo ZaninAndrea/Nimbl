@@ -14,6 +14,7 @@ import './stylesheets/App.css';
 import './stylesheets/Tree.css';
 import './stylesheets/MDEditorPreview.css';
 import './stylesheets/highlight.css';
+import './stylesheets/customMD.css';
 import {Button, Radio, Checkbox} from 'antd';
 const ButtonGroup = Button.Group;
 
@@ -61,6 +62,10 @@ class App extends Component {
             preview,
             sidebar
         };
+
+        const handlePreview = (event) => {this.forceUpdate()}
+        handlePreview.bind(this)
+        ipcRenderer.on("linkPreviewReady", handlePreview)
     }
 
     handleChange(newValue) {
