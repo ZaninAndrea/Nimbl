@@ -7,7 +7,6 @@ import 'brace/ext/language_tools'
 import 'brace/mode/markdown';
 import 'brace/theme/solarized_dark';
 import 'brace/ext/searchbox';
-import md from "../utilities/markdown-it-conf"
 
 brace.define("ace/snippets/markdown", [
     "require", "exports", "module"
@@ -23,9 +22,13 @@ class MDEditorPreview extends Component {
         // bind functions
         this.handleSelection = this.handleSelection.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleSelection(e) {
+        if (!this.props.showPreview) // do nothing if preview is disable
+            return
+            
         // scroll the markdown preview to the point corresponding to the current selection
         var preview = findDOMNode(this.refs["markdown-container"])
         var ratio = e.doc.$lines.length === 1 // ratio current line / total number of lines
@@ -36,6 +39,9 @@ class MDEditorPreview extends Component {
     }
 
     handleScroll() {
+        if (!this.props.showPreview) // do nothing if preview is disable
+            return
+
         // scroll the markdown preview to the point corresponding to the current selection
         var preview = findDOMNode(this.refs["markdown-container"])
         var editor = findDOMNode(this.refs["editor"])
@@ -44,6 +50,11 @@ class MDEditorPreview extends Component {
             : editor.env.editor.selection.getCursor().row / (editor.env.document.doc.$lines.length - 1) // avoids division by 0 and allows for ratio 1
         var scrollTarget = preview.scrollHeight * ratio
         preview.scrollTop = scrollTarget // apply scrolling
+    }
+
+    handleChange(newValue){
+        this.props.handleChange(newValue)
+        this.handleScroll()
     }
 
     render() {
@@ -58,16 +69,17 @@ class MDEditorPreview extends Component {
             editorProps={{
                 $blockScrolling: true
             }}
-            showGutter={false}
+            showGutter={true}
             showPrintMargin={false}
             highlightActiveLine={false}
+            wrapEnabled={true}
             height="100%"
             width="100%"
             setOptions={{
                 "enableSnippets": true
             }}/>
 
-        if (this.props.preview){ // display preview or not
+        if (this.props.showPreview){ // display preview or not
             return (
                 <div className="MDEditorPreview row">
                     <div className="editorWrapper col-xs-6">
@@ -75,7 +87,7 @@ class MDEditorPreview extends Component {
                     </div>
                     <div className="markdown-container col-xs-6" ref="markdown-container">
                         <div className="markdown-body" dangerouslySetInnerHTML={{
-                            __html: md.render(this.props.value)
+                            __html: this.props.preview
                         }}></div>
                     </div>
                 </div>

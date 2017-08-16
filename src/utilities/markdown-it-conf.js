@@ -91,4 +91,25 @@ md.use(require('markdown-it-container'), 'url', {
     }
 });
 
+
+md.use(require('markdown-it-container'), 'youtube', {
+
+    validate: function(params) {
+        return params.trim().match(/^youtube\s+(.*)$/);
+    },
+
+    render: function(tokens, idx) {
+        var m = tokens[idx].info.trim().match(/^youtube\s+(.*)$/);
+
+        if (tokens[idx].nesting === 1) {
+            // opening tag
+            return `<div class="youtubePreview"><iframe width="560" height="315" src="https://www.youtube.com/embed/${m[1]}" frameborder="0" allowfullscreen></iframe>`; // returns the video preview
+
+        } else {
+            // closing tag
+            return '</div>\n';
+        }
+    }
+});
+
 export default md

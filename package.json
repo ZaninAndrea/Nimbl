@@ -34,6 +34,7 @@
         "react": "^15.6.1",
         "react-ace": "^5.1.0",
         "react-ace-wrapper": "^1.0.1",
+        "react-addons-perf": "^15.4.2",
         "react-dom": "^15.6.1",
         "react-panelgroup": "^1.0.2",
         "react-scripts": "1.0.10",
