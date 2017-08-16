@@ -2,6 +2,7 @@ var hljs = require('highlight.js');
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 
+// basic markdown-it setting
 var md = require('markdown-it')({
     html: true,
     linkify: true,
@@ -17,6 +18,8 @@ var md = require('markdown-it')({
         return ''; // use external default escaping
     }
 })
+
+// loading extra modules
 md.use(require('markdown-it-task-checkbox'))
 md.use(require("../utilities/markdown-it-anchor.js"))
 md.use(require("markdown-it-table-of-contents"), {
@@ -27,6 +30,8 @@ md.use(require('markdown-it-katex'), {
     "errorColor": " #cc0000"
 })
 md.use(require('markdown-it-smartarrows'))
+
+// custom containers
 md.use(require('markdown-it-container'), 'alert', {
 
     validate: function(params) {
@@ -34,7 +39,7 @@ md.use(require('markdown-it-container'), 'alert', {
     },
 
     render: function(tokens, idx) {
-        var m = tokens[idx].info.trim().match(/^alert\s+(.*)$/);
+        var m = tokens[idx].info.trim().match(/^alert\s+(.*)$/); // parse the arguments for the container
 
         if (tokens[idx].nesting === 1) {
             // opening tag
@@ -53,7 +58,7 @@ md.use(require('markdown-it-container'), 'note', {
     },
 
     render: function(tokens, idx) {
-        var m = tokens[idx].info.trim().match(/^note\s+(.*)$/);
+        var m = tokens[idx].info.trim().match(/^note\s+(.*)$/); // parse the arguments for the container
 
         if (tokens[idx].nesting === 1) {
             // opening tag
@@ -77,7 +82,7 @@ md.use(require('markdown-it-container'), 'url', {
 
         if (tokens[idx].nesting === 1) {
             // opening tag
-            return '<div>'+ipcRenderer.sendSync('linkPreview', m[1]);
+            return '<div>'+ipcRenderer.sendSync('linkPreview', m[1]); // returns the linkPreview provided by the electron main process through ipc
 
         } else {
             // closing tag

@@ -1,3 +1,7 @@
+// markdown it anchor module
+// it's necessary to have it as a source file because of compatibility problems with electron and react packaging
+// https://github.com/valeriangalliat/markdown-it-anchor
+
 const string = require('string')
 
 const slugify = s =>
