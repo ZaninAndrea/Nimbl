@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PanelGroup from "react-panelgroup";
 import mime from "mime"
 import path from "path"
+import Mousetrap from "mousetrap"
 import MDEditorPreview from "./components/MDEditorPreview.js"
 import DirTree from "./components/DirTree.js"
 import buildTree from "./utilities/buildTree.js"
@@ -45,6 +46,7 @@ class App extends Component {
         this.handleRefreshRateChange = this.handleRefreshRateChange.bind(this)
         this.handleThemeChange = this.handleThemeChange.bind(this)
         this.handleTreeLoadData = this.handleTreeLoadData.bind(this)
+        this.handleSaveShortcut = this.handleSaveShortcut.bind(this)
         // default values
         this.state = {
             app: {
@@ -71,10 +73,19 @@ class App extends Component {
             }
         };
 
+        Mousetrap.bind("ctrl+s", this.handleSaveShortcut);
+
+
         // refresh when receiving notification of a fetched linkPreview
         const handlePreviewReady = (event) => {this.renderMd()}
         handlePreviewReady.bind(this)
         ipcRenderer.on("linkPreviewReady", handlePreviewReady)
+    }
+
+    // handle CTRL+S shortcut
+    handleSaveShortcut(){
+        this.handleSave()
+        return false; // prevent event from bubbling up
     }
 
     renderMd(){
@@ -245,7 +256,7 @@ class App extends Component {
     render() {
         // selected the correct editor / preview for the current file
         let editor = mime.lookup(this.state.app.file) === "text/x-markdown"
-            ? <MDEditorPreview theme={this.state.settings.editorTheme} value={this.state.app.value} handleChange={this.handleChange} preview={this.state.app.preview} showPreview={this.state.settings.showPreview}/>
+            ? <MDEditorPreview handleSave={this.handleSaveShortcut} theme={this.state.settings.editorTheme} value={this.state.app.value} handleChange={this.handleChange} preview={this.state.app.preview} showPreview={this.state.settings.showPreview}/>
             : mime.lookup(this.state.app.file).startsWith("image")
             ? <div className="imagePreview">
                 <div className="imageContainer">

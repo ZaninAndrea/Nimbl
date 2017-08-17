@@ -87,7 +87,16 @@ class MDEditorPreview extends Component {
             width="100%"
             setOptions={{
                 "enableSnippets": true
-            }}/>
+            }}
+            commands={[
+                {
+                    name: 'save',
+                    bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
+                    exec: this.props.handleSave,
+                    readOnly: true // false if this command should not apply in readOnly mode
+                }
+            ]}
+        />
 
         if (this.props.showPreview){ // display preview or not
             return (
