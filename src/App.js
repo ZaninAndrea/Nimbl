@@ -1,21 +1,23 @@
 import React, {Component} from 'react';
 import PanelGroup from "react-panelgroup";
 import mime from "mime"
+import path from "path"
 import MDEditorPreview from "./components/MDEditorPreview.js"
-import Tree from "./components/Tree.js"
+import DirTree from "./components/DirTree.js"
 import buildTree from "./utilities/buildTree.js"
 import buildSite from "./utilities/buildSite.js"
+import {buildDirTree, replaceInTree} from "./utilities/treeUtils"
 import md from "./utilities/markdown-it-conf"
 import "./stylesheets/font-awesome/css/font-awesome.min.css"
 import "./stylesheets/katex/katex.min.css"
 import "./stylesheets/bootstrap/css/bootstrap.min.css"
 import "./stylesheets/github-markdown/github-markdown.css"
 import "source-code-pro/source-code-pro.css"
-import './stylesheets/App.css';
-import './stylesheets/Tree.css';
-import './stylesheets/MDEditorPreview.css';
-import './stylesheets/highlight.css';
-import './stylesheets/customMD.css';
+import './stylesheets/App.css'
+import './stylesheets/Tree.css'
+import './stylesheets/MDEditorPreview.css'
+import './stylesheets/highlight.css'
+import './stylesheets/customMD.css'
 import {Button, Radio, Checkbox, Slider, InputNumber, Select} from 'antd';
 const { Option, OptGroup } = Select;
 const ButtonGroup = Button.Group;
@@ -31,7 +33,7 @@ class App extends Component {
         super(props);
         // binding all the functions
         this.handleChange = this.handleChange.bind(this)
-        this.handleDirChange = this.handleDirChange.bind(this)
+        // this.handleDirChange = this.handleDirChange.bind(this)
         this.handleTreeSelect = this.handleTreeSelect.bind(this)
         this.handleSave = this.handleSave.bind(this)
         this.handleOpenDir = this.handleOpenDir.bind(this)
@@ -42,16 +44,17 @@ class App extends Component {
         this.renderMd = this.renderMd.bind(this)
         this.handleRefreshRateChange = this.handleRefreshRateChange.bind(this)
         this.handleThemeChange = this.handleThemeChange.bind(this)
-
+        this.handleTreeLoadData = this.handleTreeLoadData.bind(this)
         // default values
         this.state = {
             app: {
                 dir : "",
                 file : "",
                 tree : {
-                    dir: "",
-                    files: [],
-                    subfolders: []
+                    key: "",
+                    position: [],
+                    name: "",
+                    children: []
                 },
                 value : "",
                 preview : "",
@@ -95,15 +98,15 @@ class App extends Component {
         })
     }
 
-    handleDirChange(event, filename) {
-        if (event === "rename") { // if the directory tree changed
-            this.setState((oldState, props) => {
-                let newApp = {...oldState.app}
-                newApp.tree = buildTree(oldState.app.dir) // rebuild the directory tree
-                return {app:newApp}
-            })
-        }
-    }
+    // handleDirChange(event, filename) {
+    //     if (event === "rename") { // if the directory tree changed
+    //         this.setState((oldState, props) => {
+    //             let newApp = {...oldState.app}
+    //             newApp.tree = buildTree(oldState.app.dir) // rebuild the directory tree
+    //             return {app:newApp}
+    //         })
+    //     }
+    // }
 
     handleTreeSelect(node, data) {
         if (node.length !== 0) {
@@ -159,7 +162,7 @@ class App extends Component {
             this.setState((oldState, props) => {
                 let newApp = {...oldState.app, ...{
                     dir: folders[0],
-                    tree: buildTree(folders[0]),
+                    tree: buildDirTree(folders[0],[]),
                     file: "",
                     value: "",
                     preview:"",
@@ -225,6 +228,20 @@ class App extends Component {
         })
     }
 
+    handleTreeLoadData(treeNode){ // handles directory exploration when expanding a folder in the sidebar tree
+      return new Promise((resolve) => {
+          const treeData = this.state.app.tree; // loads old tree
+          const newSubTree = buildDirTree(treeNode.props.eventKey,treeNode.props.position) // creates the new subTree
+          replaceInTree(treeData, newSubTree, treeNode.props.position) // inserts the new subtree in the right position
+          this.setState((oldState, props) => {
+              let newApp = {...oldState.app}
+              newApp.tree = treeData
+              return {app:newApp}
+          })
+          resolve();
+      });
+    }
+
     render() {
         // selected the correct editor / preview for the current file
         let editor = mime.lookup(this.state.app.file) === "text/x-markdown"
@@ -267,7 +284,7 @@ class App extends Component {
                        style={{ marginLeft: 6 }}
                        value={this.state.settings.refreshRate/1000}
                        onChange={this.handleRefreshRateChange}
-                    /> {this.state.settings.refreshRate<500 ? <i className="fa fa-exclamation-triangle" aria-hidden="true"></i> : ""} preview refresh rate
+                   /> {this.state.settings.refreshRate<500 ? <i className="fa fa-exclamation-triangle" aria-hidden="true"></i> : ""} preview refresh rate &nbsp;&nbsp;
                     <Select
                         defaultValue="solarized_dark"
                         value={this.state.settings.editorTheme}
@@ -291,12 +308,11 @@ class App extends Component {
                     </Select>
                     theme
                 </div>
-
                 <div className="AppBody">
                     <PanelGroup borderColor="grey" panelWidths={[
                         {size: 150, minSize:100}
                     ]}>
-                        {this.state.settings.showSidebar ? <Tree tree={this.state.app.tree} onSelect={this.handleTreeSelect}/> : null}
+                        {this.state.settings.showSidebar ? <DirTree treeData={this.state.app.tree} dir={this.state.app.dir} onLoadData={this.handleTreeLoadData} onSelect={this.handleTreeSelect}/> : null}
                         {editor}
                     </PanelGroup>
                 </div>
