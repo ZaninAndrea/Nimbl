@@ -1,4 +1,3 @@
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -8,11 +7,6 @@ const generatePreview = require("./generatePreview.js")
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
-
-// installing react dev tools
-installExtension(REACT_DEVELOPER_TOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err));
 
 let previewCache={} // cache of link previews used in the markdown preview
 
@@ -55,6 +49,14 @@ function createWindow() {
       event.preventDefault();
       shell.openExternal(url); //open url with default browser
   });
+
+  if (isDev){
+      const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+      // installing react dev tools
+      installExtension(REACT_DEVELOPER_TOOLS)
+          .then((name) => console.log(`Added Extension:  ${name}`))
+          .catch((err) => console.log('An error occurred: ', err));
+  }
 }
 
 app.on('ready', createWindow);
