@@ -1,4 +1,4 @@
-// markdown-it-katex
+// markdown-it-katex moved here to use a newer version of katex
 // https://github.com/waylonflinn/markdown-it-katex
 
 'use strict';

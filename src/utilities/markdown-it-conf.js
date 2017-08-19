@@ -25,7 +25,7 @@ md.use(require("../utilities/markdown-it-anchor.js"))
 md.use(require("markdown-it-table-of-contents"), {
     "includeLevel": [1, 2, 3, 4]
 })
-md.use(require('markdown-it-katex'), {
+md.use(require('../utilities/markdown-it-katex'), {
     "throwOnError": false,
     "errorColor": " #cc0000"
 })
