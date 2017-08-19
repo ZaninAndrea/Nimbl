@@ -66,3 +66,7 @@
 .rdTabAddButton{
     visibility: hidden;
 }
+
+ul, ol {
+    list-style: disc;
+}
