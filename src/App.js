@@ -215,7 +215,10 @@ class App extends Component {
                         recursive: true
                     }, this.handleDirChange)
                 } }
-                return {app:newApp}
+                let newSettings = {...oldState.settings, ...{
+                    showSidebar: true
+                }}
+                return {app:newApp, settings: newSettings}
             })
         })
     }
