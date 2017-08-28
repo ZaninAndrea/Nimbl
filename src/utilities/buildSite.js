@@ -24,8 +24,6 @@ const deepCopyDir = (dir, outputDir) => {
         } else {
             const dest = path.join(outputDir, elements[i])
             const data = fs.readFileSync(path.join(dir, elements[i]), 'utf8')
-            console.log(dest);
-            console.log(path.join(dir, elements[i]));
             fs.writeFileSync(dest, data)
         }
     }
@@ -55,6 +53,15 @@ function buildSite(dir, outputDir = "gh-pages") {
             deepDeleteDir(path.join(dir, outputDir))
         }
 
+        // load handlebars partials
+        if (fs.existsSync(path.join(dir, yamlConfig.templates.partials))){
+            const files = fs.readdirSync(path.join(dir, yamlConfig.templates.partials))
+            for (let i in files){
+                console.log(path.basename(files[i],path.extname(files[i])));
+                handlebars.registerPartial(path.basename(files[i],path.extname(files[i])), fs.readFileSync(path.join(dir, yamlConfig.templates.partials, files[i]), 'utf8'))
+            }
+        }
+
         // loop over each file and create it's html page
         const pageSource = fs.readFileSync(path.join(dir, yamlConfig.templates.page), 'utf8')
         const pageTemplate = handlebars.compile(pageSource);
@@ -64,7 +71,6 @@ function buildSite(dir, outputDir = "gh-pages") {
 
             // creating jsonToc with rendered latex
             const toc = markdownToc(mdSource)
-            console.log(toc.content);
             let jsonToc = toc.json
             // jsonToc = jsonToc.map(entry => Object.assign({}, entry, {content:katex.renderToString(entry.content)}))
             const context = {
@@ -80,8 +86,8 @@ function buildSite(dir, outputDir = "gh-pages") {
         }
 
         // loads static assets
-        if (yamlConfig.assets && fs.statSync(path.join(dir, yamlConfig.assets)).isDirectory()) {
-            deepCopyDir(path.join(dir, yamlConfig.assets), path.join(dir, outputDir))
+        if (yamlConfig.templates.assets && fs.statSync(path.join(dir, yamlConfig.templates.assets)).isDirectory()) {
+            deepCopyDir(path.join(dir, yamlConfig.templates.assets), path.join(dir, outputDir))
         }
 
     } catch (e) {
