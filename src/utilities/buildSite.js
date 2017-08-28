@@ -57,7 +57,6 @@ function buildSite(dir, outputDir = "gh-pages") {
         if (fs.existsSync(path.join(dir, yamlConfig.templates.partials))){
             const files = fs.readdirSync(path.join(dir, yamlConfig.templates.partials))
             for (let i in files){
-                console.log(path.basename(files[i],path.extname(files[i])));
                 handlebars.registerPartial(path.basename(files[i],path.extname(files[i])), fs.readFileSync(path.join(dir, yamlConfig.templates.partials, files[i]), 'utf8'))
             }
         }
@@ -65,24 +64,38 @@ function buildSite(dir, outputDir = "gh-pages") {
         // loop over each file and create it's html page
         const pageSource = fs.readFileSync(path.join(dir, yamlConfig.templates.page), 'utf8')
         const pageTemplate = handlebars.compile(pageSource);
-        for (let i in yamlConfig.map) {
 
-            const mdSource = fs.readFileSync(path.join(dir, yamlConfig.map[i].path), 'utf8')
+        const sitemap = Object.keys(yamlConfig.sitemap).map(page => ({
+            title: page,
+            link: "./"+path.basename(yamlConfig.sitemap[page].path,path.extname(yamlConfig.sitemap[page].path))+".html",
+        }))
+        let index = 0
+        for (let i in yamlConfig.sitemap) {
+            const mdSource = fs.readFileSync(path.join(dir, yamlConfig.sitemap[i].path), 'utf8')
 
             // creating jsonToc with rendered latex
             const toc = markdownToc(mdSource)
             let jsonToc = toc.json
             // jsonToc = jsonToc.map(entry => Object.assign({}, entry, {content:katex.renderToString(entry.content)}))
+
+            // creating small toc, with only h1
+            const smallToc = markdownToc(mdSource, {maxdepth: 1})
+            let smallJsonToc = smallToc.json
+            // smallJsonToc = smallJsonToc.map(entry => Object.assign({}, entry, {content:katex.renderToString(entry.content)}))
             const context = {
                 title: i,
                 markdownBody: md.render(mdSource),
-                details: yamlConfig.map[i],
+                details: yamlConfig.sitemap[i],
                 jsonToc: jsonToc,
-                htmlToc: md.render(toc.content)
+                htmlToc: md.render(toc.content),
+                smallJsonToc: smallJsonToc,
+                smallHtmlToc: md.render(smallToc.content),
+                siteMap:sitemap.map( (element,id) => id === index ? Object.assign({},element,{current:true}) : element),
             };
             const html = pageTemplate(context);
-            const destination = path.join(dir, "gh-pages", yamlConfig.map[i].path.replace(".md", ".html"))
+            const destination = path.join(dir, "gh-pages", yamlConfig.sitemap[i].path.replace(".md", ".html"))
             fs.writeFileSync(destination, html);
+            index++
         }
 
         // loads static assets
