@@ -3,8 +3,13 @@ import buildTree from "./treeUtils.js"
 import handlebars from "handlebars"
 import yaml from 'js-yaml';
 import path from "path"
+import katex from "katex"
 const electron = window.require('electron');
+// the following are basically imports working around webpack
 const fs = electron.remote.require('fs');
+const markdownToc = electron.remote.require("markdown-toc")
+
+
 
 // recursively copies a directory into another
 const deepCopyDir = (dir, outputDir) => {
@@ -56,10 +61,18 @@ function buildSite(dir, outputDir = "gh-pages") {
         for (let i in yamlConfig.map) {
 
             const mdSource = fs.readFileSync(path.join(dir, yamlConfig.map[i].path), 'utf8')
+
+            // creating jsonToc with rendered latex
+            const toc = markdownToc(mdSource)
+            console.log(toc.content);
+            let jsonToc = toc.json
+            // jsonToc = jsonToc.map(entry => Object.assign({}, entry, {content:katex.renderToString(entry.content)}))
             const context = {
                 title: i,
                 markdownBody: md.render(mdSource),
-                details: yamlConfig.map[i]
+                details: yamlConfig.map[i],
+                jsonToc: jsonToc,
+                htmlToc: md.render(toc.content)
             };
             const html = pageTemplate(context);
             const destination = path.join(dir, "gh-pages", yamlConfig.map[i].path.replace(".md", ".html"))

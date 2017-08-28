@@ -32,6 +32,7 @@
         "markdown-it-smartarrows": "^1.0.1",
         "markdown-it-table-of-contents": "^0.3.2",
         "markdown-it-task-checkbox": "^1.0.4",
+        "markdown-toc": "^1.1.0",
         "mime": "^1.3.6",
         "mousetrap": "^1.6.1",
         "react": "^15.6.1",
@@ -43,7 +44,8 @@
         "react-panelgroup": "^1.0.2",
         "react-scripts": "1.0.10",
         "request": "^2.81.0",
-        "source-code-pro": "git://github.com/adobe-fonts/source-code-pro.git#release"
+        "source-code-pro": "git://github.com/adobe-fonts/source-code-pro.git#release",
+        "uslug": "^1.0.4"
     },
     "scripts": {
         "start": "react-scripts start",
