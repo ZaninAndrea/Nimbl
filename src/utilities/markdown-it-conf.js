@@ -1,6 +1,8 @@
 var hljs = require('highlight.js');
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
+const mathjs = require("mathjs")
+var katex = require('katex');
 
 // basic markdown-it setting
 var md = require('markdown-it')({
@@ -108,6 +110,55 @@ md.use(require('markdown-it-container'), 'youtube', {
         } else {
             // closing tag
             return '</div>\n';
+        }
+    }
+});
+
+md.use(require('markdown-it-container'), 'graph', {
+
+    validate: function(params) {
+        return params.trim().match(/^graph\s+(.*)$/);
+    },
+
+    render: function(tokens, idx) {
+        var m = tokens[idx].info.trim().match(/^graph\s+(.*)$/);
+
+        if (tokens[idx].nesting === 1) {
+            // opening tag
+            try{
+                const node = mathjs.parse(m[1]);
+                const latex = node ? node.toTex({parenthesis: "keep", implicit: "hide"}) : '';
+                const renderedTex = katex.renderToString(latex, {throwOnError: false})
+                return `<div class="plotContainer">${renderedTex}<div id="plot${idx}"></div></div>
+
+                <script>
+                  function draw() {
+                    try {
+                      functionPlot({
+                        target: '#plot${idx}',
+                        data: [{
+                          fn: "${m[1]}",
+                          sampler: 'builtIn',  // this will make function-plot use the evaluator of math.js
+                          graphType: 'polyline'
+                        }]
+                      });
+                    }
+                    catch (err) {
+                      console.log(err);
+                    }
+                  }
+
+                  draw();
+                </script>`; // returns the video preview
+            }
+            catch(e){
+                return "PLOT"
+            }
+
+
+        } else {
+            // closing tag
+            return '\n';
         }
     }
 });
