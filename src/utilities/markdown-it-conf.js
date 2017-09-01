@@ -64,7 +64,7 @@ md.use(require('markdown-it-container'), 'note', {
 
         if (tokens[idx].nesting === 1) {
             // opening tag
-            return '<div class="md-container note"><h3><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ' + md.utils.escapeHtml(m[1]) + '</h3>\n';
+            return '<div class="md-container note"><h3><i class="fa fa-info" aria-hidden="true"></i> ' + md.utils.escapeHtml(m[1]) + '</h3>\n';
 
         } else {
             // closing tag
@@ -113,6 +113,27 @@ md.use(require('markdown-it-container'), 'youtube', {
         }
     }
 });
+
+md.use(require('markdown-it-container'), 'spoiler', {
+
+    validate: function(params) {
+        return params.trim().match(/^spoiler\s+(.*)$/);
+    },
+
+    render: function(tokens, idx) {
+        var m = tokens[idx].info.trim().match(/^spoiler\s+(.*)$/);
+
+        if (tokens[idx].nesting === 1) {
+            // opening tag
+            return '<div class="md-container spoiler"><h3><i class="fa fa-eye-slash" aria-hidden="true"></i> ' + md.utils.escapeHtml(m[1]) + '</h3>\n<div class="spoilerContent">'; // returns the video preview
+
+        } else {
+            // closing tag
+            return '</div></div>\n';
+        }
+    }
+});
+
 
 md.use(require('markdown-it-container'), 'graph', {
 

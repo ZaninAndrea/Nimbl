@@ -118,3 +118,29 @@ a.linkPreviewText:hover{
     width: 560px;
     height: 315px;
 }
+
+
+.spoiler {
+  background-color: #f0df75;
+  color: black;
+}
+.spoilerContent{
+    opacity: 0;
+    transition:opacity .5s ease-out;
+}
+
+.spoiler:hover .spoilerContent{
+    opacity: 1;
+    transition:opacity .25s ease-in;
+}
+.spoilerContent table td, .spoilerContent table th{
+  border: 1px solid #e6ca19;
+}
+
+.spoilerContent table tr {
+  background-color: #f0df75;
+}
+
+.spoilerContent table tr:nth-child(2n) {
+  background-color: #ebd547;
+}
