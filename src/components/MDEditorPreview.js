@@ -41,11 +41,30 @@ class MDEditorPreview extends Component {
         if (!this.props.showPreview) // do nothing if preview is disable
             return
 
-        // scroll the markdown preview to the point corresponding to the current selection
-        var preview = findDOMNode(this.refs["markdown-container"])
-        const elements = $(`[data-line='${e.anchor.row}']`)
-        if (elements.length !== 0){
-            preview.scrollTop = elements[0].offsetTop
+        //     BUILDS THE MAP
+        // let map = []
+        // let lastValue = 0;
+        // for (var i =0; i < e.doc.$lines.length - 1; i++){
+        //     const elements = $(`[data-line='${i}']`)
+        //     if (elements.length !== 0){
+        //         map.push(elements[0].offsetTop)
+        //         lastValue=elements[0].offsetTop
+        //     }else{
+        //         map.push(lastValue)
+        //     }
+        // }
+
+        // searches for an element corresponding to the selected line or one of the above until it finds one
+        let elements = []
+        let index = e.anchor.row
+        while(elements.length === 0 && index >= 0){
+            elements = $(`[data-line='${index}']`)
+            index--
+        }
+        
+        if (elements.length!==0){
+            var preview = findDOMNode(this.refs["markdown-container"])
+            preview.scrollTop = Math.max(0, elements[0].offsetTop-50)
         }
 
     }
@@ -54,12 +73,18 @@ class MDEditorPreview extends Component {
         if (!this.props.showPreview) // do nothing if preview is disable
             return
 
-        // scroll the markdown preview to the point corresponding to the current selection
-        var preview = findDOMNode(this.refs["markdown-container"])
-        var editor = findDOMNode(this.refs["editor"])
-        const elements =  $(`[data-line='${editor.env.editor.selection.getCursor().row}']`)
-        if (elements.length !== 0){
-            preview.scrollTop = elements[0].offsetTop
+        // searches for an element corresponding to the selected line or one of the above until it finds one
+        let elements = []
+        const editor = findDOMNode(this.refs["editor"])
+        let index = editor.env.editor.selection.getCursor().row
+        while(elements.length === 0 && index >= 0){
+            elements = $(`[data-line='${index}']`)
+            index--
+        }
+
+        if (elements.length!==0){
+            var preview = findDOMNode(this.refs["markdown-container"])
+            preview.scrollTop = Math.max(0, elements[0].offsetTop-50)
         }
     }
 
