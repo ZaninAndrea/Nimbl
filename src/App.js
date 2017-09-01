@@ -75,7 +75,7 @@ class App extends Component {
                mdSettings: {
                    isPreview:true,
                    html: true,
-                   linkify:true,
+                   linkify:false,
                    typographer: false,
                    breaks: true,
                    checkbox: true,
@@ -433,6 +433,7 @@ class App extends Component {
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
             newApp.value[newApp.currentFileIndex] = newValue;
+            newApp.preview[newApp.currentFileIndex] = this.md.render(newValue)
             return {app:newApp}
         })
 

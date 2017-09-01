@@ -29,6 +29,7 @@
         "jquery.scrollto": "^2.1.2",
         "js-yaml": "^3.9.1",
         "katex": "^0.8.2",
+        "linkify-it": "^2.0.3",
         "markdown-it": "^8.3.1",
         "markdown-it-block-image": "0.0.3",
         "markdown-it-container": "^2.0.0",

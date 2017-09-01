@@ -6,12 +6,14 @@ const fs = electron.remote.require('fs');
 const katex = require('katex');
 const path = require('path');
 const mime = require('mime');
+const linkify = require('linkify-it')();
+linkify.add('ftp:', null) // disable ftp
 
 let newMd = (opts, workingDir) => {
     const defaultSettings = {
         isPreview:false,
         html: true,
-        linkify:true,
+        linkify:false,
         typographer: false,
         breaks: true,
         checkbox: true,
@@ -136,50 +138,6 @@ let newMd = (opts, workingDir) => {
         });
     }
 
-    if (settings.url){
-        md.use(require('markdown-it-container'), 'url', {
-
-            validate: function(params) {
-                return params.trim().match(/^url\s+(.*)$/);
-            },
-
-            render: function(tokens, idx) {
-                var m = tokens[idx].info.trim().match(/^url\s+(.*)$/);
-
-                if (tokens[idx].nesting === 1) {
-                    // opening tag
-                    return '<div>'+ipcRenderer.sendSync('linkPreview', m[1]); // returns the linkPreview provided by the electron main process through ipc
-
-                } else {
-                    // closing tag
-                    return '</div>\n';
-                }
-            }
-        });
-    }
-
-    if (settings.youtube){
-        md.use(require('markdown-it-container'), 'youtube', {
-
-            validate: function(params) {
-                return params.trim().match(/^youtube\s+(.*)$/);
-            },
-
-            render: function(tokens, idx) {
-                var m = tokens[idx].info.trim().match(/^youtube\s+(.*)$/);
-
-                if (tokens[idx].nesting === 1) {
-                    // opening tag
-                    return `<div class="youtubePreview"><iframe width="560" height="315" src="https://www.youtube.com/embed/${m[1]}" frameborder="0" allowfullscreen></iframe>`; // returns the video preview
-
-                } else {
-                    // closing tag
-                    return '</div>\n';
-                }
-            }
-        });
-    }
-
     if (settings.graph){
         md.use(require('markdown-it-container'), 'graph', {
 
@@ -280,6 +238,25 @@ let newMd = (opts, workingDir) => {
     }
 
     md.renderer.rules.image = loadFileSrcImage;
+
+    // link preview
+    function linkPreview(tokens, idx, options, env, slf) {
+        const match = linkify.match(tokens[idx+1].content.trim())
+        if(tokens[idx+1].type==="inline" && match !== null && match.length===1 && match[0].index===0 && match[0].lastIndex === tokens[idx+1].content.trim().length ){
+            if((match[0].url.startsWith("https://www.youtube.com") || match[0].url.startsWith("http://www.youtube.com")) && settings.youtube){
+                return `<div class="youtubePreview"><iframe width="560" height="315" src="${match[0].url.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")}" frameborder="0" allowfullscreen></iframe></div>\n`;
+            }
+            else if (settings.url){
+                return '<div>'+ipcRenderer.sendSync('linkPreview', match[0].url)+'</div>\n'; // returns the linkPreview provided by the electron main process through ipc
+            }else{
+                return slf.renderToken(tokens, idx, options, env, slf);
+            }
+        }else{
+            return slf.renderToken(tokens, idx, options, env, slf);
+        }
+    }
+
+    md.renderer.rules.paragraph_open = linkPreview;
 
     return md
 }
