@@ -16,6 +16,8 @@ import 'brace/theme/textmate';
 import 'brace/theme/solarized_dark';
 import 'brace/theme/solarized_light';
 import 'brace/theme/terminal';
+const $ = require("jquery")
+require("jquery.scrollto")
 
 brace.define("ace/snippets/markdown", [
     "require", "exports", "module"
@@ -41,11 +43,11 @@ class MDEditorPreview extends Component {
 
         // scroll the markdown preview to the point corresponding to the current selection
         var preview = findDOMNode(this.refs["markdown-container"])
-        var ratio = e.doc.$lines.length === 1 // ratio current line / total number of lines
-            ? 1
-            : e.anchor.row / (e.doc.$lines.length - 1) // avoids division by 0 and allows for ratio 1
-        var scrollTarget = preview.scrollHeight * ratio
-        preview.scrollTop = scrollTarget // apply scrolling
+        const elements = $(`[data-line='${e.anchor.row}']`)
+        if (elements.length !== 0){
+            preview.scrollTop = elements[0].offsetTop
+        }
+
     }
 
     handleScroll() {
@@ -55,11 +57,10 @@ class MDEditorPreview extends Component {
         // scroll the markdown preview to the point corresponding to the current selection
         var preview = findDOMNode(this.refs["markdown-container"])
         var editor = findDOMNode(this.refs["editor"])
-        var ratio = editor.env.document.doc.$lines.length === 1 // ratio current line / total number of lines
-            ? 1
-            : editor.env.editor.selection.getCursor().row / (editor.env.document.doc.$lines.length - 1) // avoids division by 0 and allows for ratio 1
-        var scrollTarget = preview.scrollHeight * ratio
-        preview.scrollTop = scrollTarget // apply scrolling
+        const elements =  $(`[data-line='${editor.env.editor.selection.getCursor().row}']`)
+        if (elements.length !== 0){
+            preview.scrollTop = elements[0].offsetTop
+        }
     }
 
     handleChange(newValue){

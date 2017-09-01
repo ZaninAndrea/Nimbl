@@ -233,6 +233,29 @@ let newMd = (opts) => {
         });
     }
 
+    if (settings.isPreview){
+        function injectLineNumbers(tokens, idx, options, env, slf) {
+            var line;
+            if (tokens[idx].map) {
+                line = tokens[idx].map[0]; 
+                // tokens[idx].attrJoin('class', 'line');
+                tokens[idx].attrSet('data-line', String(line));
+            }
+            return slf.renderToken(tokens, idx, options, env, slf);
+        }
+
+        md.renderer.rules.paragraph_open =
+            md.renderer.rules.heading_open =
+            md.renderer.rules.paragraph_open =
+            md.renderer.rules.blockquote_open =
+            md.renderer.rules.ordered_list_open =
+            md.renderer.rules.bullet_list_open =
+            md.renderer.rules.list_item_open =
+            md.renderer.rules.table_open =
+            md.renderer.rules.tr_open =
+            injectLineNumbers;
+    }
+
     return md
 }
 export default newMd
