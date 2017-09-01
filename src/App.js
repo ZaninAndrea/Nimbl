@@ -3,6 +3,7 @@ import PanelGroup from "react-panelgroup";
 import mime from "mime"
 import path from "path"
 import Mousetrap from "mousetrap"
+import uslug from "uslug";
 import MDEditorPreview from "./components/MDEditorPreview.js"
 import Settings from "./components/Settings.js"
 import DirTree from "./components/DirTree.js"
@@ -57,6 +58,7 @@ class App extends Component {
         this.handleSettingsToggle = this.handleSettingsToggle.bind(this)
         this.handleSettingsModalClose = this.handleSettingsModalClose.bind(this)
         this.handleMdSettingsChange = this.handleMdSettingsChange.bind(this)
+        this.onFileDrop = this.onFileDrop.bind(this)
         // default values
         const storeSettings = store.get("settings")
         let settings;
@@ -125,7 +127,7 @@ class App extends Component {
         ipcRenderer.on("linkPreviewReady", handlePreviewReady)
 
         // setting up markdown renderer
-        this.md = newMd(settings.mdSettings)
+        this.md = newMd(settings.mdSettings, this.state.app.dir)
 
     }
 
@@ -246,6 +248,7 @@ class App extends Component {
                 let newSettings = {...oldState.settings, ...{
                     showSidebar: true
                 }}
+                this.md = newMd(newSettings.mdSettings, newApp.dir) // update md renderer
                 return {app:newApp, settings: newSettings}
             })
         })
@@ -379,7 +382,7 @@ class App extends Component {
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
             newApp.settingsModalOpen = false;
-            this.md = newMd(this.state.settings.mdSettings) // update md renderer
+            this.md = newMd(this.state.settings.mdSettings, newApp.dir) // update md renderer
 
             const mimeLookup = mime.lookup(oldState.app.file[oldState.app.currentFileIndex])
             newApp.preview[oldState.app.currentFileIndex] = mimeLookup === "text/x-markdown"
@@ -398,6 +401,43 @@ class App extends Component {
         })
     }
 
+    onFileDrop(files, position){
+        // copy files in the working directory
+        if (!fs.existsSync(path.join(this.state.app.dir,"images"))) { // if output directory does not exist, create it
+            fs.mkdirSync(path.join(this.state.app.dir,"images"))
+        }
+        for (let i in files){
+            const dest = path.join(this.state.app.dir,"images", uslug(files[i].name, { allowedChars: '.' }))
+            const data = fs.readFileSync(files[i].path)
+            fs.writeFileSync(dest, data)
+        }
+
+        // update markdown
+        let index = 0
+
+        // consume rows
+        let currentRow = 0
+        while(currentRow<position.row){
+            if(this.state.app.value[this.state.app.currentFileIndex][index]=="\n"){
+                currentRow++
+            }
+            index++
+        }
+
+        // jump to correct position
+        index += position.column
+        var newValue =  this.state.app.value[this.state.app.currentFileIndex].slice(0, index) +
+                        files.reduce((acc,x)=>`${acc}![${x.name}](${path.join(".","images", uslug(x.name, { allowedChars: '.' }))})\n`,"") +
+                        this.state.app.value[this.state.app.currentFileIndex].slice(index);
+
+        this.setState((oldState, props) => {
+            let newApp = {...oldState.app}
+            newApp.value[newApp.currentFileIndex] = newValue;
+            return {app:newApp}
+        })
+
+    }
+
     render() {
         let mainEditor
         if (this.state.app.file.length > 0){ // if there are files selected
@@ -407,7 +447,9 @@ class App extends Component {
                                     theme={this.state.settings.editorTheme}
                                     value={this.state.app.value[this.state.app.currentFileIndex]}
                                     handleChange={this.handleChange} preview={this.state.app.preview[this.state.app.currentFileIndex]}
-                                    showPreview={this.state.settings.showPreview}/>
+                                    showPreview={this.state.settings.showPreview}
+                                    currentDir={this.state.app.dir}
+                                    onDrop={this.onFileDrop}/>
                 : mime.lookup(this.state.app.file[this.state.app.currentFileIndex]).startsWith("image")
                 ? <div className="imagePreview">
                     <div className="imageContainer">

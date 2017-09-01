@@ -2,9 +2,12 @@ var hljs = require('highlight.js');
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const mathjs = require("mathjs")
-var katex = require('katex');
+const fs = electron.remote.require('fs');
+const katex = require('katex');
+const path = require('path');
+const mime = require('mime');
 
-let newMd = (opts) => {
+let newMd = (opts, workingDir) => {
     const defaultSettings = {
         isPreview:false,
         html: true,
@@ -234,10 +237,11 @@ let newMd = (opts) => {
     }
 
     if (settings.isPreview){
+        // keep track of original line
         function injectLineNumbers(tokens, idx, options, env, slf) {
             var line;
             if (tokens[idx].map) {
-                line = tokens[idx].map[0]; 
+                line = tokens[idx].map[0];
                 // tokens[idx].attrJoin('class', 'line');
                 tokens[idx].attrSet('data-line', String(line));
             }
@@ -255,6 +259,27 @@ let newMd = (opts) => {
             md.renderer.rules.tr_open =
             injectLineNumbers;
     }
+
+    // load local files when used as src for an image
+    function loadFileSrcImage(tokens, idx, options, env, slf) {
+        const src = tokens[idx].attrs.filter(x => x[0]==="src")[0][1]
+
+        if (fs.existsSync(path.join(workingDir, src))) { // relative path
+            const mimeLookup = mime.lookup(path.join(workingDir, src))
+            if (mimeLookup.startsWith("image")){
+                tokens[idx].attrSet("src", "data:" + mimeLookup + ";base64," + fs.readFileSync(path.join(workingDir, src)).toString("base64"))
+            }
+        }else if (fs.existsSync(src)){ // absolute path
+            const mimeLookup = mime.lookup(src)
+            if (mimeLookup.startsWith("image")){
+                tokens[idx].attrSet("src", "data:" + mimeLookup + ";base64," + fs.readFileSync(src).toString("base64"))
+            }
+        }
+
+        return slf.renderToken(tokens, idx, options, env, slf);
+    }
+
+    md.renderer.rules.image = loadFileSrcImage;
 
     return md
 }

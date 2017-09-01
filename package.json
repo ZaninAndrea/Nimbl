@@ -1,5 +1,5 @@
 {
-    "name": "mdsteroids",
+    "name": "mdeditor",
     "version": "0.1.0",
     "author": "ZaninAndrea",
     "homepage": "./",
@@ -14,7 +14,8 @@
         ],
         "directories": {
             "buildResources": "assets"
-        }
+        },
+        "productName": "Markdown Editor"
     },
     "dependencies": {
         "antd": "^2.12.6",
@@ -44,6 +45,7 @@
         "react-addons-perf": "^15.4.2",
         "react-dom": "^15.6.1",
         "react-draggable-tab": "^0.8.1",
+        "react-dropzone": "^4.1.0",
         "react-panelgroup": "^1.0.2",
         "react-scripts": "1.0.10",
         "request": "^2.81.0",
