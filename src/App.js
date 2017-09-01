@@ -4,11 +4,12 @@ import mime from "mime"
 import path from "path"
 import Mousetrap from "mousetrap"
 import MDEditorPreview from "./components/MDEditorPreview.js"
+import Settings from "./components/Settings.js"
 import DirTree from "./components/DirTree.js"
 import buildTree from "./utilities/buildTree.js"
 import buildSite from "./utilities/buildSite.js"
 import {buildDirTree, replaceInTree} from "./utilities/treeUtils"
-import md from "./utilities/markdown-it-conf"
+import newMd from "./utilities/markdown-it-conf"
 import {Tabs, Tab} from "react-draggable-tab"
 import {Button, Radio, Checkbox, Slider, InputNumber, Select} from 'antd';
 import "./stylesheets/font-awesome/css/font-awesome.min.css"
@@ -21,6 +22,7 @@ import './stylesheets/Tree.css'
 import './stylesheets/MDEditorPreview.css'
 import './stylesheets/highlight.css'
 import './stylesheets/customMD.css'
+
 const { Option, OptGroup } = Select;
 const ButtonGroup = Button.Group;
 
@@ -52,6 +54,9 @@ class App extends Component {
         this.handleSidebarResize = this.handleSidebarResize.bind(this)
         this.handleFileTabSelect = this.handleFileTabSelect.bind(this)
         this.handleTabClose = this.handleTabClose.bind(this)
+        this.handleSettingsToggle = this.handleSettingsToggle.bind(this)
+        this.handleSettingsModalClose = this.handleSettingsModalClose.bind(this)
+        this.handleMdSettingsChange = this.handleMdSettingsChange.bind(this)
         // default values
         const storeSettings = store.get("settings")
         let settings;
@@ -64,7 +69,26 @@ class App extends Component {
                showSidebar : true,
                refreshRate : 500,
                editorTheme : "solarized_dark",
-               sidebarWidth : 100
+               sidebarWidth : 100,
+               mdSettings: {
+                   isPreview:true,
+                   html: true,
+                   linkify:true,
+                   typographer: false,
+                   breaks: true,
+                   checkbox: true,
+                   anchor: true,
+                   toc:true,
+                   tocLevels: [1,2,3,4],
+                   katex:true,
+                   smartarrows:true,
+                   alert: true,
+                   note: true,
+                   spoiler: true,
+                   url: true,
+                   youtube: true,
+                   graph: true,
+               }
            }
 
            store.set("settings", settings)
@@ -86,7 +110,8 @@ class App extends Component {
                 addedChanges : false,
                 watcher : null,
                 renderTimeout : null,
-                currentFileIndex:0
+                currentFileIndex:0,
+                settingsModalOpen: false
             },
             settings: settings
         };
@@ -98,6 +123,10 @@ class App extends Component {
         const handlePreviewReady = (event) => {this.renderMd()}
         handlePreviewReady.bind(this)
         ipcRenderer.on("linkPreviewReady", handlePreviewReady)
+
+        // setting up markdown renderer
+        this.md = newMd(settings.mdSettings)
+
     }
 
     // handle CTRL+S shortcut
@@ -109,7 +138,7 @@ class App extends Component {
     renderMd(){
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
-            newApp.preview[oldState.app.currentFileIndex] = md.render(oldState.app.value[oldState.app.currentFileIndex])
+            newApp.preview[oldState.app.currentFileIndex] = this.md.render(oldState.app.value[oldState.app.currentFileIndex])
             return {app:newApp}
         })
     }
@@ -158,10 +187,9 @@ class App extends Component {
                     let newValue = oldState.app.value
                     newValue.push(currValue)
 
-                    // console.log(this.state.settings.showPreview);
                     let preview = oldState.app.preview
                     preview.push( mimeLookup === "text/x-markdown" && this.state.settings.showPreview
-                        ? md.render(currValue)
+                        ? this.md.render(currValue)
                         : "")
 
                     const newApp = {...oldState.app, ...{value: newValue, file: newFile, preview:preview, currentFileIndex: newFile.length -1} }
@@ -252,7 +280,10 @@ class App extends Component {
 
             if (newSettings.showPreview){ // if preview enable, render markdown
                 let newApp = {...oldState.app}
-                newApp.preview[oldState.app.currentFileIndex] = md.render(oldState.app.value[oldState.app.currentFileIndex])
+                const mimeLookup = mime.lookup(oldState.app.file[oldState.app.currentFileIndex])
+                newApp.preview[oldState.app.currentFileIndex] = mimeLookup === "text/x-markdown"
+                    ? this.md.render(oldState.app.value[oldState.app.currentFileIndex])
+                    : ""
                 return {settings:newSettings, app:newApp}
             }
 
@@ -317,7 +348,6 @@ class App extends Component {
 
     handleTabClose(e, key, currentTabs) {
         this.setState((oldState, props) => {
-            console.log("BEGIN CLOSING");
             let newApp = {...oldState.app}
 
             // losing the reference to the original array to avoid sideeffects
@@ -333,8 +363,38 @@ class App extends Component {
                                         newApp.currentFileIndex :
                                         newApp.currentFileIndex -1
             newApp.currentFileIndex = newApp.currentFileIndex < 0 ? 0 : newApp.currentFileIndex // avoid illegal indexes
-            console.log("HANDLECLOSE"+newApp.currentFileIndex);
             return {app:newApp}
+        })
+    }
+
+    handleSettingsToggle() {
+        this.setState((oldState, props) => {
+            let newApp = {...oldState.app}
+            newApp.settingsModalOpen = true;
+            return {app:newApp}
+        })
+    }
+
+    handleSettingsModalClose(){
+        this.setState((oldState, props) => {
+            let newApp = {...oldState.app}
+            newApp.settingsModalOpen = false;
+            this.md = newMd(this.state.settings.mdSettings) // update md renderer
+
+            const mimeLookup = mime.lookup(oldState.app.file[oldState.app.currentFileIndex])
+            newApp.preview[oldState.app.currentFileIndex] = mimeLookup === "text/x-markdown"
+                ? this.md.render(oldState.app.value[oldState.app.currentFileIndex])
+                : ""
+            return {app:newApp}
+        })
+    }
+
+    handleMdSettingsChange(prop, newValue){
+        this.setState((oldState, props) => {
+            let newSettings = {...oldState.settings}
+            newSettings.mdSettings[prop] = newValue;
+            store.set("settings.mdSettings."+prop, newValue)
+            return {settings:newSettings}
         })
     }
 
@@ -342,7 +402,6 @@ class App extends Component {
         let mainEditor
         if (this.state.app.file.length > 0){ // if there are files selected
             // selected the correct editor / preview for the current file
-            console.log(this.state.app.currentFileIndex);
             let editor = mime.lookup(this.state.app.file[this.state.app.currentFileIndex]) === "text/x-markdown"
                 ? <MDEditorPreview handleSave={this.handleSaveShortcut}
                                     theme={this.state.settings.editorTheme}
@@ -390,6 +449,14 @@ class App extends Component {
 
         return (
             <div className="App">
+                <Settings   visible = {this.state.app.settingsModalOpen}
+                            settings = {this.state.settings}
+                            handleSidebarToggle={this.handleSidebarToggle}
+                            handleShowPreviewToggle={this.handleShowPreviewToggle}
+                            handleRefreshRateChange={this.handleRefreshRateChange}
+                            handleThemeChange={this.handleThemeChange}
+                            handleSettingsModalClose={this.handleSettingsModalClose}
+                            handleMdSettingsChange={this.handleMdSettingsChange}/>
                 <div className="AppBar">
                     <ButtonGroup size="large">
                         <Button onClick={this.handleOpenDir}>
@@ -401,46 +468,13 @@ class App extends Component {
                         <Button type={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
                             <i className="fa fa-arrow-up" aria-hidden="true"></i>
                         </Button>
+                        <Button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
+                            <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                        </Button>
                     </ButtonGroup>
-                    <Button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
-                        <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                    <Button onClick={this.handleSettingsToggle}>
+                        <i className="fa fa-cog" aria-hidden="true"></i>
                     </Button>
-                    <Checkbox checked={this.state.settings.showSidebar} onClick={this.handleSidebarToggle}>
-                        sidebar
-                    </Checkbox>
-                    <Checkbox checked={this.state.settings.showPreview} onClick={this.handleShowPreviewToggle}>
-                        preview
-                    </Checkbox>
-                    <InputNumber
-                        step={0.1}
-                       min={0}
-                       max={5}
-                       style={{ marginLeft: 6 }}
-                       value={this.state.settings.refreshRate/1000}
-                       onChange={this.handleRefreshRateChange}
-                   /> {this.state.settings.refreshRate<500 ? <i className="fa fa-exclamation-triangle" aria-hidden="true"></i> : ""} preview refresh rate &nbsp;&nbsp;
-                    <Select
-                        defaultValue="solarized_dark"
-                        value={this.state.settings.editorTheme}
-                        style={{ width: 200 }}
-                        onChange={this.handleThemeChange}
-                    >
-                        <OptGroup label="Dark">
-                            <Option value="monokai">Monokai</Option>
-                            <Option value="twilight">Twilight</Option>
-                            <Option value="terminal">Terminal</Option>
-                            <Option value="solarized_dark">Solarized Dark</Option>
-                        </OptGroup>
-                        <OptGroup label="Light">
-                            <Option value="github">Github</Option>
-                            <Option value="tomorrow">Tomorrow</Option>
-                            <Option value="kuroir">Kuroir</Option>
-                            <Option value="xcode">XCode</Option>
-                            <Option value="textmate">TextMate</Option>
-                            <Option value="solarized_light">Solarized Light</Option>
-                        </OptGroup>
-                    </Select>
-                    theme
                 </div>
                 <div className="AppBody">
                     <PanelGroup borderColor="grey" panelWidths={[

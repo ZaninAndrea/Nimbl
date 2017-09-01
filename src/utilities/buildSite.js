@@ -1,4 +1,4 @@
-import md from "./markdown-it-conf.js"
+import newMd from "./markdown-it-conf"
 import buildTree from "./treeUtils.js"
 import handlebars from "handlebars"
 import yaml from 'js-yaml';
@@ -9,7 +9,7 @@ const electron = window.require('electron');
 const fs = electron.remote.require('fs');
 const markdownToc = electron.remote.require("markdown-toc")
 
-
+const md = newMd({})
 
 // recursively copies a directory into another
 const deepCopyDir = (dir, outputDir) => {
