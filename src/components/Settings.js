@@ -72,6 +72,41 @@ class Settings extends Component {
             <Checkbox checked={this.props.settings.mdSettings.toc} onClick={()=>this.props.handleMdSettingsChange("toc",!this.props.settings.mdSettings.toc)}>
                 toc
             </Checkbox><br />
+            {this.props.settings.mdSettings.toc ?
+                    <p>Levels to show:
+                        <Checkbox checked={this.props.settings.mdSettings.tocLevels.includes(1)} onClick={()=>this.props.handleMdSettingsChange("tocLevels",
+                            this.props.settings.mdSettings.tocLevels.includes(1) ? this.props.settings.mdSettings.tocLevels.filter(x => x!==1)
+                                                                                 : [...this.props.settings.mdSettings.tocLevels, 1])}>
+                            1
+                        </Checkbox>&nbsp;&nbsp;
+                        <Checkbox checked={this.props.settings.mdSettings.tocLevels.includes(2)} onClick={()=>this.props.handleMdSettingsChange("tocLevels",
+                            this.props.settings.mdSettings.tocLevels.includes(2) ? this.props.settings.mdSettings.tocLevels.filter(x => x!==2)
+                                                                                 : [...this.props.settings.mdSettings.tocLevels, 2])}>
+                            2
+                        </Checkbox>&nbsp;&nbsp;
+                        <Checkbox checked={this.props.settings.mdSettings.tocLevels.includes(3)} onClick={()=>this.props.handleMdSettingsChange("tocLevels",
+                            this.props.settings.mdSettings.tocLevels.includes(3) ? this.props.settings.mdSettings.tocLevels.filter(x => x!==3)
+                                                                                 : [...this.props.settings.mdSettings.tocLevels, 3])}>
+                            3
+                        </Checkbox>&nbsp;&nbsp;
+                        <Checkbox checked={this.props.settings.mdSettings.tocLevels.includes(4)} onClick={()=>this.props.handleMdSettingsChange("tocLevels",
+                            this.props.settings.mdSettings.tocLevels.includes(4) ? this.props.settings.mdSettings.tocLevels.filter(x => x!==4)
+                                                                                 : [...this.props.settings.mdSettings.tocLevels, 4])}>
+                            4
+                        </Checkbox>&nbsp;&nbsp;
+                        <Checkbox checked={this.props.settings.mdSettings.tocLevels.includes(5)} onClick={()=>this.props.handleMdSettingsChange("tocLevels",
+                            this.props.settings.mdSettings.tocLevels.includes(5) ? this.props.settings.mdSettings.tocLevels.filter(x => x!==5)
+                                                                                 : [...this.props.settings.mdSettings.tocLevels, 5])}>
+                            5
+                        </Checkbox>&nbsp;&nbsp;
+                        <Checkbox checked={this.props.settings.mdSettings.tocLevels.includes(6)} onClick={()=>this.props.handleMdSettingsChange("tocLevels",
+                            this.props.settings.mdSettings.tocLevels.includes(6) ? this.props.settings.mdSettings.tocLevels.filter(x => x!==6)
+                                                                                 : [...this.props.settings.mdSettings.tocLevels, 6])}>
+                            6
+                        </Checkbox>&nbsp;&nbsp;
+
+                    </p>
+                : ""}
             <Checkbox checked={this.props.settings.mdSettings.katex} onClick={()=>this.props.handleMdSettingsChange("katex",!this.props.settings.mdSettings.katex)}>
                 katex
             </Checkbox><br />
