@@ -215,13 +215,35 @@ let newMd = (opts, workingDir) => {
             md.renderer.rules.list_item_open =
             md.renderer.rules.table_open =
             md.renderer.rules.tr_open =
+            md.renderer.rules.image =
             injectLineNumbers;
     }
 
-    // load local files when used as src for an image
-    function loadFileSrcImage(tokens, idx, options, env, slf) {
+    // Remember old renderer, if overriden, or proxy to default renderer
+    var defaultLinkRender = md.renderer.rules.link_open || function(tokens, idx, options, env, self) {
+      return self.renderToken(tokens, idx, options);
+    };
+
+    md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+      // If you are sure other plugins can't add `target` - drop check below
+      var aIndex = tokens[idx].attrIndex('target');
+
+      if (aIndex < 0) {
+        tokens[idx].attrPush(['target', '_blank']); // add new attribute
+      } else {
+        tokens[idx].attrs[aIndex][1] = '_blank';    // replace value of existing attr
+      }
+
+      // pass token to default renderer.
+      return defaultLinkRender(tokens, idx, options, env, self);
+    };
+
+    // load local files when used as src for an image and show youtube player when youtube video as source
+    var defaultImageRender = md.renderer.rules.image
+    function handleImage(tokens, idx, options, env, slf) {
         const src = tokens[idx].attrs.filter(x => x[0]==="src")[0][1]
 
+        // load local files
         if (fs.existsSync(path.join(workingDir, src))) { // relative path
             const mimeLookup = mime.lookup(path.join(workingDir, src))
             if (mimeLookup.startsWith("image")){
@@ -234,30 +256,44 @@ let newMd = (opts, workingDir) => {
             }
         }
 
-        return slf.renderToken(tokens, idx, options, env, slf);
-    }
-
-    md.renderer.rules.image = loadFileSrcImage;
-
-    // link preview
-    function linkPreview(tokens, idx, options, env, slf) {
-        const match = linkify.match(tokens[idx+1].content.trim())
-        if(tokens[idx+1].type==="inline" && match !== null && match.length===1 && match[0].index===0 && match[0].lastIndex === tokens[idx+1].content.trim().length ){
-            if((match[0].url.startsWith("https://www.youtube.com") || match[0].url.startsWith("http://www.youtube.com")) && settings.youtube){
-                return `<div class="youtubePreview"><iframe width="560" height="315" src="${match[0].url.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")}" frameborder="0" allowfullscreen></iframe></div>\n`;
-            }
-            else if (settings.url){
-                return '<div>'+ipcRenderer.sendSync('linkPreview', match[0].url)+'</div>\n'; // returns the linkPreview provided by the electron main process through ipc
-            }else{
-                return slf.renderToken(tokens, idx, options, env, slf);
-            }
-        }else{
-            return slf.renderToken(tokens, idx, options, env, slf);
+        // handle videos
+        if((src.startsWith("https://www.youtube.com/watch?v=") || src.startsWith("http://www.youtube.com/watch?v=")) && settings.youtube){
+            return `<div class="youtubePreview"><iframe width="560" height="315" src="${src.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")}" frameborder="0" allowfullscreen></iframe></div>\n`
+        }
+        else{
+            return defaultImageRender(tokens, idx, options, env, slf);
         }
     }
 
-    md.renderer.rules.paragraph_open = linkPreview;
+    md.renderer.rules.image = handleImage;
 
+    // link preview
+    const defaultParagraphRenderer = md.renderer.rules.paragraph_open
+    function linkPreviewParagraph(tokens, idx, options, env, slf) {
+        const match = linkify.match(tokens[idx+1].content.trim())
+        if(tokens[idx+1].type==="inline" && match !== null && match.length===1 && match[0].index===0 && match[0].lastIndex === tokens[idx+1].content.trim().length ){
+            if (settings.url){
+                tokens[idx+1].children[0].urlfied=true
+                tokens[idx+1].children[0].urlfiedContent='<div>'+ipcRenderer.sendSync('linkPreview', match[0].url)+'</div>\n'; // returns the linkPreview provided by the electron main process through ipc
+            }
+        }
+
+        return defaultParagraphRenderer(tokens, idx, options, env, slf);
+    }
+
+    md.renderer.rules.paragraph_open = linkPreviewParagraph;
+
+    const defaultTextRenderer = md.renderer.rules.text
+    function linkPreviewText(tokens, idx, options, env, slf) {
+        if(tokens[idx].urlfied){
+            return tokens[idx].urlfiedContent
+        }else{
+            return defaultTextRenderer(tokens, idx, options, env, slf);
+        }
+
+    }
+
+    md.renderer.rules.text = linkPreviewText
     return md
 }
 export default newMd
