@@ -239,7 +239,9 @@ let newMd = (opts, workingDir) => {
     };
 
     // load local files when used as src for an image and show youtube player when youtube video as source
-    var defaultImageRender = md.renderer.rules.image
+    var defaultImageRender = md.renderer.rules.image || function(tokens, idx, options, env, self) {
+      return self.renderToken(tokens, idx, options);
+    };
     function handleImage(tokens, idx, options, env, slf) {
         const src = tokens[idx].attrs[tokens[idx].attrIndex('src')][1]
 
@@ -262,14 +264,16 @@ let newMd = (opts, workingDir) => {
             const id = src.match(vimeoRE)[2];
 
             return `<div class="embed-responsive embed-responsive-16by9">
-                 <iframe class="embed-responsive-item" src="//player.vimeo.com/video/${id}"></iframe>
-             </div>`;
+                 <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/${id}" frameborder="0" allowfullscreen></iframe>
+             </div>\n`;
         }
 
         const youtubeRE = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i;
         if( youtubeRE.test(src) && settings.video){
             const id = src.match(youtubeRE)[1]
-            return `<div class="youtubePreview"><iframe width="560" height="315" src="${"https://www.youtube.com/embed/"+id}" frameborder="0" allowfullscreen></iframe></div>\n`
+            return `<div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>
+            </div>\n`
         }
 
         return defaultImageRender(tokens, idx, options, env, slf);
@@ -279,7 +283,9 @@ let newMd = (opts, workingDir) => {
     md.renderer.rules.image = handleImage;
 
     // link preview
-    const defaultParagraphRenderer = md.renderer.rules.paragraph_open
+    const defaultParagraphRenderer = md.renderer.rules.paragraph_open || function(tokens, idx, options, env, self) {
+      return self.renderToken(tokens, idx, options);
+    };
     function linkPreviewParagraph(tokens, idx, options, env, slf) {
         const match = linkify.match(tokens[idx+1].content.trim())
         if(tokens[idx+1].type==="inline" && match !== null && match.length===1 && match[0].index===0 && match[0].lastIndex === tokens[idx+1].content.trim().length ){
@@ -294,7 +300,10 @@ let newMd = (opts, workingDir) => {
 
     md.renderer.rules.paragraph_open = linkPreviewParagraph;
 
-    const defaultTextRenderer = md.renderer.rules.text
+    // apply linkpreview
+    const defaultTextRenderer = md.renderer.rules.text || function(tokens, idx, options, env, self) {
+      return self.renderToken(tokens, idx, options);
+    };
     function linkPreviewText(tokens, idx, options, env, slf) {
         if(tokens[idx].urlfied){
             return tokens[idx].urlfiedContent

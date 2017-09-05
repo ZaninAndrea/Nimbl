@@ -9,8 +9,6 @@ const electron = window.require('electron');
 const fs = electron.remote.require('fs');
 const markdownToc = electron.remote.require("markdown-toc")
 
-const md = newMd({})
-
 // recursively copies a directory into another
 const deepCopyDir = (dir, outputDir) => {
     const elements = fs.readdirSync(dir)
@@ -43,6 +41,7 @@ const deepDeleteDir = (dir) => {
 }
 
 function buildSite(dir, outputDir = "gh-pages") {
+    const md = newMd({}, dir)
     try {
         // load the yaml config and generate the site accordingly
         var yamlConfig = yaml.safeLoad(fs.readFileSync(path.join(dir, "config.yml"), 'utf8'));
