@@ -125,8 +125,8 @@ class Settings extends Component {
             <Checkbox checked={this.props.settings.mdSettings.url} onClick={()=>this.props.handleMdSettingsChange("url",!this.props.settings.mdSettings.url)}>
                 url
             </Checkbox><br />
-            <Checkbox checked={this.props.settings.mdSettings.youtube} onClick={()=>this.props.handleMdSettingsChange("youtube",!this.props.settings.mdSettings.youtube)}>
-                youtube
+            <Checkbox checked={this.props.settings.mdSettings.video} onClick={()=>this.props.handleMdSettingsChange("video",!this.props.settings.mdSettings.video)}>
+                video
             </Checkbox><br />
             <Checkbox checked={this.props.settings.mdSettings.graph} onClick={()=>this.props.handleMdSettingsChange("graph",!this.props.settings.mdSettings.graph)}>
                 graph

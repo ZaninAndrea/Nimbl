@@ -63,7 +63,32 @@ class App extends Component {
         const storeSettings = store.get("settings")
         let settings;
         if (storeSettings){
-            settings = storeSettings
+            settings = {
+               showPreview : true,
+               showSidebar : true,
+               refreshRate : 500,
+               editorTheme : "solarized_dark",
+               sidebarWidth : 100,
+               mdSettings: {
+                   isPreview:true,
+                   html: true,
+                   linkify:false,
+                   typographer: false,
+                   breaks: true,
+                   checkbox: true,
+                   anchor: true,
+                   toc:true,
+                   tocLevels: [1,2,3,4],
+                   katex:true,
+                   smartarrows:true,
+                   alert: true,
+                   note: true,
+                   spoiler: true,
+                   url: true,
+                   video: true,
+                   graph: true,
+               }
+           }
         }
         else {
             settings = {
@@ -88,7 +113,7 @@ class App extends Component {
                    note: true,
                    spoiler: true,
                    url: true,
-                   youtube: true,
+                   video: true,
                    graph: true,
                }
            }

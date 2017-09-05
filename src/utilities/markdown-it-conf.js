@@ -26,7 +26,7 @@ let newMd = (opts, workingDir) => {
         note: true,
         spoiler: true,
         url: true,
-        youtube: true,
+        video: true,
         graph: true,
     }
 
@@ -241,7 +241,7 @@ let newMd = (opts, workingDir) => {
     // load local files when used as src for an image and show youtube player when youtube video as source
     var defaultImageRender = md.renderer.rules.image
     function handleImage(tokens, idx, options, env, slf) {
-        const src = tokens[idx].attrs.filter(x => x[0]==="src")[0][1]
+        const src = tokens[idx].attrs[tokens[idx].attrIndex('src')][1]
 
         // load local files
         if (fs.existsSync(path.join(workingDir, src))) { // relative path
@@ -257,12 +257,23 @@ let newMd = (opts, workingDir) => {
         }
 
         // handle videos
-        if((src.startsWith("https://www.youtube.com/watch?v=") || src.startsWith("http://www.youtube.com/watch?v=")) && settings.youtube){
-            return `<div class="youtubePreview"><iframe width="560" height="315" src="${src.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")}" frameborder="0" allowfullscreen></iframe></div>\n`
+        const vimeoRE       = /^https?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
+        if (vimeoRE.test(src) && settings.video) {
+            const id = src.match(vimeoRE)[2];
+
+            return `<div class="embed-responsive embed-responsive-16by9">
+                 <iframe class="embed-responsive-item" src="//player.vimeo.com/video/${id}"></iframe>
+             </div>`;
         }
-        else{
-            return defaultImageRender(tokens, idx, options, env, slf);
+
+        const youtubeRE = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i;
+        if( youtubeRE.test(src) && settings.video){
+            const id = src.match(youtubeRE)[1]
+            return `<div class="youtubePreview"><iframe width="560" height="315" src="${"https://www.youtube.com/embed/"+id}" frameborder="0" allowfullscreen></iframe></div>\n`
         }
+
+        return defaultImageRender(tokens, idx, options, env, slf);
+
     }
 
     md.renderer.rules.image = handleImage;
