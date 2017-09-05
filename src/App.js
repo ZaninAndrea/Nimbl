@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import PanelGroup from "react-panelgroup";
+import React, {Component} from 'react'
+import PanelGroup from "react-panelgroup"
 import mime from "mime"
 import path from "path"
 import Mousetrap from "mousetrap"
-import uslug from "uslug";
+import uslug from "uslug"
 import MDEditorPreview from "./components/MDEditorPreview.js"
 import Settings from "./components/Settings.js"
 import DirTree from "./components/DirTree.js"
@@ -12,7 +12,7 @@ import buildSite from "./utilities/buildSite.js"
 import {buildDirTree, replaceInTree} from "./utilities/treeUtils"
 import newMd from "./utilities/markdown-it-conf"
 import {Tabs, Tab} from "react-draggable-tab"
-import {Button, Radio, Checkbox, Slider, InputNumber, Select} from 'antd';
+import {Button, Radio, Checkbox, Slider, InputNumber, Select} from 'antd'
 import "./stylesheets/font-awesome/css/font-awesome.min.css"
 import "./stylesheets/katex/katex.min.css"
 import "./stylesheets/bootstrap/css/bootstrap.min.css"
@@ -24,19 +24,20 @@ import './stylesheets/MDEditorPreview.css'
 import './stylesheets/highlight.css'
 import './stylesheets/customMD.css'
 
-const { Option, OptGroup } = Select;
-const ButtonGroup = Button.Group;
+const { Option, OptGroup } = Select
+const ButtonGroup = Button.Group
 
-const electron = window.require('electron'); // little trick to import electron in react
-const fs = electron.remote.require('fs');
+const electron = window.require('electron') // little trick to import electron in react
+const fs = electron.remote.require('fs')
 const dialog = electron.remote.dialog
-const ipcRenderer = electron.ipcRenderer;
-const Store = electron.remote.require('electron-store');
-const store = new Store();
+const ipcRenderer = electron.ipcRenderer
+const Store = electron.remote.require('electron-store')
+const store = new Store()
+const Git = electron.remote.require("nodegit")
 
 class App extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         // binding all the functions
         this.handleChange = this.handleChange.bind(this)
         // this.handleDirChange = this.handleDirChange.bind(this)
@@ -61,7 +62,7 @@ class App extends Component {
         this.onFileDrop = this.onFileDrop.bind(this)
         // default values
         const storeSettings = store.get("settings")
-        let settings;
+        let settings
         if (storeSettings){
             settings = storeSettings
         }
@@ -116,9 +117,9 @@ class App extends Component {
                 settingsModalOpen: false
             },
             settings: settings
-        };
+        }
 
-        Mousetrap.bind("ctrl+s", this.handleSaveShortcut);
+        Mousetrap.bind("ctrl+s", this.handleSaveShortcut)
 
 
         // refresh when receiving notification of a fetched linkPreview
@@ -134,7 +135,7 @@ class App extends Component {
     // handle CTRL+S shortcut
     handleSaveShortcut(){
         this.handleSave()
-        return false; // prevent event from bubbling up
+        return false // prevent event from bubbling up
     }
 
     renderMd(){
@@ -177,7 +178,7 @@ class App extends Component {
             if (!fs.statSync(node[0]).isDirectory() && !this.state.app.file.includes(node[0])) { // if a new file is selected
                 this.setState((oldState, props) => {
                     const mimeLookup = mime.lookup(node[0])
-                    let currValue = mimeLookup === "text/x-markdown"
+                    let currValue = mimeLookup === "text/x-markdown" || mimeLookup === "text/markdown"
                         ? fs.readFileSync(node[0]).toString() // markdown file --> read the file to an ascii string
                         : mimeLookup.startsWith("image")
                         ? "data:" + mimeLookup + ";base64," + fs.readFileSync(node[0]).toString("base64") // image --> read the image to a base64 string
@@ -190,7 +191,7 @@ class App extends Component {
                     newValue.push(currValue)
 
                     let preview = oldState.app.preview
-                    preview.push( mimeLookup === "text/x-markdown" && this.state.settings.showPreview
+                    preview.push( mimeLookup === "text/x-markdown" || mimeLookup === "text/markdown" && this.state.settings.showPreview
                         ? this.md.render(currValue)
                         : "")
 
@@ -209,7 +210,7 @@ class App extends Component {
     handleSave() { // handles saving the current file
         let callback = (err) => {
             if (err)
-                throw err;
+                throw err
 
             this.setState((oldState, props) => {
                 let newApp = {...oldState.app}
@@ -218,7 +219,7 @@ class App extends Component {
             })
         }
         callback = callback.bind(this)
-        fs.writeFile(this.state.app.file[this.state.app.currentFileIndex], this.state.app.value[this.state.app.currentFileIndex], callback);
+        fs.writeFile(this.state.app.file[this.state.app.currentFileIndex], this.state.app.value[this.state.app.currentFileIndex], callback)
     }
 
     handleOpenDir() { // handles opening a directory
@@ -255,11 +256,10 @@ class App extends Component {
     }
 
     handleCommit(){
-        // still to implement
-        // ipcRenderer.on('gitFlow-reply', (event, arg) => {
-        //     console.log(arg)
-        // })
-        // ipcRenderer.send('gitFlow', this.state.app.dir, this.state.app.file)
+        Git.Repository.open(this.state.app.dir)
+          .then(function(repo) {
+            // to implement
+          })
     }
 
     handleSiteBuild(){
@@ -284,7 +284,7 @@ class App extends Component {
             if (newSettings.showPreview){ // if preview enable, render markdown
                 let newApp = {...oldState.app}
                 const mimeLookup = mime.lookup(oldState.app.file[oldState.app.currentFileIndex])
-                newApp.preview[oldState.app.currentFileIndex] = mimeLookup === "text/x-markdown"
+                newApp.preview[oldState.app.currentFileIndex] = mimeLookup === "text/x-markdown" || mimeLookup === "text/markdown"
                     ? this.md.render(oldState.app.value[oldState.app.currentFileIndex])
                     : ""
                 return {settings:newSettings, app:newApp}
@@ -315,7 +315,7 @@ class App extends Component {
 
     handleTreeLoadData(treeNode){ // handles directory exploration when expanding a folder in the sidebar tree
       return new Promise((resolve) => {
-          const treeData = this.state.app.tree; // loads old tree
+          const treeData = this.state.app.tree // loads old tree
           const newSubTree = buildDirTree(treeNode.props.eventKey,treeNode.props.position) // creates the new subTree
           replaceInTree(treeData, newSubTree, treeNode.props.position) // inserts the new subtree in the right position
           this.setState((oldState, props) => {
@@ -323,8 +323,8 @@ class App extends Component {
               newApp.tree = treeData
               return {app:newApp}
           })
-          resolve();
-      });
+          resolve()
+      })
     }
 
     handleSidebarResize(sizes){
@@ -373,7 +373,7 @@ class App extends Component {
     handleSettingsToggle() {
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
-            newApp.settingsModalOpen = true;
+            newApp.settingsModalOpen = true
             return {app:newApp}
         })
     }
@@ -381,11 +381,11 @@ class App extends Component {
     handleSettingsModalClose(){
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
-            newApp.settingsModalOpen = false;
+            newApp.settingsModalOpen = false
             this.md = newMd(this.state.settings.mdSettings, newApp.dir) // update md renderer
 
             const mimeLookup = mime.lookup(oldState.app.file[oldState.app.currentFileIndex])
-            newApp.preview[oldState.app.currentFileIndex] = mimeLookup === "text/x-markdown"
+            newApp.preview[oldState.app.currentFileIndex] = mimeLookup === "text/x-markdown" || mimeLookup === "text/markdown"
                 ? this.md.render(oldState.app.value[oldState.app.currentFileIndex])
                 : ""
             return {app:newApp}
@@ -395,7 +395,7 @@ class App extends Component {
     handleMdSettingsChange(prop, newValue){
         this.setState((oldState, props) => {
             let newSettings = {...oldState.settings}
-            newSettings.mdSettings[prop] = newValue;
+            newSettings.mdSettings[prop] = newValue
             store.set("settings.mdSettings."+prop, newValue)
             return {settings:newSettings}
         })
@@ -428,11 +428,11 @@ class App extends Component {
         index += position.column
         var newValue =  this.state.app.value[this.state.app.currentFileIndex].slice(0, index) +
                         files.reduce((acc,x)=>`${acc}![${x.name}](${path.join(".","images", uslug(x.name, { allowedChars: '.' }))})\n`,"") +
-                        this.state.app.value[this.state.app.currentFileIndex].slice(index);
+                        this.state.app.value[this.state.app.currentFileIndex].slice(index)
 
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
-            newApp.value[newApp.currentFileIndex] = newValue;
+            newApp.value[newApp.currentFileIndex] = newValue
             newApp.preview[newApp.currentFileIndex] = this.md.render(newValue)
             return {app:newApp}
         })
@@ -443,7 +443,8 @@ class App extends Component {
         let mainEditor
         if (this.state.app.file.length > 0){ // if there are files selected
             // selected the correct editor / preview for the current file
-            let editor = mime.lookup(this.state.app.file[this.state.app.currentFileIndex]) === "text/x-markdown"
+            const lookup = mime.lookup(this.state.app.file[this.state.app.currentFileIndex])
+            let editor = lookup === "text/x-markdown" || lookup === "text/markdown"
                 ? <MDEditorPreview handleSave={this.handleSaveShortcut}
                                     theme={this.state.settings.editorTheme}
                                     value={this.state.app.value[this.state.app.currentFileIndex]}
@@ -451,7 +452,7 @@ class App extends Component {
                                     showPreview={this.state.settings.showPreview}
                                     currentDir={this.state.app.dir}
                                     onDrop={this.onFileDrop}/>
-                : mime.lookup(this.state.app.file[this.state.app.currentFileIndex]).startsWith("image")
+                : lookup.startsWith("image")
                 ? <div className="imagePreview">
                     <div className="imageContainer">
                         <img className="img-responsive" src={this.state.app.value[this.state.app.currentFileIndex]}/>
@@ -467,7 +468,7 @@ class App extends Component {
               tabCloseIcon: {},
               tabBefore: {},
               tabAfter: {}
-            };
+            }
             let tabs = this.state.app.file.map((file, idx) => {
                 return idx === this.state.app.currentFileIndex ?
                             (<Tab key={idx.toString()} title={path.basename(file)} containerStyle={{width:"100%", height:"100%"}}>
@@ -530,8 +531,8 @@ class App extends Component {
                     </PanelGroup>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default App;
+export default App
