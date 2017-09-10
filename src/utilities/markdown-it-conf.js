@@ -259,12 +259,12 @@ let newMd = (opts, workingDir) => {
         }
 
         // handle videos
-        const vimeoRE       = /^https?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
+        const vimeoRE       = /(https?:\/\/)?(www\.)?vimeo.com\/(\d+)($|\/)/;
         if (vimeoRE.test(src) && settings.video) {
-            const id = src.match(vimeoRE)[2];
+            const id = src.match(vimeoRE)[3];
 
             return `<div class="embed-responsive embed-responsive-16by9">
-                 <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/${id}" frameborder="0" allowfullscreen></iframe>
+                 <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/${id}" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>
              </div>\n`;
         }
 
@@ -272,10 +272,15 @@ let newMd = (opts, workingDir) => {
         if( youtubeRE.test(src) && settings.video){
             const id = src.match(youtubeRE)[1]
             return `<div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${id}" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>
             </div>\n`
         }
 
+        const tedRE = /ted.com\/talks\/(.*)/;
+        if(tedRE.test(src) && settings.video){
+            const id = src.match(tedRE)[1]
+            return `<div class="embed-responsive embed-responsive-16by9"><iframe src="https://embed.ted.com/talks/${id}" class="embed-responsive-item" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>\n`
+        }
         return defaultImageRender(tokens, idx, options, env, slf);
 
     }
