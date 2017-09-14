@@ -38,7 +38,13 @@ class DirTree extends React.Component {
     const treeNodes = loop(this.props.treeData.children);
 
     return (
-      <Tree className="sidebar" draggable defaultExpandedKeys={[]} onDrop={info => console.log(info)} onSelect={this.props.onSelect} loadData={this.props.onLoadData}>
+      <Tree draggable
+            className="sidebarTree"
+            defaultExpandedKeys={[]}
+            onExpand={this.props.onExpand}
+            expandedKeys={this.props.expandedKeys}
+            selectedKeys={this.props.selectedKeys}
+            onDrop={info => console.log(info)} onSelect={this.props.onSelect} loadData={this.props.onLoadData}>
         {treeNodes}
       </Tree>
     );

@@ -31,12 +31,21 @@
     padding-left: 0px;
 }
 
-.sidebar {
+.sidebar{
     height: 100%;
+    width: 100%;
+}
+
+.sidebarTree {
+    height: 90%;
     width: 100%;
     overflow: auto;
 }
 
+.sidebarTypeSwitch{
+    height: 10%;
+    width: 100%;
+}
 .imageContainer{
     /*CHECKERBOARD PATTER FOR TRASNPARENT IMAGES*/
     background-color: #e6e6e6;

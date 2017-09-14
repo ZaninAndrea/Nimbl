@@ -3,7 +3,6 @@ const electron = window.require('electron');
 const fs = electron.remote.require('fs');
 
 const buildDirTree = (dir, position) => {
-    console.log("ENTER");
     let tree = {
         key: dir,
         position: position,

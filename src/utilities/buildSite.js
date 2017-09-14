@@ -4,13 +4,14 @@ import handlebars from "handlebars"
 import yaml from 'js-yaml';
 import path from "path"
 import katex from "katex"
+
 const electron = window.require('electron');
 // the following are basically imports working around webpack
 const fs = electron.remote.require('fs');
 const markdownToc = electron.remote.require("markdown-toc")
 
 // recursively copies a directory into another
-const deepCopyDir = (dir, outputDir) => {
+const deepCopyDir = (dir, outputDir, fileSaveFunc) => {
     const elements = fs.readdirSync(dir)
     for (let i in elements) {
         if (fs.statSync(path.join(dir, elements[i])).isDirectory()) {
@@ -20,9 +21,14 @@ const deepCopyDir = (dir, outputDir) => {
 
             deepCopyDir(path.join(dir, elements[i]), path.join(outputDir, elements[i]))
         } else {
-            const dest = path.join(outputDir, elements[i])
-            const data = fs.readFileSync(path.join(dir, elements[i]), 'utf8')
-            fs.writeFileSync(dest, data)
+            if (fileSaveFunc){
+                fileSaveFunc(outputDir, dir, elements[i])
+            }
+            else {
+                const data = fs.readFileSync(path.join(dir, elements[i]), 'utf8')
+                const dest = path.join(outputDir, elements[i])
+                fs.writeFileSync(dest, data)
+            }
         }
     }
 }
@@ -40,7 +46,7 @@ const deepDeleteDir = (dir) => {
     }
 }
 
-function buildSite(dir, outputDir = "gh-pages") {
+function buildSite(dir, settings, outputDir = "gh-pages") {
     const md = newMd({}, dir)
     try {
         // load the yaml config and generate the site accordingly
@@ -68,34 +74,57 @@ function buildSite(dir, outputDir = "gh-pages") {
             title: page,
             link: "./"+path.basename(yamlConfig.sitemap[page].path,path.extname(yamlConfig.sitemap[page].path))+".html",
         }))
+
         let index = 0
-        for (let i in yamlConfig.sitemap) {
-            const mdSource = fs.readFileSync(path.join(dir, yamlConfig.sitemap[i].path), 'utf8')
+        const saveMdFunc = (destDir, inputDir, inputFile) => {
+            if (inputFile.endsWith(".md")){
+                const mdSource = fs.readFileSync(path.join(inputDir, inputFile), 'utf8')
 
-            // creating jsonToc with rendered latex
-            const toc = markdownToc(mdSource)
-            let jsonToc = toc.json
-            // jsonToc = jsonToc.map(entry => Object.assign({}, entry, {content:katex.renderToString(entry.content)}))
+                // creating jsonToc with rendered latex
+                const toc = markdownToc(mdSource)
+                let jsonToc = toc.json
+                // jsonToc = jsonToc.map(entry => Object.assign({}, entry, {content:katex.renderToString(entry.content)}))
 
-            // creating small toc, with only h1
-            const smallToc = markdownToc(mdSource, {maxdepth: 1})
-            let smallJsonToc = smallToc.json
-            // smallJsonToc = smallJsonToc.map(entry => Object.assign({}, entry, {content:katex.renderToString(entry.content)}))
-            const context = {
-                title: i,
-                markdownBody: md.render(mdSource),
-                details: yamlConfig.sitemap[i],
-                jsonToc: jsonToc,
-                htmlToc: md.render(toc.content),
-                smallJsonToc: smallJsonToc,
-                smallHtmlToc: md.render(smallToc.content),
-                siteMap:sitemap.map( (element,id) => id === index ? Object.assign({},element,{current:true}) : element),
-            };
-            const html = pageTemplate(context);
-            const destination = path.join(dir, "gh-pages", yamlConfig.sitemap[i].path.replace(".md", ".html"))
-            fs.writeFileSync(destination, html);
-            index++
+                // creating small toc, with only h1
+                const smallToc = markdownToc(mdSource, {maxdepth: 1})
+                let smallJsonToc = smallToc.json
+                // smallJsonToc = smallJsonToc.map(entry => Object.assign({}, entry, {content:katex.renderToString(entry.content)}))
+
+                let context = {
+                    title: inputFile,
+                    markdownBody: md.render(mdSource),
+                    jsonToc: jsonToc,
+                    htmlToc: md.render(toc.content),
+                    smallJsonToc: smallJsonToc,
+                    smallHtmlToc: md.render(smallToc.content),
+                    siteMap:sitemap.map( (element,id) => id === index ? Object.assign({},element,{current:true}) : element),
+                };
+
+                // loads metadata if they exists
+                if (fs.existsSync(path.join(inputDir, inputFile+".meta.yml"))){
+                    // Get document, or throw exception on error
+                    try {
+                      const doc = yaml.safeLoad(fs.readFileSync(path.join(inputDir, inputFile+".meta.yml"), 'utf8'));
+                      context = {...context, ...doc}
+                    } catch (e) {
+                      console.log(e);
+                    }
+                }
+
+
+                const html = pageTemplate(context);
+                const destination = path.join(destDir, inputFile.replace(".md", ".html"))
+                fs.writeFileSync(destination, html);
+                index++
+            } else if (inputFile.endsWith(".md.meta.yml")){
+                // ignore metadata files
+            }
+            else{
+                const data = fs.readFileSync(path.join(inputDir, inputFile), 'utf8')
+                fs.writeFileSync( path.join(destDir, inputFile), data)
+            }
         }
+        deepCopyDir(path.join(dir, "assets"), path.join(dir, "gh-pages"), saveMdFunc)
 
         // loads static assets
         if (yamlConfig.templates.assets && fs.statSync(path.join(dir, yamlConfig.templates.assets)).isDirectory()) {

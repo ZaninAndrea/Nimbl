@@ -60,6 +60,7 @@ class App extends Component {
         this.handleSettingsModalClose = this.handleSettingsModalClose.bind(this)
         this.handleMdSettingsChange = this.handleMdSettingsChange.bind(this)
         this.onFileDrop = this.onFileDrop.bind(this)
+        this.handleTreeExpand = this.handleTreeExpand.bind(this)
         // default values
         const storeSettings = store.get("settings")
         let settings
@@ -114,7 +115,8 @@ class App extends Component {
                 watcher : null,
                 renderTimeout : null,
                 currentFileIndex:0,
-                settingsModalOpen: false
+                settingsModalOpen: false,
+                treeExpandedKeys: []
             },
             settings: settings
         }
@@ -263,7 +265,7 @@ class App extends Component {
     }
 
     handleSiteBuild(){
-        buildSite(this.state.app.dir)
+        buildSite(this.state.app.dir, this.state.settings.mdSettings)
     }
 
     handleSidebarToggle(){
@@ -439,6 +441,15 @@ class App extends Component {
 
     }
 
+    handleTreeExpand(expandedKeys) {
+        console.log("expand", expandedKeys)
+        this.setState((oldState, props) => {
+            let newApp = {...oldState.app}
+            newApp.treeExpandedKeys = expandedKeys
+            return {app:newApp}
+        })
+    }
+
     render() {
         let mainEditor
         if (this.state.app.file.length > 0){ // if there are files selected
@@ -491,6 +502,29 @@ class App extends Component {
              mainEditor = "NO FILE SELECTED"
          }
 
+        let sidebar
+        if (this.state.settings.showSidebar){
+            sidebar =   <div className="sidebar">
+                            <DirTree treeData={this.state.app.tree}
+                               dir={this.state.app.dir}
+                               onLoadData={this.handleTreeLoadData}
+                               onSelect={this.handleTreeSelect}
+                               onExpand={this.handleTreeExpand}
+                               expandedKeys={this.state.app.treeExpandedKeys}
+                               selectedKeys={[]}
+                           />
+                           <ButtonGroup className="sidebarTypeSwitch">
+                            <Button>
+                              Simple
+                            </Button>
+                            <Button>
+                              Advanced
+                            </Button>
+                          </ButtonGroup>
+                       </div>
+        }else{
+            sidebar = null
+        }
         return (
             <div className="App">
                 <Settings   visible = {this.state.app.settingsModalOpen}
@@ -524,7 +558,7 @@ class App extends Component {
                     <PanelGroup borderColor="grey" panelWidths={[
                         {size: this.state.settings.sidebarWidth, minSize:100}
                     ]} onUpdate={this.handleSidebarResize} >
-                        {this.state.settings.showSidebar ? <DirTree treeData={this.state.app.tree} dir={this.state.app.dir} onLoadData={this.handleTreeLoadData} onSelect={this.handleTreeSelect}/> : null}
+                        {sidebar}
 
                         {mainEditor}
 
