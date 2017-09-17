@@ -15,7 +15,7 @@
         "directories": {
             "buildResources": "assets"
         },
-        "productName": "Markdown Editor"
+        "productName": "Nimble"
     },
     "dependencies": {
         "antd": "^2.12.6",
