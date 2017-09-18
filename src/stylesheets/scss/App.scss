@@ -1,4 +1,12 @@
 @import '~antd/dist/antd.css';
+@import 'shared';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  // background-color: $base03;
+}
 
 #root {
     height: 100vh;
@@ -9,7 +17,7 @@
     width: 100vw;
     height: 40px;
     margin: 0px;
-    background-color: lime
+    // background-color: $base03;
 }
 
 .AppBody {

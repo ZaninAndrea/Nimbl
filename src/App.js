@@ -18,11 +18,11 @@ import "./stylesheets/katex/katex.min.css"
 import "./stylesheets/bootstrap/css/bootstrap.min.css"
 import "./stylesheets/github-markdown/github-markdown.css"
 import "source-code-pro/source-code-pro.css"
-import './stylesheets/App.css'
-import './stylesheets/Tree.css'
-import './stylesheets/MDEditorPreview.css'
-import './stylesheets/highlight.css'
-import './stylesheets/customMD.css'
+import './stylesheets/css/App.css'
+import './stylesheets/css/Tree.css'
+import './stylesheets/css/MDEditorPreview.css'
+import './stylesheets/css/highlight.css'
+import './stylesheets/css/customMD.css'
 
 const { Option, OptGroup } = Select
 const ButtonGroup = Button.Group
@@ -468,7 +468,7 @@ class App extends Component {
 
             newApp.tabs = newApp.tabs.map(tab => tab < removedID ? tab : tab -1) // update the indexes
             newApp.currentFileIndex = newApp.currentFileIndex < removedID ? newApp.currentFileIndex : newApp.currentFileIndex - 1;
-            
+
             return {app:newApp}
         })
     }

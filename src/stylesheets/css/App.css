@@ -1,0 +1,72 @@
+@import url(~antd/dist/antd.css);
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif; }
+
+#root {
+  height: 100vh;
+  width: 100vw; }
+
+.AppBar {
+  width: 100vw;
+  height: 40px;
+  margin: 0px; }
+
+.AppBody {
+  height: calc(100% - 40px);
+  width: 100vw;
+  margin: 0px; }
+
+.App {
+  height: 100vh;
+  width: 100vw;
+  margin: 0px; }
+
+.mainEditor {
+  height: 100%;
+  margin: 0px;
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px; }
+
+.sidebar {
+  height: 100%;
+  width: 100%; }
+
+.sidebarTree {
+  height: 90%;
+  width: 100%;
+  overflow: auto; }
+
+.sidebarTypeSwitch {
+  height: 10%;
+  width: 100%; }
+
+.imageContainer {
+  /*CHECKERBOARD PATTER FOR TRASNPARENT IMAGES*/
+  background-color: #e6e6e6;
+  background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 40px; }
+
+.imagePreview {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  overflow-y: auto; }
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px; }
+
+.rdTabAddButton {
+  visibility: hidden; }
+
+ul, ol {
+  list-style: disc; }
