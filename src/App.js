@@ -11,7 +11,7 @@ import buildTree from "./utilities/buildTree.js"
 import buildSite from "./utilities/buildSite.js"
 import {buildDirTree, replaceInTree} from "./utilities/treeUtils"
 import newMd from "./utilities/markdown-it-conf"
-import {Tabs, Tab} from "react-draggable-tab"
+import Tabs from "react-draggable-tabs"
 import {Button, Radio, Checkbox, Slider, InputNumber, Select} from 'antd'
 import "./stylesheets/font-awesome/css/font-awesome.min.css"
 import "./stylesheets/katex/katex.min.css"
@@ -54,13 +54,14 @@ class App extends Component {
         this.handleTreeLoadData = this.handleTreeLoadData.bind(this)
         this.handleSaveShortcut = this.handleSaveShortcut.bind(this)
         this.handleSidebarResize = this.handleSidebarResize.bind(this)
-        this.handleFileTabSelect = this.handleFileTabSelect.bind(this)
-        this.handleTabClose = this.handleTabClose.bind(this)
         this.handleSettingsToggle = this.handleSettingsToggle.bind(this)
         this.handleSettingsModalClose = this.handleSettingsModalClose.bind(this)
         this.handleMdSettingsChange = this.handleMdSettingsChange.bind(this)
         this.onFileDrop = this.onFileDrop.bind(this)
         this.handleTreeExpand = this.handleTreeExpand.bind(this)
+        this.handleTabSelect = this.handleTabSelect.bind(this)
+        this.handleMoveTab = this.handleMoveTab.bind(this)
+        this.handleClosedTab = this.handleClosedTab.bind(this)
         // default values
         const storeSettings = store.get("settings")
         let settings
@@ -110,6 +111,7 @@ class App extends Component {
                 },
                 value : [],
                 preview : [],
+                tabs:[],
                 unsavedChanges : false,
                 addedChanges : false,
                 watcher : null,
@@ -197,7 +199,10 @@ class App extends Component {
                         ? this.md.render(currValue)
                         : "")
 
-                    const newApp = {...oldState.app, ...{value: newValue, file: newFile, preview:preview, currentFileIndex: newFile.length -1} }
+                    let tabs = oldState.app.tabs
+                    tabs.push(newFile.length -1) // add the index of the new file to the tabs
+
+                    const newApp = {...oldState.app, ...{value: newValue, file: newFile, preview:preview, currentFileIndex: newFile.length -1, tabs: tabs} }
                     return {app:newApp}
                 })
             } else if (!fs.statSync(node[0]).isDirectory() && this.state.app.file.includes(node[0])) { // file already open is selected
@@ -340,38 +345,6 @@ class App extends Component {
         }
     }
 
-    handleFileTabSelect(e, key, currentTabs) {
-        this.setState((oldState, props) => {
-            let newApp = {...oldState.app}
-            let newIdx = parseInt(key, 10)
-            if (newIdx>=0 && newIdx<oldState.app.file.length)
-                newApp.currentFileIndex = newIdx
-
-            return {app:newApp}
-        })
-    }
-
-    handleTabClose(e, key, currentTabs) {
-        this.setState((oldState, props) => {
-            let newApp = {...oldState.app}
-
-            // losing the reference to the original array to avoid sideeffects
-            newApp.file = newApp.file.slice()
-            newApp.value = newApp.value.slice()
-            newApp.preview = newApp.preview.slice()
-
-            // removing the correct tab
-            newApp.file.splice(parseInt(key, 10),1)
-            newApp.value.splice(parseInt(key, 10),1)
-            newApp.preview.splice(parseInt(key, 10),1)
-            newApp.currentFileIndex = key > newApp.currentFileIndex ? // update the index to his new position
-                                        newApp.currentFileIndex :
-                                        newApp.currentFileIndex -1
-            newApp.currentFileIndex = newApp.currentFileIndex < 0 ? 0 : newApp.currentFileIndex // avoid illegal indexes
-            return {app:newApp}
-        })
-    }
-
     handleSettingsToggle() {
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
@@ -450,12 +423,61 @@ class App extends Component {
         })
     }
 
+    handleTabSelect(selectedIndex, selectedId) {
+        console.log("select")
+        this.setState((state, props) => {
+            let newApp = {...state.app}
+            newApp.currentFileIndex = selectedId
+
+            return {app:newApp}
+        })
+    }
+
+    handleMoveTab(dragIndex, hoverIndex) {
+
+        this.setState((state, props) => {
+            let newApp = {...state.app}
+            newApp.tabs.splice(hoverIndex, 0, newApp.tabs.splice(dragIndex, 1)[0]);
+
+            return {app:newApp}
+        })
+    }
+
+    handleClosedTab(removedIndex, removedID) {
+        this.setState((state, props) => {
+            let newApp = {...state.app}
+
+            // create safe copies
+            newApp.tabs = [...newApp.tabs]
+            newApp.file = [...newApp.file]
+            newApp.preview = [...newApp.preview]
+            newApp.value = [...newApp.value]
+
+            newApp.tabs.splice(removedIndex, 1) // remove the item
+            newApp.file.splice(removedID, 1)
+            newApp.preview.splice(removedID, 1)
+            newApp.value.splice(removedID, 1)
+
+            if (state.app.currentFileIndex === removedID && newApp.tabs.length !== 0) { // automatically select another tab if needed
+                const newActive = removedIndex === 0
+                    ? state.app.tabs[0]
+                    : state.app.tabs[removedIndex - 1]
+
+                newApp.currentFileIndex = newActive;
+            }
+
+            newApp.tabs = newApp.tabs.map(tab => tab < removedID ? tab : tab -1) // update the indexes
+            newApp.currentFileIndex = newApp.currentFileIndex < removedID ? newApp.currentFileIndex : newApp.currentFileIndex - 1;
+            
+            return {app:newApp}
+        })
+    }
     render() {
-        let mainEditor
+        let editor
         if (this.state.app.file.length > 0){ // if there are files selected
             // selected the correct editor / preview for the current file
             const lookup = mime.lookup(this.state.app.file[this.state.app.currentFileIndex])
-            let editor = lookup === "text/x-markdown" || lookup === "text/markdown"
+            editor = lookup === "text/x-markdown" || lookup === "text/markdown"
                 ? <MDEditorPreview handleSave={this.handleSaveShortcut}
                                     theme={this.state.settings.editorTheme}
                                     value={this.state.app.value[this.state.app.currentFileIndex]}
@@ -471,35 +493,8 @@ class App extends Component {
                 </div>
                 : "SELECT A SUPPORTED FILE"
 
-            const tabsStyles = {
-              tabWrapper: {},
-              tabBar: {},
-              tab:{width:"100%", height:"100%"},
-              tabTitle: {},
-              tabCloseIcon: {},
-              tabBefore: {},
-              tabAfter: {}
-            }
-            let tabs = this.state.app.file.map((file, idx) => {
-                return idx === this.state.app.currentFileIndex ?
-                            (<Tab key={idx.toString()} title={path.basename(file)} containerStyle={{width:"100%", height:"100%"}}>
-                                <div style={{width:"100%", height:"100%"}}>{editor}</div>
-                            </Tab>) :
-                            <Tab key={idx.toString()} title={path.basename(file)} containerStyle={{width:"100%", height:"100%"}}>
-                                <div></div>
-                            </Tab>
-            })
-
-            mainEditor = (<Tabs
-                onTabSelect={this.handleFileTabSelect}
-                onTabClose={this.handleTabClose}
-                selectedTab={this.state.app.currentFileIndex.toString()}
-                tabsStyles={tabsStyles}
-                tabs={tabs}
-                tabAddButton={null}
-              />)
          } else {
-             mainEditor = "NO FILE SELECTED"
+             editor = "NO FILE SELECTED"
          }
 
         let sidebar
@@ -560,7 +555,15 @@ class App extends Component {
                     ]} onUpdate={this.handleSidebarResize} >
                         {sidebar}
 
-                        {mainEditor}
+                        <div className="mainEditor">
+                            <Tabs
+                            selectTab={this.handleTabSelect}
+                            closeTab={this.handleClosedTab}
+                            moveTab={this.handleMoveTab}
+                            tabs={this.state.app.tabs.map(id => ({content: path.basename(this.state.app.file[id]), id: id, active: id === this.state.app.currentFileIndex}))}
+                            />
+                            <div style={{width:"100%", height:"100%"}}>{editor}</div>
+                        </div>
 
                     </PanelGroup>
                 </div>

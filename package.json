@@ -46,7 +46,7 @@
         "react-ace-wrapper": "^1.0.1",
         "react-addons-perf": "^15.4.2",
         "react-dom": "^15.6.1",
-        "react-draggable-tab": "^0.8.1",
+        "react-draggable-tabs": "^1.0.3",
         "react-dropzone": "^4.1.0",
         "react-panelgroup": "^1.0.2",
         "react-scripts": "1.0.10",

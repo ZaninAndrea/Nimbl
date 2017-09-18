@@ -1,5 +1,5 @@
 .MDEditorPreview {
-  height: 100%;
+  height: calc(100% - 37px);
   width:100%;
   margin: 0px;
 }
