@@ -1,7 +1,11 @@
-.fileIcon.fa-file-text{
-    color: red;
-}
+.fileIcon.fa-file-text {
+  color: #dc322f; }
 
 .folderIcon {
-    color: blue;
-}
+  color: #268bd2; }
+
+.ant-tree-title {
+  color: #93a1a1; }
+
+.ant-tree-switcher {
+  color: #586e75; }

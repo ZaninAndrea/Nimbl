@@ -22,7 +22,7 @@ class DirTree extends React.Component {
       }
       else { // file
           const fileMime = mime.lookup(item.key)
-          const icon = fileMime === "text/x-markdown" // select the right icon for that file
+          const icon = fileMime === "text/x-markdown" || fileMime === "text/markdown" // select the right icon for that file
               ? "fileIcon fa fa-file-text"
               : fileMime.startsWith("image")
               ? "fileIcon fa fa-file-image-o"

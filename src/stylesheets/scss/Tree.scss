@@ -1,7 +1,17 @@
+@import 'shared';
+
 .fileIcon.fa-file-text{
-    color: red;
+    color: $red;
 }
 
 .folderIcon {
-    color: blue;
+    color: $blue;
+}
+
+.ant-tree-title{
+    color: $base1;
+}
+
+.ant-tree-switcher{
+    color: $base01;
 }

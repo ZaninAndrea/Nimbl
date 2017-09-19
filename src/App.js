@@ -13,16 +13,8 @@ import {buildDirTree, replaceInTree} from "./utilities/treeUtils"
 import newMd from "./utilities/markdown-it-conf"
 import Tabs from "react-draggable-tabs"
 import {Button, Radio, Checkbox, Slider, InputNumber, Select} from 'antd'
-import "./stylesheets/font-awesome/css/font-awesome.min.css"
-import "./stylesheets/katex/katex.min.css"
-import "./stylesheets/bootstrap/css/bootstrap.min.css"
-import "./stylesheets/github-markdown/github-markdown.css"
 import "source-code-pro/source-code-pro.css"
 import './stylesheets/css/App.css'
-import './stylesheets/css/Tree.css'
-import './stylesheets/css/MDEditorPreview.css'
-import './stylesheets/css/highlight.css'
-import './stylesheets/css/customMD.css'
 
 const { Option, OptGroup } = Select
 const ButtonGroup = Button.Group
@@ -530,38 +522,37 @@ class App extends Component {
                             handleThemeChange={this.handleThemeChange}
                             handleSettingsModalClose={this.handleSettingsModalClose}
                             handleMdSettingsChange={this.handleMdSettingsChange}/>
-                <div className="AppBar">
-                    <ButtonGroup size="large">
-                        <Button onClick={this.handleOpenDir}>
-                            <i className="fa fa-folder-open" aria-hidden="true"></i>
-                        </Button>
-                        <Button type={this.state.app.unsavedChanges ? "primary" : ""} onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
-                            <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                        </Button>
-                        <Button type={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
-                            <i className="fa fa-arrow-up" aria-hidden="true"></i>
-                        </Button>
-                        <Button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
-                            <i className="fa fa-paper-plane" aria-hidden="true"></i>
-                        </Button>
-                    </ButtonGroup>
-                    <Button onClick={this.handleSettingsToggle}>
-                        <i className="fa fa-cog" aria-hidden="true"></i>
-                    </Button>
-                </div>
                 <div className="AppBody">
-                    <PanelGroup borderColor="grey" panelWidths={[
+                    <PanelGroup borderColor="#586e75" panelWidths={[
                         {size: this.state.settings.sidebarWidth, minSize:100}
                     ]} onUpdate={this.handleSidebarResize} >
                         {sidebar}
 
                         <div className="mainEditor">
-                            <Tabs
+                        <Tabs
                             selectTab={this.handleTabSelect}
                             closeTab={this.handleClosedTab}
                             moveTab={this.handleMoveTab}
                             tabs={this.state.app.tabs.map(id => ({content: path.basename(this.state.app.file[id]), id: id, active: id === this.state.app.currentFileIndex}))}
-                            />
+                            >
+                                <ButtonGroup size="large">
+                                    <Button onClick={this.handleOpenDir}>
+                                        <i className="fa fa-folder-open" aria-hidden="true"></i>
+                                    </Button>
+                                    <Button type={this.state.app.unsavedChanges ? "primary" : ""} onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
+                                        <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                                    </Button>
+                                    <Button type={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
+                                        <i className="fa fa-arrow-up" aria-hidden="true"></i>
+                                    </Button>
+                                    <Button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
+                                        <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                                    </Button>
+                                </ButtonGroup>
+                                <Button onClick={this.handleSettingsToggle}>
+                                    <i className="fa fa-cog" aria-hidden="true"></i>
+                                </Button>
+                            </Tabs>
                             <div style={{width:"100%", height:"100%"}}>{editor}</div>
                         </div>
 

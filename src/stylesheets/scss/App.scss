@@ -1,11 +1,21 @@
 @import '~antd/dist/antd.css';
+@import 'font-awesome/css/font-awesome.min.css';
+@import 'katex/katex.min.css';
+@import 'bootstrap/css/bootstrap.min.css';
 @import 'shared';
+@import 'highlight';
+@import 'MDEditorPreview';
+@import 'Tree';
+@import 'github-markdown';
+@import 'customMD';
+
 
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  // background-color: $base03;
+  background-color: $base03;
+  color:$base1;
 }
 
 #root {
@@ -13,15 +23,8 @@ body {
     width: 100vw;
 }
 
-.AppBar {
-    width: 100vw;
-    height: 40px;
-    margin: 0px;
-    // background-color: $base03;
-}
-
 .AppBody {
-    height: calc(100% - 40px);
+    height: 100vh;
     width: 100vw;
     margin: 0px;
 }
@@ -31,6 +34,11 @@ body {
     width: 100vw;
     margin: 0px;
 }
+
+.divider div{
+    cursor:col-resize !important;
+}
+
 
 .mainEditor {
     height: 100%;
@@ -43,6 +51,7 @@ body {
 .sidebar{
     height: 100%;
     width: 100%;
+    background-color: $base03;
 }
 
 .sidebarTree {
