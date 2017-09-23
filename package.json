@@ -1,13 +1,13 @@
 {
-    "name": "mdeditor",
-    "version": "0.1.0",
+    "name": "nimbl",
+    "version": "0.8.0",
     "author": "ZaninAndrea",
     "homepage": "./",
     "license": "MIT",
-    "description": "Note taking app for markdown lovers",
+    "description": "Solarized markdown notes",
     "main": "public/electron.js",
     "build": {
-        "appId": "com.example.electron-cra",
+        "appId": "com.nimbl",
         "files": [
             "build/**/*",
             "node_modules/**/*"
@@ -15,7 +15,7 @@
         "directories": {
             "buildResources": "assets"
         },
-        "productName": "Nimble"
+        "productName": "Nimbl"
     },
     "dependencies": {
         "antd": "^2.12.6",
@@ -41,7 +41,6 @@
         "mime": "^1.3.6",
         "mousetrap": "^1.6.1",
         "node-sass-chokidar": "0.0.3",
-        "nodegit": "^0.20.1",
         "react": "^15.6.1",
         "react-ace": "^5.1.0",
         "react-ace-wrapper": "^1.0.1",

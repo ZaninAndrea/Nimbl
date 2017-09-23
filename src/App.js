@@ -25,7 +25,6 @@ const dialog = electron.remote.dialog
 const ipcRenderer = electron.ipcRenderer
 const Store = electron.remote.require('electron-store')
 const store = new Store()
-const Git = electron.remote.require("nodegit")
 
 class App extends Component {
     constructor(props) {
@@ -54,6 +53,8 @@ class App extends Component {
         this.handleTabSelect = this.handleTabSelect.bind(this)
         this.handleMoveTab = this.handleMoveTab.bind(this)
         this.handleClosedTab = this.handleClosedTab.bind(this)
+        this.handleAdvancedSettingsToggle = this.handleAdvancedSettingsToggle.bind(this)
+        this.handleMDModeChange = this.handleMDModeChange.bind(this)
         // default values
         const storeSettings = store.get("settings")
         let settings
@@ -110,7 +111,8 @@ class App extends Component {
                 renderTimeout : null,
                 currentFileIndex:0,
                 settingsModalOpen: false,
-                treeExpandedKeys: []
+                treeExpandedKeys: [],
+                showAdvancedSettings: false
             },
             settings: settings
         }
@@ -255,10 +257,7 @@ class App extends Component {
     }
 
     handleCommit(){
-        Git.Repository.open(this.state.app.dir)
-          .then(function(repo) {
-            // to implement
-          })
+        // to do
     }
 
     handleSiteBuild(){
@@ -426,7 +425,6 @@ class App extends Component {
     }
 
     handleMoveTab(dragIndex, hoverIndex) {
-
         this.setState((state, props) => {
             let newApp = {...state.app}
             newApp.tabs.splice(hoverIndex, 0, newApp.tabs.splice(dragIndex, 1)[0]);
@@ -464,6 +462,25 @@ class App extends Component {
             return {app:newApp}
         })
     }
+
+    handleAdvancedSettingsToggle() {
+        this.setState((state, props) => {
+            let newApp = {...state.app}
+            newApp.showAdvancedSettings = !newApp.showAdvancedSettings
+
+            return {app:newApp}
+        })
+    }
+
+    handleMDModeChange(update){
+        this.setState((oldState, props) => {
+            let newSettings = {...oldState.settings}
+            newSettings.mdSettings = {...newSettings.mdSettings, ...update}
+            store.set("settings.mdSettings", newSettings.mdSettings)
+            return {settings:newSettings}
+        })
+    }
+
     render() {
         let editor
         if (this.state.app.file.length > 0){ // if there are files selected
@@ -521,7 +538,10 @@ class App extends Component {
                             handleRefreshRateChange={this.handleRefreshRateChange}
                             handleThemeChange={this.handleThemeChange}
                             handleSettingsModalClose={this.handleSettingsModalClose}
-                            handleMdSettingsChange={this.handleMdSettingsChange}/>
+                            handleMdSettingsChange={this.handleMdSettingsChange}
+                            handleMDModeChange={this.handleMDModeChange}
+                            showAdvancedSettings={this.state.app.showAdvancedSettings}
+                            toggleAdvancedSettings={this.handleAdvancedSettingsToggle}/>
                 <div className="AppBody">
                     <PanelGroup borderColor="#586e75" panelWidths={[
                         {size: this.state.settings.sidebarWidth, minSize:100}
