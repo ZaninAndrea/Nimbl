@@ -509,6 +509,9 @@ class App extends Component {
         let sidebar
         if (this.state.settings.showSidebar){
             sidebar =   <div className="sidebar">
+                            <div className="projectTitle" >
+                                PROJECT
+                            </div>
                             <DirTree treeData={this.state.app.tree}
                                dir={this.state.app.dir}
                                onLoadData={this.handleTreeLoadData}
@@ -517,14 +520,14 @@ class App extends Component {
                                expandedKeys={this.state.app.treeExpandedKeys}
                                selectedKeys={[]}
                            />
-                           <ButtonGroup className="sidebarTypeSwitch">
-                            <Button>
-                              Simple
-                            </Button>
-                            <Button>
-                              Advanced
-                            </Button>
-                          </ButtonGroup>
+                            <div className="sidebarTypeSwitch">
+                                <button>
+                                    Simple
+                                </button>
+                                <button>
+                                    Advanced
+                                </button>
+                            </div>
                        </div>
         }else{
             sidebar = null
@@ -543,8 +546,8 @@ class App extends Component {
                             showAdvancedSettings={this.state.app.showAdvancedSettings}
                             toggleAdvancedSettings={this.handleAdvancedSettingsToggle}/>
                 <div className="AppBody">
-                    <PanelGroup borderColor="#586e75" panelWidths={[
-                        {size: this.state.settings.sidebarWidth, minSize:100}
+                    <PanelGroup borderColor="#001f27" panelWidths={[
+                        {size: this.state.settings.sidebarWidth, minSize:140}
                     ]} onUpdate={this.handleSidebarResize} >
                         {sidebar}
 
@@ -555,23 +558,23 @@ class App extends Component {
                             moveTab={this.handleMoveTab}
                             tabs={this.state.app.tabs.map(id => ({content: path.basename(this.state.app.file[id]), id: id, active: id === this.state.app.currentFileIndex}))}
                             >
-                                <ButtonGroup size="large">
-                                    <Button onClick={this.handleOpenDir}>
+                                <div className="appBarButtonBlock">
+                                    <button onClick={this.handleOpenDir}>
                                         <i className="fa fa-folder-open" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button type={this.state.app.unsavedChanges ? "primary" : ""} onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
+                                    </button>
+                                    <button className={this.state.app.unsavedChanges ? "primary" : ""} onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
                                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button type={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
+                                    </button>
+                                    <button className={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
                                         <i className="fa fa-arrow-up" aria-hidden="true"></i>
-                                    </Button>
-                                    <Button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
+                                    </button>
+                                    <button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
                                         <i className="fa fa-paper-plane" aria-hidden="true"></i>
-                                    </Button>
-                                </ButtonGroup>
-                                <Button onClick={this.handleSettingsToggle}>
-                                    <i className="fa fa-cog" aria-hidden="true"></i>
-                                </Button>
+                                    </button>
+                                    <button onClick={this.handleSettingsToggle}>
+                                        <i className="fa fa-cog" aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </Tabs>
                             <div style={{width:"100%", height:"100%"}}>{editor}</div>
                         </div>

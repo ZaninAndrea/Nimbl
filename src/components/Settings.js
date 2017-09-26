@@ -146,7 +146,6 @@ class Settings extends Component {
             const isSpiced = isExtended && settings.smartarrows && settings.video && settings.url && settings.toc
             const isAddict = isSpiced && settings.checkbox && settings.alert && settings.note && settings.spoiler && settings.graph
 
-            console.log(settings);
             const markdownLevel = isAddict ? 3
                                 : isSpiced ? 2
                                 : isExtended ? 1
