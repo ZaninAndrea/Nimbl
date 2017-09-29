@@ -11,13 +11,10 @@ import buildTree from "./utilities/buildTree.js"
 import buildSite from "./utilities/buildSite.js"
 import {buildDirTree, replaceInTree} from "./utilities/treeUtils"
 import newMd from "./utilities/markdown-it-conf"
-import Tabs from "react-draggable-tabs"
-import {Button, Radio, Checkbox, Slider, InputNumber, Select} from 'antd'
+import {Modal} from 'antd'
 import "source-code-pro/source-code-pro.css"
 import './stylesheets/css/App.css'
-
-const { Option, OptGroup } = Select
-const ButtonGroup = Button.Group
+import Tabs from "react-draggable-tabs"
 
 const electron = window.require('electron') // little trick to import electron in react
 const fs = electron.remote.require('fs')
@@ -55,6 +52,7 @@ class App extends Component {
         this.handleClosedTab = this.handleClosedTab.bind(this)
         this.handleAdvancedSettingsToggle = this.handleAdvancedSettingsToggle.bind(this)
         this.handleMDModeChange = this.handleMDModeChange.bind(this)
+        this.autoSaveToggle = this.autoSaveToggle.bind(this)
         // default values
         const storeSettings = store.get("settings")
         let settings
@@ -68,6 +66,7 @@ class App extends Component {
                refreshRate : 500,
                editorTheme : "solarized_dark",
                sidebarWidth : 100,
+               autoSave: true,
                mdSettings: {
                    isPreview:true,
                    html: true,
@@ -105,14 +104,15 @@ class App extends Component {
                 value : [],
                 preview : [],
                 tabs:[],
-                unsavedChanges : false,
+                unsavedChanges : [],
                 addedChanges : false,
                 watcher : null,
                 renderTimeout : null,
                 currentFileIndex:0,
                 settingsModalOpen: false,
                 treeExpandedKeys: [],
-                showAdvancedSettings: false
+                showAdvancedSettings: false,
+                quitting:false,
             },
             settings: settings
         }
@@ -128,6 +128,17 @@ class App extends Component {
         // setting up markdown renderer
         this.md = newMd(settings.mdSettings, this.state.app.dir)
 
+        window.onbeforeunload = (e) => {
+            if (this.state.app.unsavedChanges.reduce((acc,x)=>acc||x, false)){ // checks if any file had unsaved changes
+                this.setState((state,props)=>{
+                    const newApp = {...state.app}
+                    newApp.quitting = true;
+                    return {app: newApp}
+                })
+
+                return false // prevent closing
+            }
+        }
     }
 
     // handle CTRL+S shortcut
@@ -142,6 +153,10 @@ class App extends Component {
             newApp.preview[oldState.app.currentFileIndex] = this.md.render(oldState.app.value[oldState.app.currentFileIndex])
             return {app:newApp}
         })
+
+        if (this.state.settings.autoSave){
+            this.handleSave()
+        }
     }
 
     // handles changes in the editor content, aka user writing
@@ -154,7 +169,7 @@ class App extends Component {
             let newApp = {...oldState.app, ...{
                 value: newValue,
                 renderTimeout: newTimeout,
-                unsavedChanges: true
+                unsavedChanges: oldState.app.unsavedChanges.map((val, idx)=>idx === oldState.app.currentFileIndex ? true : val)
             } }
             return {app:newApp}
         })
@@ -196,31 +211,47 @@ class App extends Component {
                     let tabs = oldState.app.tabs
                     tabs.push(newFile.length -1) // add the index of the new file to the tabs
 
-                    const newApp = {...oldState.app, ...{value: newValue, file: newFile, preview:preview, currentFileIndex: newFile.length -1, tabs: tabs} }
+                    let newUnsavedChanges = oldState.app.unsavedChanges
+                    newUnsavedChanges.push(false)
+
+                    const newApp = {...oldState.app, ...{value: newValue, file: newFile, preview:preview, currentFileIndex: newFile.length -1, tabs: tabs, unsavedChanges: newUnsavedChanges} }
+
+                    document.title = "Nimbl - "+path.basename(node[0])
                     return {app:newApp}
                 })
             } else if (!fs.statSync(node[0]).isDirectory() && this.state.app.file.includes(node[0])) { // file already open is selected
                 this.setState((oldState, props) => {
                     const newApp = {...oldState.app, ...{currentFileIndex: oldState.app.file.indexOf(node[0])} }
+                    document.title = "Nimbl - "+path.basename(node[0])
+
                     return {app:newApp}
                 })
             }
         }
     }
 
-    handleSave() { // handles saving the current file
+    handleSave(filename, content) { // handles saving the current file
         let callback = (err) => {
             if (err)
                 throw err
 
             this.setState((oldState, props) => {
                 let newApp = {...oldState.app}
-                newApp.unsavedChanges = false // rebuild the directory tree
+                newApp.unsavedChanges = oldState.app.unsavedChanges.map((val, idx)=>{
+                    if (typeof filename === "string"){
+                        return oldState.app.file[idx]===filename ? false : val
+                    }else{
+                        return idx === oldState.app.currentFileIndex ? false : val
+                    }
+                }
+                )
                 return {app:newApp}
             })
         }
         callback = callback.bind(this)
-        fs.writeFile(this.state.app.file[this.state.app.currentFileIndex], this.state.app.value[this.state.app.currentFileIndex], callback)
+        const file = typeof filename === "string" ? filename : this.state.app.file[this.state.app.currentFileIndex]
+        const value = typeof content === "string" ? content : this.state.app.value[this.state.app.currentFileIndex]
+        fs.writeFile(file, value, callback)
     }
 
     handleOpenDir() { // handles opening a directory
@@ -239,10 +270,13 @@ class App extends Component {
                 let newApp = {...oldState.app, ...{
                     dir: folders[0],
                     tree: buildDirTree(folders[0],[]),
+                    currentFileIndex:0,
+                    treeExpandedKeys: [],
                     file: [],
                     value: [],
                     preview:[],
-                    unsavedChanges: false,
+                    unsavedChanges: [],
+                    tabs:[],
                     watcher: fs.watch(folders[0], {
                         recursive: true
                     }, this.handleDirChange)
@@ -406,7 +440,6 @@ class App extends Component {
     }
 
     handleTreeExpand(expandedKeys) {
-        console.log("expand", expandedKeys)
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
             newApp.treeExpandedKeys = expandedKeys
@@ -418,10 +451,22 @@ class App extends Component {
         console.log("select")
         this.setState((state, props) => {
             let newApp = {...state.app}
+
+            const lookup = mime.lookup(newApp.file[newApp.currentFileIndex])
+            if(state.settings.autoSave && (lookup === "text/x-markdown" || lookup === "text/markdown") ){
+                this.handleSave(newApp.file[newApp.currentFileIndex], newApp.value[newApp.currentFileIndex])
+                clearTimeout(this.state.app.renderTimeout)
+            }
+
             newApp.currentFileIndex = selectedId
+            const file = newApp.file[newApp.currentFileIndex]
+            document.title = "Nimbl - "+path.basename(file)
+
+
 
             return {app:newApp}
         })
+
     }
 
     handleMoveTab(dragIndex, hoverIndex) {
@@ -442,6 +487,12 @@ class App extends Component {
             newApp.file = [...newApp.file]
             newApp.preview = [...newApp.preview]
             newApp.value = [...newApp.value]
+
+            const lookup = mime.lookup(newApp.file[newApp.currentFileIndex])
+            if(state.settings.autoSave && removedIndex===newApp.currentFileIndex && (lookup === "text/x-markdown" || lookup === "text/markdown")){
+                this.handleSave(newApp.file[removedIndex], newApp.value[removedIndex])
+                clearTimeout(this.state.app.renderTimeout)
+            }
 
             newApp.tabs.splice(removedIndex, 1) // remove the item
             newApp.file.splice(removedID, 1)
@@ -477,6 +528,15 @@ class App extends Component {
             let newSettings = {...oldState.settings}
             newSettings.mdSettings = {...newSettings.mdSettings, ...update}
             store.set("settings.mdSettings", newSettings.mdSettings)
+            return {settings:newSettings}
+        })
+    }
+
+    autoSaveToggle(){
+        this.setState((oldState, props) => {
+            let newSettings = {...oldState.settings}
+            newSettings.autoSave = !newSettings.autoSave
+            store.set("settings.autoSave", newSettings.autoSave)
             return {settings:newSettings}
         })
     }
@@ -532,8 +592,26 @@ class App extends Component {
         }else{
             sidebar = null
         }
+
         return (
             <div className="App">
+                <Modal
+                  title="Close"
+                  visible={this.state.app.quitting}
+                  closable={false}
+                  okText="Don't close"
+                  cancelText="Close without saving"
+                  maskClosable={false}
+                  zIndex={10000}
+                  onOk={()=>this.setState((state,props)=>{
+                      const newApp = {...state.app}
+                      newApp.quitting = false;
+                      return {app: newApp}
+                  })}
+                  onCancel={()=>ipcRenderer.sendSync("mainClose")}
+                >
+
+                </Modal>
                 <Settings   visible = {this.state.app.settingsModalOpen}
                             settings = {this.state.settings}
                             handleSidebarToggle={this.handleSidebarToggle}
@@ -544,7 +622,8 @@ class App extends Component {
                             handleMdSettingsChange={this.handleMdSettingsChange}
                             handleMDModeChange={this.handleMDModeChange}
                             showAdvancedSettings={this.state.app.showAdvancedSettings}
-                            toggleAdvancedSettings={this.handleAdvancedSettingsToggle}/>
+                            toggleAdvancedSettings={this.handleAdvancedSettingsToggle}
+                            autoSaveToggle={this.autoSaveToggle}/>
                 <div className="AppBody">
                     <PanelGroup borderColor="#001f27" panelWidths={[
                         {size: this.state.settings.sidebarWidth, minSize:140}
@@ -556,15 +635,30 @@ class App extends Component {
                             selectTab={this.handleTabSelect}
                             closeTab={this.handleClosedTab}
                             moveTab={this.handleMoveTab}
-                            tabs={this.state.app.tabs.map(id => ({content: path.basename(this.state.app.file[id]), id: id, active: id === this.state.app.currentFileIndex}))}
+                            tabs={this.state.app.tabs.map(id => {
+                                const fileMime = mime.lookup(this.state.app.file[id])
+                                const icon = this.state.app.unsavedChanges[id]
+                                    ? "fileIcon fa fa-circle"
+                                    : fileMime === "text/x-markdown" || fileMime === "text/markdown"
+                                    ? "fileIcon fa fa-file-text"
+                                    : fileMime.startsWith("image")
+                                    ? "fileIcon fa fa-file-image-o"
+                                    : "fileIcon fa fa-file"
+                                return {
+                                    content: (<span>
+                                                <i className={icon} aria-hidden="true"></i>&nbsp;{path.basename(this.state.app.file[id])}
+                                            </span>),
+                                    id: id,
+                                    active: id === this.state.app.currentFileIndex}
+                                })}
                             >
                                 <div className="appBarButtonBlock">
                                     <button onClick={this.handleOpenDir}>
                                         <i className="fa fa-folder-open" aria-hidden="true"></i>
                                     </button>
-                                    <button className={this.state.app.unsavedChanges ? "primary" : ""} onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
+                                    {this.state.settings.autoSave ? "" : <button onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
                                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                                    </button>
+                                    </button>}
                                     <button className={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
                                         <i className="fa fa-arrow-up" aria-hidden="true"></i>
                                     </button>

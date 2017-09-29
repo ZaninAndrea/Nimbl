@@ -15,6 +15,9 @@
         "directories": {
             "buildResources": "assets"
         },
+        "win": {
+            "icon": "build/icon.ico"
+        },
         "productName": "Nimbl"
     },
     "dependencies": {
@@ -25,6 +28,7 @@
         "electron-store": "^1.2.0",
         "handlebars": "^4.0.10",
         "highlight.js": "^9.12.0",
+        "is-absolute-url": "^2.1.0",
         "jquery": "^3.2.1",
         "jquery.scrollto": "^2.1.2",
         "js-yaml": "^3.10.0",
@@ -33,6 +37,7 @@
         "markdown-it": "^8.3.1",
         "markdown-it-block-image": "0.0.3",
         "markdown-it-container": "^2.0.0",
+        "markdown-it-ins": "^2.0.0",
         "markdown-it-smartarrows": "^1.0.1",
         "markdown-it-table-of-contents": "^0.3.2",
         "markdown-it-task-checkbox": "^1.0.4",
@@ -64,7 +69,8 @@
         "electron-dev": "concurrently \"yarn watch-css\" \"SET BROWSER=none&& yarn start\" \"wait-on http://localhost:3000 && electron .\"",
         "electron-pack": "build --em.main=build/electron.js --win --x64",
         "electron-pack32": "build --em.main=build/electron.js --win --ia32",
-        "preelectron-pack": "yarn build-css && yarn build"
+        "preelectron-pack": "yarn build-css && yarn build",
+        "preelectron-pack32": "yarn build-css && yarn build"
     },
     "devDependencies": {
         "concurrently": "^3.5.0",

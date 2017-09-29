@@ -897,3 +897,12 @@ button:hover {
 
 button :focus {
   border: 0px; }
+
+button.primary {
+  color: #268bd2; }
+
+.react-tabs-tab-close {
+  box-sizing: content-box; }
+
+.fileIcon.fa-circle {
+  color: #268bd2; }

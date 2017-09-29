@@ -7,18 +7,11 @@ const generatePreview = require("./generatePreview.js")
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
-
+const isAbsoluteUrl = require('is-absolute-url');
+let mainWindow;
 let previewCache={} // cache of link previews used in the markdown preview
 
 ipcMain.on('gitFlow', (event, arg) => {
-    // exec(`cd ${arg[0]} | git add . ; git commit -m "changed file ${arg[1]}" ; git push`, (error, stdout, stderr) => {
-    //   if (error) {
-    //     event.sender.send('asynchronous-reply', `exec error: ${error}`)
-    //     console.error(`exec error: ${error}`);
-    //     return;
-    //   }
-    //   event.sender.send('asynchronous-reply', `stdout: ${stdout}`, `stderr: ${stderr}`)
-    // });
     event.sender.send('gitFlow-reply', "WORK IN PROGRESS")
 })
 
@@ -37,7 +30,10 @@ ipcMain.on("linkPreview", (event, arg) => {
     }
 })
 
-let mainWindow;
+ipcMain.on("mainClose", (event, arg) => {
+    mainWindow.destroy()
+})
+
 
 function createWindow() {
   mainWindow = new BrowserWindow({width: 900, height: 680});
@@ -48,7 +44,11 @@ function createWindow() {
   // intercept link opening
   mainWindow.webContents.on('new-window', function(event, url){
       event.preventDefault();
-      shell.openExternal(url); //open url with default browser
+      if (isAbsoluteUrl(url)){
+          shell.openExternal(url); //open url with default browser
+      }else{
+          ipcMain.send("changeFile", url)
+      }
   });
 
   if (isDev){

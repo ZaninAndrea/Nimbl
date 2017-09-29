@@ -1,6 +1,6 @@
 const request = require("request")
 const cheerio = require("cheerio")
-const url = "https://medium.com/personal-growth/there-is-no-greater-agony-than-bearing-an-untold-story-inside-you-81385bfd4b4e"
+const urlUtil = require("url")
 
 // finds title in the DOM passed
 const findTitleInDom = ($dom) => {
@@ -33,8 +33,11 @@ const generatePreview = (url, callback) => {
         if (!error) {
             const $dom = cheerio.load(body)
             const descr = findDescriptionInDom($dom)
-            const title = findTitleInDom($dom)
-            const img = findImageInDom($dom)
+            let title = findTitleInDom($dom)
+            title = title ? title : url
+
+            let img = findImageInDom($dom)
+                img = img ? urlUtil.resolve((new urlUtil.URL(url)).href, img) : ""
 
             const html = `<div class="linkPreviewContainer">
                 <a href="${url}" data-href="${url}" title="${url}" rel="nofollow" target="_blank" class="linkPreviewText">

@@ -25,6 +25,9 @@ class Settings extends Component {
                 <Checkbox checked={this.props.settings.showPreview} onClick={this.props.handleShowPreviewToggle}>
                     preview
                 </Checkbox><br />
+                <Checkbox checked={this.props.settings.autoSave} onClick={this.props.autoSaveToggle}>
+                    autoSave
+                </Checkbox><br />
                 {this.props.settings.refreshRate<500 ? <i className="fa fa-exclamation-triangle" aria-hidden="true"></i> : ""} preview refresh rate &nbsp;
                 <InputNumber
                     step={0.1}

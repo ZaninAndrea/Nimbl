@@ -157,3 +157,15 @@ button:hover{
 button :focus{
     border: 0px;
 }
+
+button.primary{
+    color:$blue;
+}
+
+.react-tabs-tab-close{
+    box-sizing: content-box;
+}
+
+.fileIcon.fa-circle{
+    color: $blue;
+}
