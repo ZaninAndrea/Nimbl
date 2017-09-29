@@ -563,7 +563,7 @@ class App extends Component {
                 : "SELECT A SUPPORTED FILE"
 
          } else {
-             editor = "NO FILE SELECTED"
+             editor = <img className="placeholderLogo" src="./icons/placeholder.png"/>
          }
 
         let sidebar
@@ -637,16 +637,15 @@ class App extends Component {
                             moveTab={this.handleMoveTab}
                             tabs={this.state.app.tabs.map(id => {
                                 const fileMime = mime.lookup(this.state.app.file[id])
-                                const icon = this.state.app.unsavedChanges[id]
-                                    ? "fileIcon fa fa-circle"
-                                    : fileMime === "text/x-markdown" || fileMime === "text/markdown"
+                                const icon = fileMime === "text/x-markdown" || fileMime === "text/markdown"
                                     ? "fileIcon fa fa-file-text"
                                     : fileMime.startsWith("image")
                                     ? "fileIcon fa fa-file-image-o"
                                     : "fileIcon fa fa-file"
                                 return {
-                                    content: (<span>
-                                                <i className={icon} aria-hidden="true"></i>&nbsp;{path.basename(this.state.app.file[id])}
+                                    content: (<span className={this.state.app.unsavedChanges[id] ? "unsavedTab" : ""}>
+                                                <i className={icon} aria-hidden="true"></i>
+                                                &nbsp;{path.basename(this.state.app.file[id])}
                                             </span>),
                                     id: id,
                                     active: id === this.state.app.currentFileIndex}

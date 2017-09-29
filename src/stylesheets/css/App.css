@@ -94,6 +94,9 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   padding: 5px 0px 0px 5px;
   margin-right: 0px; }
 
+.fileIcon {
+  color: #93a1a1; }
+
 .fileIcon.fa-file-text {
   color: #dc322f; }
 
@@ -904,5 +907,28 @@ button.primary {
 .react-tabs-tab-close {
   box-sizing: content-box; }
 
-.fileIcon.fa-circle {
+.react-tabs-tab-content span {
+  transition: color 0.5s ease; }
+
+.unsavedTab {
   color: #268bd2; }
+
+button:hover .fa-cog {
+  animation: fa-spin 2s infinite linear; }
+
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg); } }
+
+.placeholderLogo {
+  opacity: 0.5;
+  max-width: 80%;
+  max-height: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 10%; }
