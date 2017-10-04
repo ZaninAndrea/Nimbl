@@ -774,6 +774,47 @@ a.linkPreviewText:hover {
 .spoilerContent table tr:nth-child(2n) {
   background-color: #ebd547; }
 
+.ant-modal-content {
+  background-color: transparent; }
+
+.ant-modal-header {
+  padding: 13px 16px;
+  border-radius: 4px 4px 0 0;
+  background: #002b36;
+  color: #93a1a1;
+  border-bottom: 1px solid #586e75; }
+
+.ant-modal-body {
+  background: #002b36;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.5; }
+
+.ant-modal-title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: #93a1a1; }
+
+.ant-modal-close {
+  color: #586e75; }
+
+.ant-modal-close:hover {
+  background: transparent;
+  color: #fdf6e3; }
+
+.ant-checkbox-inner {
+  background-color: #eee8d5;
+  border-color: #fdf6e3; }
+
+.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #268bd2;
+  border-color: #268bd2; }
+
+.ant-checkbox-checked .ant-checkbox-inner:after {
+  border-color: #eee8d5; }
+
 body {
   margin: 0;
   padding: 0;
@@ -816,7 +857,7 @@ body {
   overflow: auto; }
 
 .sidebarTypeSwitch {
-  height: 10%;
+  height: 32px;
   width: 100%; }
 
 .imageContainer {
@@ -857,10 +898,11 @@ button {
 button:hover {
   background-color: #073642; }
 
-.sidebarTypeSwitch button {
+.sidebarTypeSwitch .fluid-button {
   width: 50%;
-  height: 30px;
-  text-overflow: ellipsis; }
+  height: 32px;
+  text-overflow: ellipsis;
+  line-height: 32px; }
 
 .projectTitle {
   background-color: #001f27;
@@ -890,13 +932,15 @@ button:hover {
   background: #001f27; }
 
 .appBarButtonBlock {
-  display: inline-block;
   margin-top: -7px;
-  margin-right: -7px; }
+  text-align: center;
+  margin-right: -7px;
+  width: 140px !important; }
 
-.appBarButtonBlock button {
+.appBarButtonBlock div {
   width: 35px;
-  height: 35px; }
+  height: 35px;
+  line-height: 35px; }
 
 button :focus {
   border: 0px; }
@@ -913,7 +957,7 @@ button.primary {
 .unsavedTab {
   color: #268bd2; }
 
-button:hover .fa-cog {
+div:hover > .fa-cog {
   animation: fa-spin 2s infinite linear; }
 
 @keyframes fa-spin {

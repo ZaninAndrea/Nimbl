@@ -15,6 +15,7 @@ import {Modal} from 'antd'
 import "source-code-pro/source-code-pro.css"
 import './stylesheets/css/App.css'
 import Tabs from "react-draggable-tabs"
+import {Button, ButtonGroup} from 'react-fluid-buttons'
 
 const electron = window.require('electron') // little trick to import electron in react
 const fs = electron.remote.require('fs')
@@ -581,12 +582,14 @@ class App extends Component {
                                selectedKeys={[]}
                            />
                             <div className="sidebarTypeSwitch">
-                                <button>
-                                    Simple
-                                </button>
-                                <button>
-                                    Advanced
-                                </button>
+                                <ButtonGroup>
+                                    <Button>
+                                        Simple
+                                    </Button>
+                                    <Button>
+                                        Advanced
+                                    </Button>
+                                </ButtonGroup>
                             </div>
                        </div>
         }else{
@@ -651,23 +654,23 @@ class App extends Component {
                                     active: id === this.state.app.currentFileIndex}
                                 })}
                             >
-                                <div className="appBarButtonBlock">
-                                    <button onClick={this.handleOpenDir}>
+                                <ButtonGroup className="appBarButtonBlock">
+                                    <Button onClick={this.handleOpenDir}>
                                         <i className="fa fa-folder-open" aria-hidden="true"></i>
-                                    </button>
-                                    {this.state.settings.autoSave ? "" : <button onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
+                                    </Button>
+                                    {/* {this.state.settings.autoSave ? "" : <Button onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
                                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                                    </button>}
-                                    <button className={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
+                                    </Button>} */}
+                                    <Button className={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
                                         <i className="fa fa-arrow-up" aria-hidden="true"></i>
-                                    </button>
-                                    <button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
+                                    </Button>
+                                    <Button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
                                         <i className="fa fa-paper-plane" aria-hidden="true"></i>
-                                    </button>
-                                    <button onClick={this.handleSettingsToggle}>
+                                    </Button>
+                                    <Button onClick={this.handleSettingsToggle}>
                                         <i className="fa fa-cog" aria-hidden="true"></i>
-                                    </button>
-                                </div>
+                                    </Button>
+                                </ButtonGroup>
                             </Tabs>
                             <div style={{width:"100%", height:"100%"}}>{editor}</div>
                         </div>

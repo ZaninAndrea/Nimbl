@@ -1,0 +1,40 @@
+.ant-modal-content {
+  background-color: transparent; }
+
+.ant-modal-header {
+  padding: 13px 16px;
+  border-radius: 4px 4px 0 0;
+  background: #002b36;
+  color: #93a1a1;
+  border-bottom: 1px solid #586e75; }
+
+.ant-modal-body {
+  background: #002b36;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.5; }
+
+.ant-modal-title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: #93a1a1; }
+
+.ant-modal-close {
+  color: #586e75; }
+
+.ant-modal-close:hover {
+  background: transparent;
+  color: #fdf6e3; }
+
+.ant-checkbox-inner {
+  background-color: #eee8d5;
+  border-color: #fdf6e3; }
+
+.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #268bd2;
+  border-color: #268bd2; }
+
+.ant-checkbox-checked .ant-checkbox-inner:after {
+  border-color: #eee8d5; }

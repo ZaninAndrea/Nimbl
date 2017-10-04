@@ -1,0 +1,49 @@
+@import 'shared';
+
+.ant-modal-content{
+    background-color: transparent;
+}
+.ant-modal-header {
+    padding: 13px 16px;
+    border-radius: 4px 4px 0 0;
+    background: $base03;
+    color: $base1;
+    border-bottom: 1px solid $base01;
+}
+
+.ant-modal-body {
+    background: $base03;
+    padding: 16px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.ant-modal-title {
+    margin: 0;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    color: $base1;
+}
+
+.ant-modal-close{
+    color: $base01;
+}
+.ant-modal-close:hover{
+    background: transparent;
+    color: $base3;
+}
+
+.ant-checkbox-inner {
+    background-color: $base2;
+    border-color: $base3;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
+    background-color: $blue;
+    border-color: $blue;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner:after {
+    border-color: $base2;
+}

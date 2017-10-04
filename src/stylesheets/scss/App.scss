@@ -8,7 +8,7 @@
 @import 'Tree';
 @import 'github-markdown';
 @import 'customMD';
-
+@import 'antd';
 
 body {
   margin: 0;
@@ -60,7 +60,7 @@ body {
 }
 
 .sidebarTypeSwitch{
-    height: 10%;
+    height: 32px;
     width: 100%;
 }
 .imageContainer{
@@ -108,10 +108,11 @@ button:hover{
     background-color: $base02;
 }
 
-.sidebarTypeSwitch button{
+.sidebarTypeSwitch .fluid-button{
     width:50%;
-    height:30px;
+    height:32px;
     text-overflow: ellipsis;
+    line-height: 32px;
 }
 
 .projectTitle{
@@ -144,14 +145,16 @@ button:hover{
 }
 
 .appBarButtonBlock{
-    display: inline-block;
     margin-top: -7px;
+    text-align: center;
     margin-right: -7px;
+    width:140px !important;
 }
 
-.appBarButtonBlock button{
+.appBarButtonBlock div{
     width:35px;
     height:35px;
+    line-height: 35px;
 }
 
 button :focus{
@@ -174,7 +177,7 @@ button.primary{
     color: $blue;
 }
 
-button:hover .fa-cog{
+div:hover > .fa-cog{
     animation: fa-spin 2s infinite linear;
 }
 
