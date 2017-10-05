@@ -2,7 +2,8 @@ import path from "path";
 const electron = window.require('electron');
 const fs = electron.remote.require('fs');
 
-const buildDirTree = (dir, position) => {
+const buildDirTree = (dir, position, expandedNodes=[]) => {
+    console.log(expandedNodes)
     let tree = {
         key: dir,
         position: position,
@@ -15,6 +16,21 @@ const buildDirTree = (dir, position) => {
     }
 
     const list = fs.readdirSync(dir);
+    list.sort((a,b)=>{
+        let pathA = dir + "/" + a;
+        let pathB = dir + "/" + b;
+        const statA = fs.statSync(pathA);
+        const statB = fs.statSync(pathB);
+
+        // put folders on top
+        if (statB.isDirectory() && !statA.isDirectory()) return 1
+        if (statA.isDirectory() && !statB.isDirectory()) return -1
+
+        // order by name
+        if (a>b) return 1
+        if (a<b) return -1
+        return 0
+    })//add function
     let tempPosition = 0;
     list.forEach(function(element) {
         // Full path of that file
@@ -23,7 +39,8 @@ const buildDirTree = (dir, position) => {
         const stat = fs.statSync(path);
         if (stat && stat.isDirectory()) // dive into any directory
             // Dive into the directory
-            tree.children.push({key:path, name:element, position:position.concat([tempPosition])});
+            tree.children.push(expandedNodes.indexOf(path) !== -1 ? buildDirTree(path,position.concat([tempPosition]),expandedNodes)
+                                                            : {key:path, name:element, position:position.concat([tempPosition])});
         else // create a node of any file
             // Call the action
             tree.children.push({key:path, name:element, isLeaf:true, position:position.concat([tempPosition])})
