@@ -29,7 +29,7 @@ class App extends Component {
         super(props)
         // binding all the functions
         this.handleChange = this.handleChange.bind(this)
-        // this.handleDirChange = this.handleDirChange.bind(this)
+        this.handleDirChange = this.handleDirChange.bind(this)
         this.handleTreeSelect = this.handleTreeSelect.bind(this)
         this.handleSave = this.handleSave.bind(this)
         this.handleOpenDir = this.handleOpenDir.bind(this)
@@ -114,6 +114,8 @@ class App extends Component {
                 treeExpandedKeys: [],
                 showAdvancedSettings: false,
                 quitting:false,
+                newFileModalOpen:false,
+                newFolderModalOpen:false,
             },
             settings: settings
         }
@@ -176,15 +178,16 @@ class App extends Component {
         })
     }
 
-    // handleDirChange(event, filename) {
-    //     if (event === "rename") { // if the directory tree changed
-    //         this.setState((oldState, props) => {
-    //             let newApp = {...oldState.app}
-    //             newApp.tree = buildTree(oldState.app.dir) // rebuild the directory tree
-    //             return {app:newApp}
-    //         })
-    //     }
-    // }
+    handleDirChange(event, filename) {
+        if (event === "rename") { // if the directory tree changed
+            this.setState((oldState, props) => {
+                let newApp = {...oldState.app}
+                newApp.tree = buildDirTree(oldState.app.dir,[], oldState.app.treeExpandedKeys) // rebuild the directory tree
+
+                return {app:newApp}
+            })
+        }
+    }
 
     handleTreeSelect(node, data) { // handles clicks in the sidebar
         if (node.length !== 0) {
@@ -441,6 +444,7 @@ class App extends Component {
     }
 
     handleTreeExpand(expandedKeys) {
+        console.log(expandedKeys)
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
             newApp.treeExpandedKeys = expandedKeys
@@ -449,7 +453,6 @@ class App extends Component {
     }
 
     handleTabSelect(selectedIndex, selectedId) {
-        console.log("select")
         this.setState((state, props) => {
             let newApp = {...state.app}
 
@@ -583,11 +586,11 @@ class App extends Component {
                            />
                             <div className="sidebarTypeSwitch">
                                 <ButtonGroup>
-                                    <Button>
-                                        Simple
+                                    <Button onClick={()=>this.setState((state,props)=>{const newApp=state.app; newApp.newFileModalOpen=true; return {app:newApp}})}>
+                                        <i className="material-icons">insert_drive_file</i>
                                     </Button>
-                                    <Button>
-                                        Advanced
+                                    <Button onClick={()=>this.setState((state,props)=>{const newApp=state.app; newApp.newFolderModalOpen=true; return {app:newApp}})}>
+                                        <i className="material-icons">create_new_folder</i>
                                     </Button>
                                 </ButtonGroup>
                             </div>
@@ -613,8 +616,36 @@ class App extends Component {
                   })}
                   onCancel={()=>ipcRenderer.sendSync("mainClose")}
                 >
-
+                    If you close now all your unsaved changes will go lost!!
                 </Modal>
+
+                <Modal
+                  title="Create new file"
+                  visible={this.state.app.newFileModalOpen}
+                  closable={true}
+                  okText="Create file"
+                  cancelText="Nevermind"
+                  maskClosable={true}
+                  zIndex={10000}
+                //   onOk={}
+                  onClose={()=>this.setState((state,props)=>{const newApp=state.app; newApp.newFileModalOpen=false; return {app:newApp}})}
+                >
+                    Ehi
+                </Modal>
+                <Modal
+                  title="Create new folder"
+                  visible={this.state.app.newFolderModalOpen}
+                  closable={true}
+                  okText="Create folder"
+                  cancelText="Nevermind"
+                  maskClosable={true}
+                  zIndex={10000}
+                //   onOk={}
+                  onClose={()=>this.setState((state,props)=>{const newApp=state.app; newApp.newFolderModalOpen=false; return {app:newApp}})}
+                >
+                    Ehi
+                </Modal>
+
                 <Settings   visible = {this.state.app.settingsModalOpen}
                             settings = {this.state.settings}
                             handleSidebarToggle={this.handleSidebarToggle}
