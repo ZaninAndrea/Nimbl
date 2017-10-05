@@ -10,6 +10,41 @@
 @import 'customMD';
 @import 'antd';
 
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../font/MaterialIcons-Regular.woff'); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url('../font/MaterialIcons-Regular.woff') format('woff');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -113,6 +148,10 @@ button:hover{
     height:32px;
     text-overflow: ellipsis;
     line-height: 32px;
+    padding-top: 4px;
+}
+.sidebarTypeSwitch .fluid-button .material-icons{
+    font-size: 24px;  /* Preferred icon size */
 }
 
 .projectTitle{
