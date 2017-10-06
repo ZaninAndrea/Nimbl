@@ -6,6 +6,7 @@
     "license": "MIT",
     "description": "Solarized markdown notes",
     "main": "public/electron.js",
+    "repository": "https://github.com/ZaninAndrea/mdeditor",
     "build": {
         "appId": "com.nimbl",
         "files": [
@@ -18,6 +19,9 @@
         "win": {
             "icon": "build/icon.ico"
         },
+        "publish": {
+            "provider": "github"
+        },
         "productName": "Nimbl"
     },
     "dependencies": {
@@ -26,6 +30,7 @@
         "cheerio": "^1.0.0-rc.2",
         "electron-is-dev": "^0.3.0",
         "electron-store": "^1.2.0",
+        "electron-updater": "^2.10.1",
         "handlebars": "^4.0.10",
         "highlight.js": "^9.12.0",
         "is-absolute-url": "^2.1.0",

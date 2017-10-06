@@ -116,6 +116,7 @@ class App extends Component {
                 quitting:false,
                 newFileModalOpen:false,
                 newFolderModalOpen:false,
+                updateReady:false,
             },
             settings: settings
         }
@@ -142,6 +143,12 @@ class App extends Component {
                 return false // prevent closing
             }
         }
+
+        ipcRenderer.on("updateReady", ()=>this.setState((state,props)=>{
+            let newApp = {...state.app}
+            newApp.updateReady=true
+            return {app:newApp}
+        }))
     }
 
     // handle CTRL+S shortcut
@@ -701,6 +708,10 @@ class App extends Component {
                                     <Button onClick={this.handleSettingsToggle}>
                                         <i className="fa fa-cog" aria-hidden="true"></i>
                                     </Button>
+                                    {this.state.app.updateReady ?
+                                        <Button onClick={()=>ipcRenderer.send('quitAndInstall')}>
+                                        <i className="material-icons primary" style={{marginTop: "10px"}}>system_update_alt</i>
+                                    </Button> : ""}
                                 </ButtonGroup>
                             </Tabs>
                             <div style={{width:"100%", height:"100%"}}>{editor}</div>

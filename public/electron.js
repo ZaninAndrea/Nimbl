@@ -1,8 +1,6 @@
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const {app, BrowserWindow, Menu, protocol, ipcMain, dialog, shell} = require('electron');
+const {autoUpdater} = require("electron-updater");
 const { exec } = require('child_process');
-const {ipcMain, shell} = require('electron')
 const generatePreview = require("./generatePreview.js")
 const path = require('path');
 const url = require('url');
@@ -58,9 +56,19 @@ function createWindow() {
           .then((name) => console.log(`Added Extension:  ${name}`))
           .catch((err) => console.log('An error occurred: ', err));
   }
+
+  autoUpdater.checkForUpdates();
+
 }
 
 app.on('ready', createWindow);
+
+autoUpdater.on('update-downloaded', (info) => {
+    mainWindow.webContents.send('updateReady')
+});
+ipcMain.on("quitAndInstall", (event, arg) => {
+    autoUpdater.quitAndInstall();
+})
 
 // on MacOS leave process running also with no windows
 app.on('window-all-closed', () => {
