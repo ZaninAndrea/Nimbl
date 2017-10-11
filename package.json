@@ -1,6 +1,6 @@
 {
     "name": "nimbl",
-    "version": "0.8.2",
+    "version": "0.8.3",
     "author": "ZaninAndrea",
     "homepage": "./",
     "license": "MIT",
@@ -18,7 +18,7 @@
         },
         "win": {
             "icon": "build/icon.ico"
-        }
+        },
         "productName": "Nimbl"
     },
     "dependencies": {
@@ -74,13 +74,16 @@
         "pack32": "build --em.main=build/electron.js --win --ia32",
         "prepack": "yarn build-css && yarn build",
         "prepack32": "yarn build-css && yarn build",
-        "ship":"build --em.main=build/electron.js --win --ia32 -p always"
+        "ship": "build --em.main=build/electron.js --win --ia32 -p always -c electron-builder.yml",
+        "preship": "yarn build-css && yarn build",
+        "pretty": "prettier --write \"{public,src}/**/*.{scss,js}\""
     },
     "devDependencies": {
         "concurrently": "^3.5.0",
-        "electron": "^1.7.5",\
+        "electron": "^1.7.5",
         "electron-builder": "^19.20.1",
         "electron-devtools-installer": "^2.2.0",
+        "prettier": "^1.7.4",
         "wait-on": "^2.0.2"
     }
 }

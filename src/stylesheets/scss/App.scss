@@ -1,56 +1,55 @@
-@import '~antd/dist/antd.css';
-@import 'font-awesome/css/font-awesome.min.css';
-@import 'katex/katex.min.css';
-@import 'bootstrap/css/bootstrap.min.css';
-@import 'shared';
-@import 'highlight';
-@import 'MDEditorPreview';
-@import 'Tree';
-@import 'github-markdown';
-@import 'customMD';
-@import 'antd';
+@import "~antd/dist/antd.css";
+@import "font-awesome/css/font-awesome.min.css";
+@import "katex/katex.min.css";
+@import "bootstrap/css/bootstrap.min.css";
+@import "shared";
+@import "highlight";
+@import "MDEditorPreview";
+@import "Tree";
+@import "github-markdown";
+@import "customMD";
+@import "antd";
 
 @font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../font/MaterialIcons-Regular.woff'); /* For IE6-8 */
-  src: local('Material Icons'),
-    local('MaterialIcons-Regular'),
-    url('../font/MaterialIcons-Regular.woff') format('woff');
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../font/MaterialIcons-Regular.woff"); /* For IE6-8 */
+    src: local("Material Icons"), local("MaterialIcons-Regular"),
+        url("../font/MaterialIcons-Regular.woff") format("woff");
 }
 
 .material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 16px;  /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 16px; /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
 
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
 
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
 
-  /* Support for IE. */
-  font-feature-settings: 'liga';
+    /* Support for IE. */
+    font-feature-settings: "liga";
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background-color: $base03;
-  color:$base1;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: $base03;
+    color: $base1;
 }
 
 #root {
@@ -70,19 +69,19 @@ body {
     margin: 0px;
 }
 
-.divider div{
-    cursor:col-resize !important;
+.divider div {
+    cursor: col-resize !important;
 }
 
 .mainEditor {
     height: 100%;
     margin: 0px;
-    width:100%;
+    width: 100%;
     padding-right: 0px;
     padding-left: 0px;
 }
 
-.sidebar{
+.sidebar {
     height: 100%;
     width: 100%;
     background-color: $base04;
@@ -94,14 +93,17 @@ body {
     overflow: auto;
 }
 
-.sidebarTypeSwitch{
+.sidebarTypeSwitch {
     height: 32px;
     width: 100%;
 }
-.imageContainer{
+.imageContainer {
     /*CHECKERBOARD PATTER FOR TRASNPARENT IMAGES*/
     background-color: #e6e6e6;
-    background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
+    background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
+        linear-gradient(-45deg, #808080 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #808080 75%),
+        linear-gradient(-45deg, transparent 75%, #808080 75%);
     background-size: 40px 40px;
     background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
 
@@ -119,45 +121,46 @@ body {
     overflow-y: auto;
 }
 
-.row{
+.row {
     margin-left: 0px;
     margin-right: 0px;
 }
 
-.rdTabAddButton{
+.rdTabAddButton {
     visibility: hidden;
 }
 
-ul, ol {
+ul,
+ol {
     list-style: disc;
 }
-button{
+button {
     background-color: $base04;
     transition: background-color 0.5s ease;
     color: $base1;
     border: 0px;
-    outline:none;
+    outline: none;
 }
 
-button:hover{
+button:hover {
     background-color: $base02;
 }
 
-.sidebarTypeSwitch .fluid-button{
-    width:50%;
-    height:32px;
+.sidebarTypeSwitch .fluid-button {
+    width: 50%;
+    height: 32px;
     text-overflow: ellipsis;
     line-height: 32px;
     padding-top: 4px;
 }
-.sidebarTypeSwitch .fluid-button .material-icons{
-    font-size: 24px;  /* Preferred icon size */
+.sidebarTypeSwitch .fluid-button .material-icons {
+    font-size: 24px; /* Preferred icon size */
 }
 
-.projectTitle{
+.projectTitle {
     background-color: $base04;
-    width:100%;
-    height:35px;
+    width: 100%;
+    height: 35px;
     color: $base1;
     font-weight: bold;
     overflow: hidden;
@@ -183,44 +186,44 @@ button:hover{
     background: $base04;
 }
 
-.appBarButtonBlock{
+.appBarButtonBlock {
     margin-top: -7px;
     text-align: center;
     margin-right: -7px;
-    width:140px !important;
+    width: 140px !important;
 }
 
-.appBarButtonBlock div{
-    width:35px;
-    height:35px;
+.appBarButtonBlock div {
+    width: 35px;
+    height: 35px;
     line-height: 35px;
 }
 
-button :focus{
+button :focus {
     border: 0px;
 }
 
-i.primary{
-    color:$blue;
-}
-
-.react-tabs-tab-close{
-    box-sizing: content-box;
-}
-
-.react-tabs-tab-content span{
-    transition: color 0.5s ease;
-}
-
-.unsavedTab{
+i.primary {
     color: $blue;
 }
 
-div:hover > .fa-cog{
+.react-tabs-tab-close {
+    box-sizing: content-box;
+}
+
+.react-tabs-tab-content span {
+    transition: color 0.5s ease;
+}
+
+.unsavedTab {
+    color: $blue;
+}
+
+div:hover > .fa-cog {
     animation: fa-spin 2s infinite linear;
 }
 
-@keyframes fa-spin{
+@keyframes fa-spin {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
@@ -231,7 +234,7 @@ div:hover > .fa-cog{
     }
 }
 
-.placeholderLogo{
+.placeholderLogo {
     opacity: 0.5;
     max-width: 80%;
     max-height: 80%;

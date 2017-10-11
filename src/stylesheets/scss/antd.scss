@@ -1,6 +1,6 @@
-@import 'shared';
+@import "shared";
 
-.ant-modal-content{
+.ant-modal-content {
     background-color: transparent;
 }
 .ant-modal-header {
@@ -26,10 +26,10 @@
     color: $base1;
 }
 
-.ant-modal-close{
+.ant-modal-close {
     color: $base01;
 }
-.ant-modal-close:hover{
+.ant-modal-close:hover {
     background: transparent;
     color: $base3;
 }
@@ -39,7 +39,8 @@
     border-color: $base3;
 }
 
-.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
+.ant-checkbox-checked .ant-checkbox-inner,
+.ant-checkbox-indeterminate .ant-checkbox-inner {
     background-color: $blue;
     border-color: $blue;
 }

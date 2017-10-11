@@ -32,7 +32,8 @@
   background-color: #eee8d5;
   border-color: #fdf6e3; }
 
-.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
+.ant-checkbox-checked .ant-checkbox-inner,
+.ant-checkbox-indeterminate .ant-checkbox-inner {
   background-color: #268bd2;
   border-color: #268bd2; }
 

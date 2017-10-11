@@ -1,9 +1,9 @@
-@import 'shared';
+@import "shared";
 
-.fileIcon{
-    color:$base1;
+.fileIcon {
+    color: $base1;
 }
-.fileIcon.fa-file-text{
+.fileIcon.fa-file-text {
     color: $red;
 }
 
@@ -11,10 +11,10 @@
     color: $blue;
 }
 
-.ant-tree-title{
+.ant-tree-title {
     color: $base1;
 }
 
-.ant-tree-switcher{
+.ant-tree-switcher {
     color: $base01;
 }

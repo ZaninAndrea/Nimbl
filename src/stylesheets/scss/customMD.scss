@@ -1,54 +1,58 @@
-@import 'shared';
+@import "shared";
 
-.md-body h3{
-  margin-top: 5px
+.md-body h3 {
+    margin-top: 5px;
 }
 
 .warning {
-  background-color: #e84e40;
+    background-color: #e84e40;
 }
 
-.warning table td, .warning table th{
-  border: 1px solid #b72315;
+.warning table td,
+.warning table th {
+    border: 1px solid #b72315;
 }
 
 .warning table tr {
-  background-color: #e84e40;
+    background-color: #e84e40;
 }
 
 .warning table tr:nth-child(2n) {
-  background-color: #e74132;
+    background-color: #e74132;
 }
 
 .note {
-  background-color: #29B6F6;
+    background-color: #29b6f6;
 }
 
-.note table td, .note table th{
-  border: 1px solid #0888c4;
+.note table td,
+.note table th {
+    border: 1px solid #0888c4;
 }
 
 .note table tr {
-  background-color: #29B6F6;
+    background-color: #29b6f6;
 }
 
 .note table tr:nth-child(2n) {
-  background-color: #0aabf5;
+    background-color: #0aabf5;
 }
 
 pre {
-  padding: 5px 10px 2px 10px;
-  margin-left: -5px;
-  margin-bottom: 5px;
-  border: none;
+    padding: 5px 10px 2px 10px;
+    margin-left: -5px;
+    margin-bottom: 5px;
+    border: none;
 }
 
-.markdown-body pre>code {
-    font-family: 'Source Code Pro', monospace;
+.markdown-body pre > code {
+    font-family: "Source Code Pro", monospace;
 }
 
-.linkPreviewContainer{
-    font-family: medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
+.linkPreviewContainer {
+    font-family: medium-ui-sans-serif-text-font, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+        "Open Sans", "Helvetica Neue", sans-serif;
     letter-spacing: 0;
     font-weight: 400;
     font-style: normal;
@@ -57,7 +61,8 @@ pre {
     overflow: hidden;
     max-height: 280px;
     box-sizing: border-box;
-    box-shadow: 0 1px 4px rgba(0,0,0,.04),inset 0 0 0 1px rgba(0,0,0,.09);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.09);
     display: table;
     width: 90%;
     margin-left: auto;
@@ -66,7 +71,7 @@ pre {
     background-color: $base02;
 }
 
-.linkPreviewImage{
+.linkPreviewImage {
     display: table-cell;
     vertical-align: middle;
     width: 160px;
@@ -78,7 +83,7 @@ pre {
     box-shadow: inset 0 0 0 1px $base01;
 }
 
-a.linkPreviewText{
+a.linkPreviewText {
     display: table-cell;
     vertical-align: middle;
     padding: 20px;
@@ -86,12 +91,14 @@ a.linkPreviewText{
     color: $base01;
 }
 
-a.linkPreviewText:hover{
+a.linkPreviewText:hover {
     text-decoration: none;
 }
 
-.linkPreviewText strong{
-    font-family: medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
+.linkPreviewText strong {
+    font-family: medium-ui-sans-serif-text-font, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+        "Open Sans", "Helvetica Neue", sans-serif;
     letter-spacing: 0;
     font-weight: 400;
     font-style: normal;
@@ -102,7 +109,7 @@ a.linkPreviewText:hover{
     margin-bottom: -8px;
 }
 
-.linkPreviewText em{
+.linkPreviewText em {
     font-size: 14px;
     font-style: normal;
     color: $base00;
@@ -113,35 +120,35 @@ a.linkPreviewText:hover{
     overflow: hidden;
 }
 
-.youtubePreview{
+.youtubePreview {
     margin-left: auto;
     margin-right: auto;
     width: 560px;
     height: 315px;
 }
 
-
 .spoiler {
-  background-color: #f0df75;
-  color: black;
+    background-color: #f0df75;
+    color: black;
 }
-.spoilerContent{
+.spoilerContent {
     opacity: 0;
-    transition:opacity .5s ease-out;
+    transition: opacity 0.5s ease-out;
 }
 
-.spoiler:hover .spoilerContent{
+.spoiler:hover .spoilerContent {
     opacity: 1;
-    transition:opacity .25s ease-in;
+    transition: opacity 0.25s ease-in;
 }
-.spoilerContent table td, .spoilerContent table th{
-  border: 1px solid #e6ca19;
+.spoilerContent table td,
+.spoilerContent table th {
+    border: 1px solid #e6ca19;
 }
 
 .spoilerContent table tr {
-  background-color: #f0df75;
+    background-color: #f0df75;
 }
 
 .spoilerContent table tr:nth-child(2n) {
-  background-color: #ebd547;
+    background-color: #ebd547;
 }
