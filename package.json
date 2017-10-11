@@ -1,6 +1,6 @@
 {
     "name": "nimbl",
-    "version": "0.8.0",
+    "version": "0.8.2",
     "author": "ZaninAndrea",
     "homepage": "./",
     "license": "MIT",
@@ -18,10 +18,7 @@
         },
         "win": {
             "icon": "build/icon.ico"
-        },
-        "publish": {
-            "provider": "github"
-        },
+        }
         "productName": "Nimbl"
     },
     "dependencies": {
@@ -72,15 +69,16 @@
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
-        "electron-dev": "concurrently \"yarn watch-css\" \"SET BROWSER=none&& yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-        "electron-pack": "build --em.main=build/electron.js --win --x64",
-        "electron-pack32": "build --em.main=build/electron.js --win --ia32",
-        "preelectron-pack": "yarn build-css && yarn build",
-        "preelectron-pack32": "yarn build-css && yarn build"
+        "dev": "concurrently \"yarn watch-css\" \"SET BROWSER=none&& yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+        "pack": "build --em.main=build/electron.js --win --x64",
+        "pack32": "build --em.main=build/electron.js --win --ia32",
+        "prepack": "yarn build-css && yarn build",
+        "prepack32": "yarn build-css && yarn build",
+        "ship":"build --em.main=build/electron.js --win --ia32 -p always"
     },
     "devDependencies": {
         "concurrently": "^3.5.0",
-        "electron": "^1.7.5",
+        "electron": "^1.7.5",\
         "electron-builder": "^19.20.1",
         "electron-devtools-installer": "^2.2.0",
         "wait-on": "^2.0.2"
