@@ -9,8 +9,46 @@ const isAbsoluteUrl = require('is-absolute-url');
 let mainWindow;
 let previewCache={} // cache of link previews used in the markdown preview
 
-ipcMain.on('gitFlow', (event, arg) => {
-    event.sender.send('gitFlow-reply', "WORK IN PROGRESS")
+ipcMain.on('gitPush', (event, dir) => {
+    // pull
+    exec("git pull", {cwd:dir}, (err0, stdout0, stderr0)=>{
+        if (err0){
+            console.log(err0,stderr0,"pull")
+
+            event.sender.send('gitPush-err', stderr0 ? stderr0 : stdout0)
+            return;
+        }
+
+        // add
+        exec("git add .", {cwd:dir}, (err1, stdout1, stderr1)=>{
+            if (err1){
+                console.log(err1,stderr1,"add")
+                event.sender.send('gitPush-err', stderr1 ? stderr1 : stdout1)
+                return;
+            }
+            // commit
+            exec('git commit -m "updated with Nimbl"', {cwd:dir}, (err2, stdout2, stderr2)=>{
+                if (err2){
+                    console.log(err2,stderr2,"commit")
+
+                    event.sender.send('gitPush-err', stderr2 ? stderr2 : stdout2)
+                    return;
+                }
+                // push
+                exec("git push origin master", {cwd:dir}, (err3, stdout3, stderr3)=>{
+                    if (err3){
+                        console.log(err3,stderr3,"push")
+
+                        event.sender.send('gitPush-err', stderr3 ? stderr3 : stdout3)
+                        return;
+                    }
+
+                    event.sender.send('gitPush-success')
+                })
+            })
+        })
+    })
+
 })
 
 const insertInPreviewCache = url => sender => preview => {
@@ -34,7 +72,7 @@ ipcMain.on("mainClose", (event, arg) => {
 
 
 function createWindow() {
-  mainWindow = new BrowserWindow({width: 900, height: 680, icon:`${path.join(__dirname, '../build/icon.ico')}`});
+  mainWindow = new BrowserWindow({width: 900, height: 680, icon:`${path.join(__dirname, '../build/icon.ico')}`, backgroundColor: '#002b36'});
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`); // load the react app
   if (isDev) mainWindow.openDevTools();
   mainWindow.on('closed', () => mainWindow = null);

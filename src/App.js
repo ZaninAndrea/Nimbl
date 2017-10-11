@@ -117,6 +117,7 @@ class App extends Component {
                 newFileModalOpen:false,
                 newFolderModalOpen:false,
                 updateReady:false,
+                committing:false,
             },
             settings: settings
         }
@@ -149,6 +150,25 @@ class App extends Component {
             newApp.updateReady=true
             return {app:newApp}
         }))
+
+        ipcRenderer.on("gitPush-err", (event, err)=>{
+            this.setState((state,props)=>{
+                let newApp = {...state.app}
+                newApp.committing=false
+
+                return {app:newApp}
+            })
+            alert(err)
+        })
+        ipcRenderer.on("gitPush-success", ()=>{
+            this.setState((state,props)=>{
+                let newApp = {...state.app}
+                newApp.committing=false
+
+                return {app:newApp}
+            })
+        })
+
     }
 
     // handle CTRL+S shortcut
@@ -302,7 +322,17 @@ class App extends Component {
     }
 
     handleCommit(){
-        // to do
+        if (this.state.app.dir){
+            this.setState((state,props)=>{
+                let newApp = {...state.app}
+                newApp.committing=true
+
+                return {app:newApp}
+            })
+            ipcRenderer.send("gitPush",this.state.app.dir)
+        }else{
+            alert("no folder selected")
+        }
     }
 
     handleSiteBuild(){
@@ -637,7 +667,7 @@ class App extends Component {
                 //   onOk={}
                   onClose={()=>this.setState((state,props)=>{const newApp=state.app; newApp.newFileModalOpen=false; return {app:newApp}})}
                 >
-                    Ehi
+                    TODO
                 </Modal>
                 <Modal
                   title="Create new folder"
@@ -650,7 +680,7 @@ class App extends Component {
                 //   onOk={}
                   onClose={()=>this.setState((state,props)=>{const newApp=state.app; newApp.newFolderModalOpen=false; return {app:newApp}})}
                 >
-                    Ehi
+                    TODO
                 </Modal>
 
                 <Settings   visible = {this.state.app.settingsModalOpen}
@@ -696,11 +726,13 @@ class App extends Component {
                                     <Button onClick={this.handleOpenDir}>
                                         <i className="fa fa-folder-open" aria-hidden="true"></i>
                                     </Button>
-                                    {/* {this.state.settings.autoSave ? "" : <Button onClick={this.handleSave} disabled={this.state.app.file[0] === ""}>
+                                    {this.state.settings.autoSave ? "" : <Button onClick={this.handleSave} disabled={!this.state.app.file[0]}>
                                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                                    </Button>} */}
+                                    </Button>}
                                     <Button className={this.state.app.addedChanges ? "primary" : ""} onClick={this.handleCommit}>
-                                        <i className="fa fa-arrow-up" aria-hidden="true"></i>
+                                        {this.state.app.committing
+                                            ? <i className="fa fa-refresh fa-spin" aria-hidden="true"></i>
+                                            : <i className="fa fa-arrow-up" aria-hidden="true"></i>}
                                     </Button>
                                     <Button onClick={this.handleSiteBuild} disabled={this.state.app.dir === ""}>
                                         <i className="fa fa-paper-plane" aria-hidden="true"></i>
