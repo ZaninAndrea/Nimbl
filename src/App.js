@@ -530,16 +530,18 @@ class App extends Component {
             newApp.settingsModalOpen = false
             this.md = newMd(this.state.settings.mdSettings, newApp.dir) // update md renderer
 
-            const mimeLookup = mime.lookup(
-                oldState.app.file[oldState.app.currentFileIndex]
-            )
-            newApp.preview[oldState.app.currentFileIndex] =
-                mimeLookup === "text/x-markdown" ||
-                mimeLookup === "text/markdown"
-                    ? this.md.render(
-                          oldState.app.value[oldState.app.currentFileIndex]
-                      )
-                    : ""
+            if (oldState.app.file.length > 0) {
+                const mimeLookup = mime.lookup(
+                    oldState.app.file[oldState.app.currentFileIndex]
+                )
+                newApp.preview[oldState.app.currentFileIndex] =
+                    mimeLookup === "text/x-markdown" ||
+                    mimeLookup === "text/markdown"
+                        ? this.md.render(
+                              oldState.app.value[oldState.app.currentFileIndex]
+                          )
+                        : ""
+            }
             return {app: newApp}
         })
     }
@@ -867,6 +869,12 @@ class App extends Component {
                     maskClosable={true}
                     zIndex={10000}
                     //   onOk={}
+                    onCancel={() =>
+                        this.setState((state, props) => {
+                            const newApp = state.app
+                            newApp.newFileModalOpen = false
+                            return {app: newApp}
+                        })}
                     onClose={() =>
                         this.setState((state, props) => {
                             const newApp = state.app
@@ -885,6 +893,12 @@ class App extends Component {
                     maskClosable={true}
                     zIndex={10000}
                     //   onOk={}
+                    onCancel={() =>
+                        this.setState((state, props) => {
+                            const newApp = state.app
+                            newApp.newFolderModalOpen = false
+                            return {app: newApp}
+                        })}
                     onClose={() =>
                         this.setState((state, props) => {
                             const newApp = state.app
