@@ -50,9 +50,7 @@ class App extends Component {
         this.handleTabSelect = this.handleTabSelect.bind(this)
         this.handleMoveTab = this.handleMoveTab.bind(this)
         this.handleClosedTab = this.handleClosedTab.bind(this)
-        this.handleAdvancedSettingsToggle = this.handleAdvancedSettingsToggle.bind(
-            this
-        )
+        this.handleAdvancedSettingsToggle = this.handleAdvancedSettingsToggle.bind(this)
         this.handleMDModeChange = this.handleMDModeChange.bind(this)
         this.autoSaveToggle = this.autoSaveToggle.bind(this)
         // default values
@@ -137,12 +135,7 @@ class App extends Component {
 
         window.onbeforeunload = e => {
             // checks if any file had unsaved changes
-            if (
-                this.state.app.unsavedChanges.reduce(
-                    (acc, x) => acc || x,
-                    false
-                )
-            ) {
+            if (this.state.app.unsavedChanges.reduce((acc, x) => acc || x, false)) {
                 // alerts the user
                 this.setState((state, props) => {
                     const newApp = {...state.app}
@@ -229,8 +222,7 @@ class App extends Component {
                     renderTimeout: newRenderTimeout,
                     saveTimeout: newSaveTimeout,
                     unsavedChanges: oldState.app.unsavedChanges.map(
-                        (val, idx) =>
-                            idx === oldState.app.currentFileIndex ? true : val
+                        (val, idx) => (idx === oldState.app.currentFileIndex ? true : val)
                     ),
                 },
             }
@@ -243,14 +235,12 @@ class App extends Component {
             // if the directory tree changed
             this.setState((oldState, props) => {
                 let newApp = {...oldState.app}
-                newApp.tree = buildDirTree(
-                    oldState.app.dir,
-                    [],
-                    oldState.app.treeExpandedKeys
-                ) // rebuild the directory tree
+                newApp.tree = buildDirTree(oldState.app.dir, [], oldState.app.treeExpandedKeys) // rebuild the directory tree
 
                 return {app: newApp}
             })
+        } else {
+            console.log(event, filename)
         }
     }
 
@@ -258,16 +248,12 @@ class App extends Component {
         // handles clicks in the sidebar
         if (node.length !== 0) {
             // nesting ifs so that statSync doesn't get called with undefined as argument
-            if (
-                !fs.statSync(node[0]).isDirectory() &&
-                !this.state.app.file.includes(node[0])
-            ) {
+            if (!fs.statSync(node[0]).isDirectory() && !this.state.app.file.includes(node[0])) {
                 // if a new file is selected
                 this.setState((oldState, props) => {
                     const mimeLookup = mime.lookup(node[0])
                     let currValue =
-                        mimeLookup === "text/x-markdown" ||
-                        mimeLookup === "text/markdown"
+                        mimeLookup === "text/x-markdown" || mimeLookup === "text/markdown"
                             ? fs.readFileSync(node[0]).toString() // markdown file --> read the file to an ascii string
                             : mimeLookup.startsWith("image")
                               ? "data:" +
@@ -285,8 +271,7 @@ class App extends Component {
                     let preview = oldState.app.preview
                     preview.push(
                         mimeLookup === "text/x-markdown" ||
-                        (mimeLookup === "text/markdown" &&
-                            this.state.settings.showPreview)
+                        (mimeLookup === "text/markdown" && this.state.settings.showPreview)
                             ? this.md.render(currValue)
                             : ""
                     )
@@ -321,9 +306,7 @@ class App extends Component {
                     const newApp = {
                         ...oldState.app,
                         ...{
-                            currentFileIndex: oldState.app.file.indexOf(
-                                node[0]
-                            ),
+                            currentFileIndex: oldState.app.file.indexOf(node[0]),
                         },
                     }
                     document.title = "Nimbl - " + path.basename(node[0])
@@ -341,19 +324,13 @@ class App extends Component {
 
             this.setState((oldState, props) => {
                 let newApp = {...oldState.app}
-                newApp.unsavedChanges = oldState.app.unsavedChanges.map(
-                    (val, idx) => {
-                        if (typeof filename === "string") {
-                            return oldState.app.file[idx] === filename
-                                ? false
-                                : val
-                        } else {
-                            return idx === oldState.app.currentFileIndex
-                                ? false
-                                : val
-                        }
+                newApp.unsavedChanges = oldState.app.unsavedChanges.map((val, idx) => {
+                    if (typeof filename === "string") {
+                        return oldState.app.file[idx] === filename ? false : val
+                    } else {
+                        return idx === oldState.app.currentFileIndex ? false : val
                     }
-                )
+                })
                 return {app: newApp}
             })
         }
@@ -458,15 +435,10 @@ class App extends Component {
             if (newSettings.showPreview) {
                 // if preview enable, render markdown
                 let newApp = {...oldState.app}
-                const mimeLookup = mime.lookup(
-                    oldState.app.file[oldState.app.currentFileIndex]
-                )
+                const mimeLookup = mime.lookup(oldState.app.file[oldState.app.currentFileIndex])
                 newApp.preview[oldState.app.currentFileIndex] =
-                    mimeLookup === "text/x-markdown" ||
-                    mimeLookup === "text/markdown"
-                        ? this.md.render(
-                              oldState.app.value[oldState.app.currentFileIndex]
-                          )
+                    mimeLookup === "text/x-markdown" || mimeLookup === "text/markdown"
+                        ? this.md.render(oldState.app.value[oldState.app.currentFileIndex])
                         : ""
                 return {settings: newSettings, app: newApp}
             }
@@ -513,10 +485,7 @@ class App extends Component {
     }
 
     handleSidebarResize(sizes) {
-        if (
-            sizes.length > 1 &&
-            sizes[0].size !== this.state.settings.sidebarWidth
-        ) {
+        if (sizes.length > 1 && sizes[0].size !== this.state.settings.sidebarWidth) {
             this.setState((oldState, props) => {
                 let newSettings = {...oldState.settings}
                 newSettings.sidebarWidth = sizes[0].size
@@ -541,15 +510,10 @@ class App extends Component {
             this.md = newMd(this.state.settings.mdSettings, newApp.dir) // update md renderer
 
             if (oldState.app.file.length > 0) {
-                const mimeLookup = mime.lookup(
-                    oldState.app.file[oldState.app.currentFileIndex]
-                )
+                const mimeLookup = mime.lookup(oldState.app.file[oldState.app.currentFileIndex])
                 newApp.preview[oldState.app.currentFileIndex] =
-                    mimeLookup === "text/x-markdown" ||
-                    mimeLookup === "text/markdown"
-                        ? this.md.render(
-                              oldState.app.value[oldState.app.currentFileIndex]
-                          )
+                    mimeLookup === "text/x-markdown" || mimeLookup === "text/markdown"
+                        ? this.md.render(oldState.app.value[oldState.app.currentFileIndex])
                         : ""
             }
             return {app: newApp}
@@ -587,10 +551,7 @@ class App extends Component {
         // consume rows
         let currentRow = 0
         while (currentRow < position.row) {
-            if (
-                this.state.app.value[this.state.app.currentFileIndex][index] ==
-                "\n"
-            ) {
+            if (this.state.app.value[this.state.app.currentFileIndex][index] == "\n") {
                 currentRow++
             }
             index++
@@ -599,10 +560,7 @@ class App extends Component {
         // jump to correct position
         index += position.column
         var newValue =
-            this.state.app.value[this.state.app.currentFileIndex].slice(
-                0,
-                index
-            ) +
+            this.state.app.value[this.state.app.currentFileIndex].slice(0, index) +
             files.reduce(
                 (acc, x) =>
                     `${acc}![${x.name}](${path.join(
@@ -659,11 +617,7 @@ class App extends Component {
     handleMoveTab(dragIndex, hoverIndex) {
         this.setState((state, props) => {
             let newApp = {...state.app}
-            newApp.tabs.splice(
-                hoverIndex,
-                0,
-                newApp.tabs.splice(dragIndex, 1)[0]
-            )
+            newApp.tabs.splice(hoverIndex, 0, newApp.tabs.splice(dragIndex, 1)[0])
 
             return {app: newApp}
         })
@@ -685,10 +639,7 @@ class App extends Component {
                 removedIndex === newApp.currentFileIndex &&
                 (lookup === "text/x-markdown" || lookup === "text/markdown")
             ) {
-                this.handleSave(
-                    newApp.file[removedIndex],
-                    newApp.value[removedIndex]
-                )
+                this.handleSave(newApp.file[removedIndex], newApp.value[removedIndex])
                 clearTimeout(this.state.app.renderTimeout)
                 clearTimeout(this.state.app.saveTimeout)
             }
@@ -698,22 +649,15 @@ class App extends Component {
             newApp.preview.splice(removedID, 1)
             newApp.value.splice(removedID, 1)
 
-            if (
-                state.app.currentFileIndex === removedID &&
-                newApp.tabs.length !== 0
-            ) {
+            if (state.app.currentFileIndex === removedID && newApp.tabs.length !== 0) {
                 // automatically select another tab if needed
                 const newActive =
-                    removedIndex === 0
-                        ? state.app.tabs[0]
-                        : state.app.tabs[removedIndex - 1]
+                    removedIndex === 0 ? state.app.tabs[0] : state.app.tabs[removedIndex - 1]
 
                 newApp.currentFileIndex = newActive
             }
 
-            newApp.tabs = newApp.tabs.map(
-                tab => (tab < removedID ? tab : tab - 1)
-            ) // update the indexes
+            newApp.tabs = newApp.tabs.map(tab => (tab < removedID ? tab : tab - 1)) // update the indexes
             newApp.currentFileIndex =
                 newApp.currentFileIndex < removedID
                     ? newApp.currentFileIndex
@@ -755,25 +699,15 @@ class App extends Component {
         if (this.state.app.file.length > 0) {
             // if there are files selected
             // selected the correct editor / preview for the current file
-            const lookup = mime.lookup(
-                this.state.app.file[this.state.app.currentFileIndex]
-            )
+            const lookup = mime.lookup(this.state.app.file[this.state.app.currentFileIndex])
             editor =
                 lookup === "text/x-markdown" || lookup === "text/markdown" ? (
                     <MDEditorPreview
                         handleSave={this.handleSaveShortcut}
                         theme={this.state.settings.editorTheme}
-                        value={
-                            this.state.app.value[
-                                this.state.app.currentFileIndex
-                            ]
-                        }
+                        value={this.state.app.value[this.state.app.currentFileIndex]}
                         handleChange={this.handleChange}
-                        preview={
-                            this.state.app.preview[
-                                this.state.app.currentFileIndex
-                            ]
-                        }
+                        preview={this.state.app.preview[this.state.app.currentFileIndex]}
                         showPreview={this.state.settings.showPreview}
                         currentDir={this.state.app.dir}
                         onDrop={this.onFileDrop}
@@ -783,11 +717,7 @@ class App extends Component {
                         <div className="imageContainer">
                             <img
                                 className="img-responsive"
-                                src={
-                                    this.state.app.value[
-                                        this.state.app.currentFileIndex
-                                    ]
-                                }
+                                src={this.state.app.value[this.state.app.currentFileIndex]}
                             />
                         </div>
                     </div>
@@ -795,12 +725,7 @@ class App extends Component {
                     "SELECT A SUPPORTED FILE"
                 )
         } else {
-            editor = (
-                <img
-                    className="placeholderLogo"
-                    src="./icons/placeholder.png"
-                />
-            )
+            editor = <img className="placeholderLogo" src="./icons/placeholder.png" />
         }
 
         let sidebar
@@ -827,9 +752,7 @@ class App extends Component {
                                         return {app: newApp}
                                     })}
                             >
-                                <i className="material-icons">
-                                    insert_drive_file
-                                </i>
+                                <i className="material-icons">insert_drive_file</i>
                             </Button>
                             <Button
                                 onClick={() =>
@@ -839,9 +762,7 @@ class App extends Component {
                                         return {app: newApp}
                                     })}
                             >
-                                <i className="material-icons">
-                                    create_new_folder
-                                </i>
+                                <i className="material-icons">create_new_folder</i>
                             </Button>
                         </ButtonGroup>
                     </div>
@@ -954,9 +875,7 @@ class App extends Component {
                                 closeTab={this.handleClosedTab}
                                 moveTab={this.handleMoveTab}
                                 tabs={this.state.app.tabs.map(id => {
-                                    const fileMime = mime.lookup(
-                                        this.state.app.file[id]
-                                    )
+                                    const fileMime = mime.lookup(this.state.app.file[id])
                                     const icon =
                                         fileMime === "text/x-markdown" ||
                                         fileMime === "text/markdown"
@@ -968,8 +887,7 @@ class App extends Component {
                                         content: (
                                             <span
                                                 className={
-                                                    this.state.app
-                                                        .unsavedChanges[id]
+                                                    this.state.app.unsavedChanges[id]
                                                         ? "unsavedTab"
                                                         : ""
                                                 }
@@ -979,18 +897,13 @@ class App extends Component {
                                             </span>
                                         ),
                                         id: id,
-                                        active:
-                                            id ===
-                                            this.state.app.currentFileIndex,
+                                        active: id === this.state.app.currentFileIndex,
                                     }
                                 })}
                             >
                                 <ButtonGroup className="appBarButtonBlock">
                                     <Button onClick={this.handleOpenDir}>
-                                        <i
-                                            className="fa fa-folder-open"
-                                            aria-hidden="true"
-                                        />
+                                        <i className="fa fa-folder-open" aria-hidden="true" />
                                     </Button>
                                     {this.state.settings.autoSave ? (
                                         ""
@@ -999,18 +912,11 @@ class App extends Component {
                                             onClick={this.handleSave}
                                             disabled={!this.state.app.file[0]}
                                         >
-                                            <i
-                                                className="fa fa-floppy-o"
-                                                aria-hidden="true"
-                                            />
+                                            <i className="fa fa-floppy-o" aria-hidden="true" />
                                         </Button>
                                     )}
                                     <Button
-                                        className={
-                                            this.state.app.addedChanges
-                                                ? "primary"
-                                                : ""
-                                        }
+                                        className={this.state.app.addedChanges ? "primary" : ""}
                                         onClick={this.handleCommit}
                                     >
                                         {this.state.app.committing ? (
@@ -1019,34 +925,20 @@ class App extends Component {
                                                 aria-hidden="true"
                                             />
                                         ) : (
-                                            <i
-                                                className="fa fa-arrow-up"
-                                                aria-hidden="true"
-                                            />
+                                            <i className="fa fa-arrow-up" aria-hidden="true" />
                                         )}
                                     </Button>
                                     <Button
                                         onClick={this.handleSiteBuild}
                                         disabled={this.state.app.dir === ""}
                                     >
-                                        <i
-                                            className="fa fa-paper-plane"
-                                            aria-hidden="true"
-                                        />
+                                        <i className="fa fa-paper-plane" aria-hidden="true" />
                                     </Button>
                                     <Button onClick={this.handleSettingsToggle}>
-                                        <i
-                                            className="fa fa-cog"
-                                            aria-hidden="true"
-                                        />
+                                        <i className="fa fa-cog" aria-hidden="true" />
                                     </Button>
                                     {this.state.app.updateReady ? (
-                                        <Button
-                                            onClick={() =>
-                                                ipcRenderer.send(
-                                                    "quitAndInstall"
-                                                )}
-                                        >
+                                        <Button onClick={() => ipcRenderer.send("quitAndInstall")}>
                                             <i
                                                 className="material-icons primary"
                                                 style={{marginTop: "10px"}}
@@ -1059,9 +951,7 @@ class App extends Component {
                                     )}
                                 </ButtonGroup>
                             </Tabs>
-                            <div style={{width: "100%", height: "100%"}}>
-                                {editor}
-                            </div>
+                            <div style={{width: "100%", height: "100%"}}>{editor}</div>
                         </div>
                     </PanelGroup>
                 </div>

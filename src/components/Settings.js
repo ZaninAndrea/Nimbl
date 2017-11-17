@@ -42,14 +42,6 @@ class Settings extends Component {
                         autoSave
                     </Checkbox>
                     <br />
-                    {this.props.settings.refreshRate < 500 ? (
-                        <i
-                            className="fa fa-exclamation-triangle"
-                            aria-hidden="true"
-                        />
-                    ) : (
-                        ""
-                    )}{" "}
                     preview refresh rate &nbsp;
                     <InputNumber
                         step={0.1}
@@ -58,7 +50,12 @@ class Settings extends Component {
                         style={{marginLeft: 6}}
                         value={this.props.settings.refreshRate / 1000}
                         onChange={this.props.handleRefreshRateChange}
-                    />{" "}
+                    />&nbsp;
+                    {this.props.settings.refreshRate < 500 ? (
+                        <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+                    ) : (
+                        ""
+                    )}
                     <br />
                     theme &nbsp;
                     <Select
@@ -71,9 +68,7 @@ class Settings extends Component {
                             <Option value="monokai">Monokai</Option>
                             <Option value="twilight">Twilight</Option>
                             <Option value="terminal">Terminal</Option>
-                            <Option value="solarized_dark">
-                                Solarized Dark
-                            </Option>
+                            <Option value="solarized_dark">Solarized Dark</Option>
                         </OptGroup>
                         <OptGroup label="Light">
                             <Option value="github">Github</Option>
@@ -81,9 +76,7 @@ class Settings extends Component {
                             <Option value="kuroir">Kuroir</Option>
                             <Option value="xcode">XCode</Option>
                             <Option value="textmate">TextMate</Option>
-                            <Option value="solarized_light">
-                                Solarized Light
-                            </Option>
+                            <Option value="solarized_light">Solarized Light</Option>
                         </OptGroup>
                     </Select>
                     <br />
@@ -159,133 +152,85 @@ class Settings extends Component {
                         <p>
                             Levels to show:
                             <Checkbox
-                                checked={this.props.settings.mdSettings.tocLevels.includes(
-                                    1
-                                )}
+                                checked={this.props.settings.mdSettings.tocLevels.includes(1)}
                                 onClick={() =>
                                     this.props.handleMdSettingsChange(
                                         "tocLevels",
-                                        this.props.settings.mdSettings.tocLevels.includes(
-                                            1
-                                        )
+                                        this.props.settings.mdSettings.tocLevels.includes(1)
                                             ? this.props.settings.mdSettings.tocLevels.filter(
                                                   x => x !== 1
                                               )
-                                            : [
-                                                  ...this.props.settings
-                                                      .mdSettings.tocLevels,
-                                                  1,
-                                              ]
+                                            : [...this.props.settings.mdSettings.tocLevels, 1]
                                     )}
                             >
                                 1
                             </Checkbox>&nbsp;&nbsp;
                             <Checkbox
-                                checked={this.props.settings.mdSettings.tocLevels.includes(
-                                    2
-                                )}
+                                checked={this.props.settings.mdSettings.tocLevels.includes(2)}
                                 onClick={() =>
                                     this.props.handleMdSettingsChange(
                                         "tocLevels",
-                                        this.props.settings.mdSettings.tocLevels.includes(
-                                            2
-                                        )
+                                        this.props.settings.mdSettings.tocLevels.includes(2)
                                             ? this.props.settings.mdSettings.tocLevels.filter(
                                                   x => x !== 2
                                               )
-                                            : [
-                                                  ...this.props.settings
-                                                      .mdSettings.tocLevels,
-                                                  2,
-                                              ]
+                                            : [...this.props.settings.mdSettings.tocLevels, 2]
                                     )}
                             >
                                 2
                             </Checkbox>&nbsp;&nbsp;
                             <Checkbox
-                                checked={this.props.settings.mdSettings.tocLevels.includes(
-                                    3
-                                )}
+                                checked={this.props.settings.mdSettings.tocLevels.includes(3)}
                                 onClick={() =>
                                     this.props.handleMdSettingsChange(
                                         "tocLevels",
-                                        this.props.settings.mdSettings.tocLevels.includes(
-                                            3
-                                        )
+                                        this.props.settings.mdSettings.tocLevels.includes(3)
                                             ? this.props.settings.mdSettings.tocLevels.filter(
                                                   x => x !== 3
                                               )
-                                            : [
-                                                  ...this.props.settings
-                                                      .mdSettings.tocLevels,
-                                                  3,
-                                              ]
+                                            : [...this.props.settings.mdSettings.tocLevels, 3]
                                     )}
                             >
                                 3
                             </Checkbox>&nbsp;&nbsp;
                             <Checkbox
-                                checked={this.props.settings.mdSettings.tocLevels.includes(
-                                    4
-                                )}
+                                checked={this.props.settings.mdSettings.tocLevels.includes(4)}
                                 onClick={() =>
                                     this.props.handleMdSettingsChange(
                                         "tocLevels",
-                                        this.props.settings.mdSettings.tocLevels.includes(
-                                            4
-                                        )
+                                        this.props.settings.mdSettings.tocLevels.includes(4)
                                             ? this.props.settings.mdSettings.tocLevels.filter(
                                                   x => x !== 4
                                               )
-                                            : [
-                                                  ...this.props.settings
-                                                      .mdSettings.tocLevels,
-                                                  4,
-                                              ]
+                                            : [...this.props.settings.mdSettings.tocLevels, 4]
                                     )}
                             >
                                 4
                             </Checkbox>&nbsp;&nbsp;
                             <Checkbox
-                                checked={this.props.settings.mdSettings.tocLevels.includes(
-                                    5
-                                )}
+                                checked={this.props.settings.mdSettings.tocLevels.includes(5)}
                                 onClick={() =>
                                     this.props.handleMdSettingsChange(
                                         "tocLevels",
-                                        this.props.settings.mdSettings.tocLevels.includes(
-                                            5
-                                        )
+                                        this.props.settings.mdSettings.tocLevels.includes(5)
                                             ? this.props.settings.mdSettings.tocLevels.filter(
                                                   x => x !== 5
                                               )
-                                            : [
-                                                  ...this.props.settings
-                                                      .mdSettings.tocLevels,
-                                                  5,
-                                              ]
+                                            : [...this.props.settings.mdSettings.tocLevels, 5]
                                     )}
                             >
                                 5
                             </Checkbox>&nbsp;&nbsp;
                             <Checkbox
-                                checked={this.props.settings.mdSettings.tocLevels.includes(
-                                    6
-                                )}
+                                checked={this.props.settings.mdSettings.tocLevels.includes(6)}
                                 onClick={() =>
                                     this.props.handleMdSettingsChange(
                                         "tocLevels",
-                                        this.props.settings.mdSettings.tocLevels.includes(
-                                            6
-                                        )
+                                        this.props.settings.mdSettings.tocLevels.includes(6)
                                             ? this.props.settings.mdSettings.tocLevels.filter(
                                                   x => x !== 6
                                               )
-                                            : [
-                                                  ...this.props.settings
-                                                      .mdSettings.tocLevels,
-                                                  6,
-                                              ]
+                                            : [...this.props.settings.mdSettings.tocLevels, 6]
                                     )}
                             >
                                 6
@@ -395,16 +340,9 @@ class Settings extends Component {
 
             const settings = this.props.settings.mdSettings
             const isExtended =
-                settings.katex &&
-                settings.breaks &&
-                settings.anchor &&
-                settings.typographer
+                settings.katex && settings.breaks && settings.anchor && settings.typographer
             const isSpiced =
-                isExtended &&
-                settings.smartarrows &&
-                settings.video &&
-                settings.url &&
-                settings.toc
+                isExtended && settings.smartarrows && settings.video && settings.url && settings.toc
             const isAddict =
                 isSpiced &&
                 settings.checkbox &&
@@ -413,9 +351,7 @@ class Settings extends Component {
                 settings.spoiler &&
                 settings.graph
 
-            const markdownLevel = isAddict
-                ? 3
-                : isSpiced ? 2 : isExtended ? 1 : 0
+            const markdownLevel = isAddict ? 3 : isSpiced ? 2 : isExtended ? 1 : 0
             const mdModes = {
                 0: {
                     typographer: false,
@@ -478,8 +414,7 @@ class Settings extends Component {
                     graph: true,
                 },
             }
-            const markdownChange = index =>
-                this.props.handleMDModeChange(mdModes[index])
+            const markdownChange = index => this.props.handleMDModeChange(mdModes[index])
 
             return (
                 <Modal
