@@ -54,12 +54,11 @@
         "react-dom": "^15.6.1",
         "react-draggable-tabs": "^1.0.7",
         "react-dropzone": "^4.1.0",
-        "react-fluid-buttons": "^0.8.2",
+        "react-fluid-buttons": "^1.0.3",
         "react-panelgroup": "^1.0.2",
         "react-scripts": "^1.0.10",
         "request": "^2.81.0",
-        "source-code-pro":
-            "git://github.com/adobe-fonts/source-code-pro.git#release",
+        "source-code-pro": "git://github.com/adobe-fonts/source-code-pro.git#release",
         "uslug": "^1.0.4"
     },
     "lint-staged": {
@@ -70,8 +69,7 @@
     },
     "scripts": {
         "precommit": "lint-staged",
-        "build-css":
-            "node-sass-chokidar src/stylesheets/scss/ -o src/stylesheets/css/",
+        "build-css": "node-sass-chokidar src/stylesheets/scss/ -o src/stylesheets/css/",
         "watch-css":
             "npm run build-css && node-sass-chokidar src/stylesheets/scss/ -o src/stylesheets/css/ --watch --recursive",
         "start": "react-scripts start",
@@ -81,15 +79,12 @@
         "dev":
             "concurrently \"yarn watch-css\" \"SET BROWSER=none&& yarn start\" \"wait-on http://localhost:3000 && electron .\"",
         "pack": "build --em.main=build/electron.js --win --x64",
-        "pack32":
-            "build --em.main=build/electron.js --win --ia32 -c electron-builder.yml",
+        "pack32": "build --em.main=build/electron.js --win --ia32 -c electron-builder.yml",
         "prepack": "yarn build-css && yarn build",
         "prepack32": "yarn build-css && yarn build",
-        "ship":
-            "build --em.main=build/electron.js --win --ia32 -p always -c electron-builder.yml",
+        "ship": "build --em.main=build/electron.js --win --ia32 -p always -c electron-builder.yml",
         "preship": "yarn build-css && yarn build",
-        "pretty":
-            "prettier --write \"{{public,src}/**/*.{scss,js,json},package.json}\""
+        "pretty": "prettier --write \"{{public,src}/**/*.{scss,js,json},package.json}\""
     },
     "devDependencies": {
         "concurrently": "^3.5.0",

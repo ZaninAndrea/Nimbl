@@ -117,6 +117,7 @@ class App extends Component {
                 newFolderModalOpen: false,
                 updateReady: false,
                 committing: false,
+                isGitRepo: true,
             },
             settings: settings,
         }
@@ -173,7 +174,12 @@ class App extends Component {
             })
         })
         ipcRenderer.on("gitPull-err", (event, err) => {
-            alert(err)
+            this.setState((state, props) => {
+                let newApp = {...state.app}
+                newApp.isGitRepo = false
+
+                return {app: newApp}
+            })
         })
     }
 
@@ -239,8 +245,6 @@ class App extends Component {
 
                 return {app: newApp}
             })
-        } else {
-            console.log(event, filename)
         }
     }
 
@@ -581,7 +585,6 @@ class App extends Component {
     }
 
     handleTreeExpand(expandedKeys) {
-        console.log(expandedKeys)
         this.setState((oldState, props) => {
             let newApp = {...oldState.app}
             newApp.treeExpandedKeys = expandedKeys
@@ -901,7 +904,19 @@ class App extends Component {
                                     }
                                 })}
                             >
-                                <ButtonGroup className="appBarButtonBlock">
+                                <ButtonGroup
+                                    className="appBarButtonBlock"
+                                    style={{
+                                        width:
+                                            35 *
+                                                // calculating the number of buttons that will be displayed
+                                                (3 +
+                                                    (this.state.app.isGitRepo ? 1 : 0) +
+                                                    (this.state.settings.autoSave ? 0 : 1) +
+                                                    (this.state.app.updateReady ? 1 : 0)) +
+                                            "px",
+                                    }}
+                                >
                                     <Button onClick={this.handleOpenDir}>
                                         <i className="fa fa-folder-open" aria-hidden="true" />
                                     </Button>
@@ -915,19 +930,23 @@ class App extends Component {
                                             <i className="fa fa-floppy-o" aria-hidden="true" />
                                         </Button>
                                     )}
-                                    <Button
-                                        className={this.state.app.addedChanges ? "primary" : ""}
-                                        onClick={this.handleCommit}
-                                    >
-                                        {this.state.app.committing ? (
-                                            <i
-                                                className="fa fa-refresh fa-spin"
-                                                aria-hidden="true"
-                                            />
-                                        ) : (
-                                            <i className="fa fa-arrow-up" aria-hidden="true" />
-                                        )}
-                                    </Button>
+                                    {this.state.app.isGitRepo ? (
+                                        <Button
+                                            className={this.state.app.addedChanges ? "primary" : ""}
+                                            onClick={this.handleCommit}
+                                        >
+                                            {this.state.app.committing ? (
+                                                <i
+                                                    className="fa fa-refresh fa-spin"
+                                                    aria-hidden="true"
+                                                />
+                                            ) : (
+                                                <i className="fa fa-arrow-up" aria-hidden="true" />
+                                            )}
+                                        </Button>
+                                    ) : (
+                                        ""
+                                    )}
                                     <Button
                                         onClick={this.handleSiteBuild}
                                         disabled={this.state.app.dir === ""}

@@ -974,8 +974,7 @@ button:hover {
 .appBarButtonBlock {
   margin-top: -7px;
   text-align: center;
-  margin-right: -7px;
-  width: 140px !important; }
+  margin-right: -7px; }
 
 .appBarButtonBlock div {
   width: 35px;

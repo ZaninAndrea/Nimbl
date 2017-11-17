@@ -3,7 +3,6 @@ const electron = window.require("electron")
 const fs = electron.remote.require("fs")
 
 const buildDirTree = (dir, position, expandedNodes = []) => {
-    console.log(expandedNodes)
     let tree = {
         key: dir,
         position: position,
@@ -41,11 +40,7 @@ const buildDirTree = (dir, position, expandedNodes = []) => {
             // Dive into the directory
             tree.children.push(
                 expandedNodes.indexOf(path) !== -1
-                    ? buildDirTree(
-                          path,
-                          position.concat([tempPosition]),
-                          expandedNodes
-                      )
+                    ? buildDirTree(path, position.concat([tempPosition]), expandedNodes)
                     : {
                           key: path,
                           name: element,
@@ -68,7 +63,6 @@ const buildDirTree = (dir, position, expandedNodes = []) => {
 }
 
 const replaceInTree = (tree, newValue, posArr) => {
-    // console.log(tree);
     if (posArr.length === 0) {
         return newValue
     } else {
