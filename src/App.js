@@ -7,7 +7,6 @@ import uslug from "uslug"
 import MDEditorPreview from "./components/MDEditorPreview.js"
 import Settings from "./components/Settings.js"
 import DirTree from "./components/DirTree.js"
-import buildTree from "./utilities/buildTree.js"
 import buildSite from "./utilities/buildSite.js"
 import {buildDirTree, replaceInTree} from "./utilities/treeUtils"
 import newMd from "./utilities/markdown-it-conf"
@@ -500,7 +499,8 @@ class App extends Component {
             const treeData = this.state.app.tree // loads old tree
             const newSubTree = buildDirTree(
                 treeNode.props.eventKey,
-                treeNode.props.position
+                treeNode.props.position,
+                this.state.app.treeExpandedKeys
             ) // creates the new subTree
             replaceInTree(treeData, newSubTree, treeNode.props.position) // inserts the new subtree in the right position
             this.setState((oldState, props) => {

@@ -38,7 +38,6 @@ const buildDirTree = (dir, position, expandedNodes = []) => {
         // Get the file's stats
         const stat = fs.statSync(path)
         if (stat && stat.isDirectory())
-            // dive into any directory
             // Dive into the directory
             tree.children.push(
                 expandedNodes.indexOf(path) !== -1
