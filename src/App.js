@@ -110,6 +110,7 @@ class App extends Component {
                 addedChanges: false,
                 watcher: null,
                 renderTimeout: null,
+                saveTimeout: null,
                 currentFileIndex: 0,
                 settingsModalOpen: false,
                 treeExpandedKeys: [],
@@ -136,13 +137,14 @@ class App extends Component {
         this.md = newMd(settings.mdSettings, this.state.app.dir)
 
         window.onbeforeunload = e => {
+            // checks if any file had unsaved changes
             if (
                 this.state.app.unsavedChanges.reduce(
                     (acc, x) => acc || x,
                     false
                 )
             ) {
-                // checks if any file had unsaved changes
+                // alerts the user
                 this.setState((state, props) => {
                     const newApp = {...state.app}
                     newApp.quitting = true
@@ -207,9 +209,16 @@ class App extends Component {
     handleChange(newCurrValue) {
         // update editor continuously, update preview only after `refreshRate` milliseconds of idle
         clearTimeout(this.state.app.renderTimeout) // delay update
-        const newTimeout = this.state.settings.showPreview
+        const newRenderTimeout = this.state.settings.showPreview
             ? setTimeout(this.renderMd, this.state.settings.refreshRate)
             : null
+
+        // delays autosave
+        clearTimeout(this.state.app.saveTimeout) // delay update
+        const newSaveTimeout = this.state.settings.autoSave
+            ? setTimeout(this.handleSave, this.state.settings.refreshRate)
+            : null
+
         this.setState((oldState, props) => {
             // handle editor changes
             let newValue = oldState.app.value
@@ -218,7 +227,8 @@ class App extends Component {
                 ...oldState.app,
                 ...{
                     value: newValue,
-                    renderTimeout: newTimeout,
+                    renderTimeout: newRenderTimeout,
+                    saveTimeout: newSaveTimeout,
                     unsavedChanges: oldState.app.unsavedChanges.map(
                         (val, idx) =>
                             idx === oldState.app.currentFileIndex ? true : val
@@ -635,6 +645,7 @@ class App extends Component {
                     newApp.value[newApp.currentFileIndex]
                 )
                 clearTimeout(this.state.app.renderTimeout)
+                clearTimeout(this.state.app.saveTimeout)
             }
 
             newApp.currentFileIndex = selectedId
@@ -679,6 +690,7 @@ class App extends Component {
                     newApp.value[removedIndex]
                 )
                 clearTimeout(this.state.app.renderTimeout)
+                clearTimeout(this.state.app.saveTimeout)
             }
 
             newApp.tabs.splice(removedIndex, 1) // remove the item

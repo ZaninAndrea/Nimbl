@@ -52,7 +52,7 @@
         "react-ace-wrapper": "^1.0.1",
         "react-addons-perf": "^15.4.2",
         "react-dom": "^15.6.1",
-        "react-draggable-tabs": "^1.0.6",
+        "react-draggable-tabs": "^1.0.7",
         "react-dropzone": "^4.1.0",
         "react-fluid-buttons": "^0.8.2",
         "react-panelgroup": "^1.0.2",

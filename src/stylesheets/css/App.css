@@ -1016,3 +1016,6 @@ div:hover > .fa-cog {
   margin-right: auto;
   display: block;
   margin-top: 10%; }
+
+.react-tabs-container {
+  border-bottom: 0 !important; }
