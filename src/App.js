@@ -728,7 +728,7 @@ class App extends Component {
                     "SELECT A SUPPORTED FILE"
                 )
         } else {
-            editor = <img className="placeholderLogo" src="./icons/placeholder.png" />
+            editor = <div className="placeholderLogo" />
         }
 
         let sidebar
