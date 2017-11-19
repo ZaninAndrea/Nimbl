@@ -25,15 +25,11 @@ const electron = window.require("electron")
 // the following are basically imports working around webpack
 const fs = electron.remote.require("fs")
 
-brace.define(
-    "ace/snippets/markdown",
-    ["require", "exports", "module"],
-    function(e, t, n) {
-        t.snippetText =
-            "snippet tbl\n	${1: }|${2: }\n	---|---\n	${3: }|${4: }\n\nsnippet note\n	:::note ${1: }\n	${2: }\n	:::\n	\n\nsnippet alert\n	:::alert ${1: }\n	${2: }\n	:::\n	\nsnippet $\n	$${1: }$\n\nsnippet $$\n	$$\n	${1: }\n	$$\n"
-        t.scope = "markdown"
-    }
-)
+brace.define("ace/snippets/markdown", ["require", "exports", "module"], function(e, t, n) {
+    t.snippetText =
+        "snippet tbl\n	${1: }|${2: }\n	---|---\n	${3: }|${4: }\n\nsnippet note\n	:::note ${1: }\n	${2: }\n	:::\n	\n\nsnippet alert\n	:::alert ${1: }\n	${2: }\n	:::\n	\nsnippet $\n	$${1: }$\n\nsnippet $$\n	$$\n	${1: }\n	$$\n"
+    t.scope = "markdown"
+})
 
 class MDEditorPreview extends Component {
     constructor(props) {
@@ -57,7 +53,7 @@ class MDEditorPreview extends Component {
             // do nothing if preview is disable
             return
 
-        //     BUILDS THE MAP
+        //     BUILDS THE WHOLE MAP, OUTDATED, BUT COULD BE USED TO COME BACK FROM PREVIEW TO MARKDOWN
         // let map = []
         // let lastValue = 0;
         // for (var i =0; i < e.doc.$lines.length - 1; i++){
@@ -133,23 +129,14 @@ class MDEditorPreview extends Component {
 
     render() {
         const {dropzoneActive} = this.state
-        const overlayStyle = {
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            padding: "2.5em 0",
-            background: "rgba(0,0,0,0.5)",
-            textAlign: "center",
-            color: "#fff",
-        }
 
         let aceEditor = (
             <AceEditor
                 ref="editor"
+                key="aceEditor"
                 onSelectionChange={this.handleSelection}
                 onScroll={this.handleScroll}
+                onInput={this.handleScroll}
                 mode="markdown"
                 theme={this.props.theme}
                 onChange={this.props.handleChange}
@@ -185,24 +172,30 @@ class MDEditorPreview extends Component {
                     <div className="editorWrapper col-xs-6">
                         <Dropzone
                             disableClick
+                            accept="image/*"
                             style={{height: "100%", width: "100%"}}
                             onDrop={this.onDrop.bind(this)}
                             onDragEnter={this.onDragEnter.bind(this)}
                             onDragLeave={this.onDragLeave.bind(this)}
+                            acceptClassName="acceptedFilesOverlay"
+                            rejectClassName="rejectedFilesOverlay"
                         >
-                            {dropzoneActive ? (
-                                <div style={overlayStyle}>Drop files...</div>
-                            ) : (
-                                ""
-                            )}
+                            {dropzoneActive
+                                ? [
+                                      <div className="failureDroppingOverlay" key="failure">
+                                          Only images allowed
+                                      </div>,
+                                      <div className="successDroppingOverlay" key="success">
+                                          Drop files...
+                                      </div>,
+                                  ]
+                                : ""}
                             {aceEditor}
                         </Dropzone>
                     </div>
-                    <div
-                        className="markdown-container col-xs-6"
-                        ref="markdown-container"
-                    >
+                    <div className="markdown-container col-xs-6" ref="markdown-container">
                         <div
+                            key="mdBody"
                             className="markdown-body"
                             dangerouslySetInnerHTML={{
                                 __html: this.props.preview,

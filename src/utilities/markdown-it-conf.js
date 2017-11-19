@@ -257,9 +257,7 @@ let newMd = (opts, workingDir) => {
                     "data:" +
                         mimeLookup +
                         ";base64," +
-                        fs
-                            .readFileSync(path.join(workingDir, src))
-                            .toString("base64")
+                        fs.readFileSync(path.join(workingDir, src)).toString("base64")
                 )
             }
         } else if (fs.existsSync(src)) {
@@ -268,10 +266,7 @@ let newMd = (opts, workingDir) => {
             if (mimeLookup.startsWith("image")) {
                 tokens[idx].attrSet(
                     "src",
-                    "data:" +
-                        mimeLookup +
-                        ";base64," +
-                        fs.readFileSync(src).toString("base64")
+                    "data:" + mimeLookup + ";base64," + fs.readFileSync(src).toString("base64")
                 )
             }
         }
@@ -322,9 +317,7 @@ let newMd = (opts, workingDir) => {
             if (settings.url) {
                 tokens[idx + 1].children[0].urlfied = true
                 tokens[idx + 1].children[0].urlfiedContent =
-                    "<div>" +
-                    ipcRenderer.sendSync("linkPreview", match[0].url) +
-                    "</div>\n" // returns the linkPreview provided by the electron main process through ipc
+                    "<div>" + ipcRenderer.sendSync("linkPreview", match[0].url) + "</div>\n" // returns the linkPreview provided by the electron main process through ipc
             }
         }
 

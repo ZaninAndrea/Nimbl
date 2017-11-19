@@ -49,8 +49,7 @@ class DirTree extends React.Component {
                     // file
                     const fileMime = mime.lookup(item.key)
                     const icon =
-                        fileMime === "text/x-markdown" ||
-                        fileMime === "text/markdown" // select the right icon for that file
+                        fileMime === "text/x-markdown" || fileMime === "text/markdown" // select the right icon for that file
                             ? "fileIcon fa fa-file-text"
                             : fileMime.startsWith("image")
                               ? "fileIcon fa fa-file-image-o"
@@ -60,10 +59,7 @@ class DirTree extends React.Component {
                         <TreeNode
                             title={
                                 <span>
-                                    <i
-                                        className={icon}
-                                        aria-hidden="true"
-                                    />&nbsp;
+                                    <i className={icon} aria-hidden="true" />&nbsp;
                                     {item.name}
                                 </span>
                             }

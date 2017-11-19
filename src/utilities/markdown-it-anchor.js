@@ -19,8 +19,7 @@ const hasProp = {}.hasOwnProperty
 const permalinkHref = slug => `#${slug}`
 
 const renderPermalink = (slug, opts, state, idx) => {
-    const space = () =>
-        Object.assign(new state.Token("text", "", 0), {content: " "})
+    const space = () => Object.assign(new state.Token("text", "", 0), {content: " "})
 
     const linkTokens = [
         Object.assign(new state.Token("link_open", "a", 1), {
@@ -39,9 +38,7 @@ const renderPermalink = (slug, opts, state, idx) => {
     // `push` or `unshift` according to position option.
     // Space is at the opposite side.
     linkTokens[position[!opts.permalinkBefore]](space())
-    state.tokens[idx + 1].children[position[opts.permalinkBefore]](
-        ...linkTokens
-    )
+    state.tokens[idx + 1].children[position[opts.permalinkBefore]](...linkTokens)
 }
 
 const uniqueSlug = (slug, slugs) => {
@@ -77,11 +74,7 @@ const anchor = (md, opts) => {
             .forEach(token => {
                 // Aggregate the next token children text.
                 const title = tokens[tokens.indexOf(token) + 1].children
-                    .filter(
-                        token =>
-                            token.type === "text" ||
-                            token.type === "code_inline"
-                    )
+                    .filter(token => token.type === "text" || token.type === "code_inline")
                     .reduce((acc, t) => acc + t.content, "")
 
                 let slug = token.attrGet("id")
@@ -92,12 +85,7 @@ const anchor = (md, opts) => {
                 }
 
                 if (opts.permalink) {
-                    opts.renderPermalink(
-                        slug,
-                        opts,
-                        state,
-                        tokens.indexOf(token)
-                    )
+                    opts.renderPermalink(slug, opts, state, tokens.indexOf(token))
                 }
 
                 if (opts.callback) {
