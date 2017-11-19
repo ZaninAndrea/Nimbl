@@ -389,15 +389,9 @@ class App extends Component {
                             ),
                         },
                     }
-                    let newSettings = {
-                        ...oldState.settings,
-                        ...{
-                            showSidebar: true,
-                        },
-                    }
-                    this.md = newMd(newSettings.mdSettings, newApp.dir) // update md renderer
+                    this.md = newMd(oldState.settings.mdSettings, newApp.dir) // update md renderer
                     ipcRenderer.send("gitPull", folders[0]) // pull updates
-                    return {app: newApp, settings: newSettings}
+                    return {app: newApp}
                 })
             }
         )
@@ -732,7 +726,7 @@ class App extends Component {
         }
 
         let sidebar
-        if (this.state.settings.showSidebar) {
+        if (this.state.settings.showSidebar && this.state.app.dir) {
             sidebar = (
                 <div className="sidebar">
                     <div className="projectTitle">PROJECT</div>
@@ -910,9 +904,15 @@ class App extends Component {
                                         width:
                                             35 *
                                                 // calculating the number of buttons that will be displayed
-                                                (3 +
-                                                    (this.state.app.isGitRepo ? 1 : 0) +
-                                                    (this.state.settings.autoSave ? 0 : 1) +
+                                                (2 +
+                                                    (this.state.app.isGitRepo && this.state.app.dir
+                                                        ? 1
+                                                        : 0) +
+                                                    (!this.state.settings.autoSave &&
+                                                    this.state.app.dir
+                                                        ? 1
+                                                        : 0) +
+                                                    (this.state.app.dir ? 1 : 0) +
                                                     (this.state.app.updateReady ? 1 : 0)) +
                                             "px",
                                     }}
@@ -920,17 +920,17 @@ class App extends Component {
                                     <Button onClick={this.handleOpenDir}>
                                         <i className="fa fa-folder-open" aria-hidden="true" />
                                     </Button>
-                                    {this.state.settings.autoSave ? (
-                                        ""
-                                    ) : (
+                                    {!this.state.settings.autoSave && this.state.app.dir ? (
                                         <Button
                                             onClick={this.handleSave}
                                             disabled={!this.state.app.file[0]}
                                         >
                                             <i className="fa fa-floppy-o" aria-hidden="true" />
                                         </Button>
+                                    ) : (
+                                        ""
                                     )}
-                                    {this.state.app.isGitRepo ? (
+                                    {this.state.app.isGitRepo && this.state.app.dir ? (
                                         <Button
                                             className={this.state.app.addedChanges ? "primary" : ""}
                                             onClick={this.handleCommit}
@@ -947,12 +947,16 @@ class App extends Component {
                                     ) : (
                                         ""
                                     )}
-                                    <Button
-                                        onClick={this.handleSiteBuild}
-                                        disabled={this.state.app.dir === ""}
-                                    >
-                                        <i className="fa fa-paper-plane" aria-hidden="true" />
-                                    </Button>
+                                    {this.state.app.dir ? (
+                                        <Button
+                                            onClick={this.handleSiteBuild}
+                                            disabled={this.state.app.dir === ""}
+                                        >
+                                            <i className="fa fa-paper-plane" aria-hidden="true" />
+                                        </Button>
+                                    ) : (
+                                        ""
+                                    )}
                                     <Button onClick={this.handleSettingsToggle}>
                                         <i className="fa fa-cog" aria-hidden="true" />
                                     </Button>
