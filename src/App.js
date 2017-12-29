@@ -630,7 +630,9 @@ class App extends Component {
             newApp.preview = [...newApp.preview]
             newApp.value = [...newApp.value]
 
+            console.log(newApp)
             const lookup = mime.lookup(newApp.file[newApp.currentFileIndex])
+            console.log("successful lookup")
             if (
                 state.settings.autoSave &&
                 removedIndex === newApp.currentFileIndex &&
@@ -658,7 +660,7 @@ class App extends Component {
             newApp.currentFileIndex =
                 newApp.currentFileIndex < removedID
                     ? newApp.currentFileIndex
-                    : newApp.currentFileIndex - 1
+                    : newApp.currentFileIndex === 0 ? 0 : newApp.currentFileIndex - 1
 
             return {app: newApp}
         })
@@ -747,7 +749,8 @@ class App extends Component {
                                         const newApp = state.app
                                         newApp.newFileModalOpen = true
                                         return {app: newApp}
-                                    })}
+                                    })
+                                }
                             >
                                 <i className="material-icons">insert_drive_file</i>
                             </Button>
@@ -757,7 +760,8 @@ class App extends Component {
                                         const newApp = state.app
                                         newApp.newFolderModalOpen = true
                                         return {app: newApp}
-                                    })}
+                                    })
+                                }
                             >
                                 <i className="material-icons">create_new_folder</i>
                             </Button>
@@ -784,7 +788,8 @@ class App extends Component {
                             const newApp = {...state.app}
                             newApp.quitting = false
                             return {app: newApp}
-                        })}
+                        })
+                    }
                     onCancel={() => ipcRenderer.sendSync("mainClose")}
                 >
                     If you close now all your unsaved changes will go lost!!
@@ -804,13 +809,15 @@ class App extends Component {
                             const newApp = state.app
                             newApp.newFileModalOpen = false
                             return {app: newApp}
-                        })}
+                        })
+                    }
                     onClose={() =>
                         this.setState((state, props) => {
                             const newApp = state.app
                             newApp.newFileModalOpen = false
                             return {app: newApp}
-                        })}
+                        })
+                    }
                 >
                     TODO
                 </Modal>
@@ -828,13 +835,15 @@ class App extends Component {
                             const newApp = state.app
                             newApp.newFolderModalOpen = false
                             return {app: newApp}
-                        })}
+                        })
+                    }
                     onClose={() =>
                         this.setState((state, props) => {
                             const newApp = state.app
                             newApp.newFolderModalOpen = false
                             return {app: newApp}
-                        })}
+                        })
+                    }
                 >
                     TODO
                 </Modal>
