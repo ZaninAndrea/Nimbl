@@ -801,14 +801,16 @@ a.linkPreviewText:hover {
 .spoilerContent table tr:nth-child(2n) {
   background-color: #ebd547; }
 
-.ant-modal-content {
-  background-color: transparent; }
+.ant-modal-footer {
+  background: #002b36;
+  border: 0; }
 
 .ant-modal-header {
   padding: 13px 16px;
   border-radius: 4px 4px 0 0;
   background: #002b36;
   color: #93a1a1;
+  border-top-color: #002b36;
   border-bottom: 1px solid #586e75; }
 
 .ant-modal-body {
@@ -823,6 +825,9 @@ a.linkPreviewText:hover {
   line-height: 21px;
   font-weight: 500;
   color: #93a1a1; }
+
+.ant-modal-content {
+  border-radius: 5px; }
 
 .ant-modal-close {
   color: #586e75; }
@@ -842,6 +847,9 @@ a.linkPreviewText:hover {
 
 .ant-checkbox-checked .ant-checkbox-inner:after {
   border-color: #eee8d5; }
+
+.ant-slider-mark-text {
+  color: #93a1a1; }
 
 @font-face {
   font-family: "Material Icons";
@@ -943,9 +951,11 @@ body {
 .rdTabAddButton {
   visibility: hidden; }
 
-ul,
-ol {
+ul {
   list-style: disc; }
+
+ol {
+  list-style: decimal; }
 
 button {
   background-color: #001f27;

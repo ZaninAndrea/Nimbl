@@ -1,11 +1,13 @@
-.ant-modal-content {
-  background-color: transparent; }
+.ant-modal-footer {
+  background: #002b36;
+  border: 0; }
 
 .ant-modal-header {
   padding: 13px 16px;
   border-radius: 4px 4px 0 0;
   background: #002b36;
   color: #93a1a1;
+  border-top-color: #002b36;
   border-bottom: 1px solid #586e75; }
 
 .ant-modal-body {
@@ -20,6 +22,9 @@
   line-height: 21px;
   font-weight: 500;
   color: #93a1a1; }
+
+.ant-modal-content {
+  border-radius: 5px; }
 
 .ant-modal-close {
   color: #586e75; }
@@ -39,3 +44,6 @@
 
 .ant-checkbox-checked .ant-checkbox-inner:after {
   border-color: #eee8d5; }
+
+.ant-slider-mark-text {
+  color: #93a1a1; }

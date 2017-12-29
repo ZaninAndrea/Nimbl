@@ -130,9 +130,11 @@ body {
     visibility: hidden;
 }
 
-ul,
-ol {
+ul {
     list-style: disc;
+}
+ol {
+    list-style: decimal;
 }
 button {
     background-color: $base04;

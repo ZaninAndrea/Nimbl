@@ -1,13 +1,16 @@
 @import "shared";
 
-.ant-modal-content {
-    background-color: transparent;
+.ant-modal-footer {
+    background: $base03;
+    border: 0;
 }
+
 .ant-modal-header {
     padding: 13px 16px;
     border-radius: 4px 4px 0 0;
     background: $base03;
     color: $base1;
+    border-top-color: $base03;
     border-bottom: 1px solid $base01;
 }
 
@@ -24,6 +27,10 @@
     line-height: 21px;
     font-weight: 500;
     color: $base1;
+}
+
+.ant-modal-content {
+    border-radius: 5px;
 }
 
 .ant-modal-close {
@@ -47,4 +54,8 @@
 
 .ant-checkbox-checked .ant-checkbox-inner:after {
     border-color: $base2;
+}
+
+.ant-slider-mark-text {
+    color: $base1;
 }

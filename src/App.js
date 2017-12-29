@@ -774,7 +774,7 @@ class App extends Component {
         }
 
         return (
-            <div className="App">
+            <div className="App solarizedDarkTheme">
                 <Modal
                     title="Close"
                     visible={this.state.app.quitting}

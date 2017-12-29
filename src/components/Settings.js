@@ -83,23 +83,13 @@ class Settings extends Component {
                     <b>Markdown extensions</b>
                     <br />
                     <Checkbox
-                        checked={this.props.settings.mdSettings.linkify}
-                        onClick={() =>
-                            this.props.handleMdSettingsChange(
-                                "linkify",
-                                !this.props.settings.mdSettings.linkify
-                            )}
-                    >
-                        linkify
-                    </Checkbox>
-                    <br />
-                    <Checkbox
                         checked={this.props.settings.mdSettings.typographer}
                         onClick={() =>
                             this.props.handleMdSettingsChange(
                                 "typographer",
                                 !this.props.settings.mdSettings.typographer
-                            )}
+                            )
+                        }
                     >
                         typographer
                     </Checkbox>
@@ -110,7 +100,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "breaks",
                                 !this.props.settings.mdSettings.breaks
-                            )}
+                            )
+                        }
                     >
                         breaks
                     </Checkbox>
@@ -121,7 +112,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "checkbox",
                                 !this.props.settings.mdSettings.checkbox
-                            )}
+                            )
+                        }
                     >
                         checkbox
                     </Checkbox>
@@ -132,7 +124,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "anchor",
                                 !this.props.settings.mdSettings.anchor
-                            )}
+                            )
+                        }
                     >
                         anchor
                     </Checkbox>
@@ -143,7 +136,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "toc",
                                 !this.props.settings.mdSettings.toc
-                            )}
+                            )
+                        }
                     >
                         toc
                     </Checkbox>
@@ -161,7 +155,8 @@ class Settings extends Component {
                                                   x => x !== 1
                                               )
                                             : [...this.props.settings.mdSettings.tocLevels, 1]
-                                    )}
+                                    )
+                                }
                             >
                                 1
                             </Checkbox>&nbsp;&nbsp;
@@ -175,7 +170,8 @@ class Settings extends Component {
                                                   x => x !== 2
                                               )
                                             : [...this.props.settings.mdSettings.tocLevels, 2]
-                                    )}
+                                    )
+                                }
                             >
                                 2
                             </Checkbox>&nbsp;&nbsp;
@@ -189,7 +185,8 @@ class Settings extends Component {
                                                   x => x !== 3
                                               )
                                             : [...this.props.settings.mdSettings.tocLevels, 3]
-                                    )}
+                                    )
+                                }
                             >
                                 3
                             </Checkbox>&nbsp;&nbsp;
@@ -203,7 +200,8 @@ class Settings extends Component {
                                                   x => x !== 4
                                               )
                                             : [...this.props.settings.mdSettings.tocLevels, 4]
-                                    )}
+                                    )
+                                }
                             >
                                 4
                             </Checkbox>&nbsp;&nbsp;
@@ -217,7 +215,8 @@ class Settings extends Component {
                                                   x => x !== 5
                                               )
                                             : [...this.props.settings.mdSettings.tocLevels, 5]
-                                    )}
+                                    )
+                                }
                             >
                                 5
                             </Checkbox>&nbsp;&nbsp;
@@ -231,7 +230,8 @@ class Settings extends Component {
                                                   x => x !== 6
                                               )
                                             : [...this.props.settings.mdSettings.tocLevels, 6]
-                                    )}
+                                    )
+                                }
                             >
                                 6
                             </Checkbox>&nbsp;&nbsp;
@@ -245,7 +245,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "katex",
                                 !this.props.settings.mdSettings.katex
-                            )}
+                            )
+                        }
                     >
                         katex
                     </Checkbox>
@@ -256,7 +257,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "smartarrows",
                                 !this.props.settings.mdSettings.smartarrows
-                            )}
+                            )
+                        }
                     >
                         smartarrows
                     </Checkbox>
@@ -267,7 +269,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "alert",
                                 !this.props.settings.mdSettings.alert
-                            )}
+                            )
+                        }
                     >
                         alert
                     </Checkbox>
@@ -278,7 +281,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "note",
                                 !this.props.settings.mdSettings.note
-                            )}
+                            )
+                        }
                     >
                         note
                     </Checkbox>
@@ -289,7 +293,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "spoiler",
                                 !this.props.settings.mdSettings.spoiler
-                            )}
+                            )
+                        }
                     >
                         spoiler
                     </Checkbox>
@@ -300,7 +305,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "url",
                                 !this.props.settings.mdSettings.url
-                            )}
+                            )
+                        }
                     >
                         url
                     </Checkbox>
@@ -311,7 +317,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "video",
                                 !this.props.settings.mdSettings.video
-                            )}
+                            )
+                        }
                     >
                         video
                     </Checkbox>
@@ -322,7 +329,8 @@ class Settings extends Component {
                             this.props.handleMdSettingsChange(
                                 "graph",
                                 !this.props.settings.mdSettings.graph
-                            )}
+                            )
+                        }
                     >
                         graph
                     </Checkbox>
@@ -333,7 +341,7 @@ class Settings extends Component {
             const interfaceMarks = {0: "Zen", 1: "Balanced", 2: "Powerhouse"}
             const markdownMarks = {
                 0: "Purist",
-                1: "Extended",
+                1: "Novice",
                 2: "Spiced up",
                 3: "Plugin addict",
             }
@@ -423,7 +431,7 @@ class Settings extends Component {
                     visible={this.props.visible}
                     onCancel={this.props.handleSettingsModalClose}
                 >
-                    Interface complexity
+                    <b>Interface complexity</b>
                     <Slider
                         marks={interfaceMarks}
                         step={null}
@@ -432,7 +440,7 @@ class Settings extends Component {
                         max={2}
                         tipFormatter={id => interfaceMarks[id]}
                     />
-                    Markdown extensions
+                    <b>Markdown extensions</b>
                     <Slider
                         marks={markdownMarks}
                         step={null}
