@@ -66,17 +66,17 @@ class Settings extends Component {
                         onChange={this.props.handleThemeChange}
                     >
                         <OptGroup label="Dark">
-                            <Option value="monokai">Monokai</Option>
+                            {/* <Option value="monokai">Monokai</Option>
                             <Option value="twilight">Twilight</Option>
-                            <Option value="terminal">Terminal</Option>
+                            <Option value="terminal">Terminal</Option> */}
                             <Option value="solarized_dark">Solarized Dark</Option>
                         </OptGroup>
                         <OptGroup label="Light">
-                            <Option value="github">Github</Option>
+                            {/* <Option value="github">Github</Option>
                             <Option value="tomorrow">Tomorrow</Option>
                             <Option value="kuroir">Kuroir</Option>
                             <Option value="xcode">XCode</Option>
-                            <Option value="textmate">TextMate</Option>
+                            <Option value="textmate">TextMate</Option> */}
                             <Option value="solarized_light">Solarized Light</Option>
                         </OptGroup>
                     </Select>
