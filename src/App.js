@@ -15,6 +15,8 @@ import "source-code-pro/source-code-pro.css"
 import "./stylesheets/css/App.css"
 import Tabs from "react-draggable-tabs"
 import {Button, ButtonGroup} from "react-fluid-buttons"
+import CreateFileModal from "./components/CreateFileModal"
+import CreateFolderModal from "./components/CreateFolderModal"
 
 const electron = window.require("electron") // little trick to import electron in react
 const fs = electron.remote.require("fs")
@@ -796,50 +798,21 @@ class App extends Component {
                     If you close now all your unsaved changes will go lost!!
                 </Modal>
 
-                <Modal
-                    className={this.state.settings.editorTheme}
-                    title="Create new file"
+                <CreateFileModal
+                    theme={this.state.settings.editorTheme}
                     visible={this.state.app.newFileModalOpen}
-                    closable={true}
-                    okText="Create file"
-                    cancelText="Nevermind"
-                    maskClosable={true}
-                    zIndex={10000}
-                    //   onOk={}
-                    onCancel={() =>
+                    onClose={() => {
                         this.setState((state, props) => {
                             const newApp = state.app
                             newApp.newFileModalOpen = false
                             return {app: newApp}
                         })
-                    }
-                    onClose={() =>
-                        this.setState((state, props) => {
-                            const newApp = state.app
-                            newApp.newFileModalOpen = false
-                            return {app: newApp}
-                        })
-                    }
-                >
-                    TODO
-                </Modal>
-                <Modal
-                    className={this.state.settings.editorTheme}
-                    title="Create new folder"
+                    }}
+                    currentDirectory={this.state.app.dir}
+                />
+                <CreateFolderModal
+                    theme={this.state.settings.editorTheme}
                     visible={this.state.app.newFolderModalOpen}
-                    closable={true}
-                    okText="Create folder"
-                    cancelText="Nevermind"
-                    maskClosable={true}
-                    zIndex={10000}
-                    //   onOk={}
-                    onCancel={() =>
-                        this.setState((state, props) => {
-                            const newApp = state.app
-                            newApp.newFolderModalOpen = false
-                            return {app: newApp}
-                        })
-                    }
                     onClose={() =>
                         this.setState((state, props) => {
                             const newApp = state.app
@@ -847,9 +820,8 @@ class App extends Component {
                             return {app: newApp}
                         })
                     }
-                >
-                    TODO
-                </Modal>
+                    currentDirectory={this.state.app.dir}
+                />
 
                 <Settings
                     visible={this.state.app.settingsModalOpen}
