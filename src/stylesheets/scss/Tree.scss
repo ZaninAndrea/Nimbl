@@ -1,20 +1,29 @@
-@import "solarizedDarkTheme";
+@mixin standardTheme($base04, $base03, $base03Trs, $base02, $base01, $base00, $base0, $base1, $base2, $base3, $yellow, $orange, $red, $magenta, $violet, $blue, $cyan, $green) {
+    .fileIcon {
+        color: $base1;
+    }
+    .fileIcon.fa-file-text {
+        color: $red;
+    }
 
-.fileIcon {
-    color: $base1;
+    .folderIcon {
+        color: $blue;
+    }
+
+    .ant-tree-title {
+        color: $base1;
+    }
+
+    .ant-tree-switcher {
+        color: $base01;
+    }
 }
-.fileIcon.fa-file-text {
-    color: $red;
+.App.solarized_dark {
+    @import "solarizedDarkTheme";
+    @include standardTheme($base04, $base03, $base03Trs, $base02, $base01, $base00, $base0, $base1, $base2, $base3, $yellow, $orange, $red, $magenta, $violet, $blue, $cyan, $green);
 }
 
-.folderIcon {
-    color: $blue;
-}
-
-.ant-tree-title {
-    color: $base1;
-}
-
-.ant-tree-switcher {
-    color: $base01;
+.App.solarized_light {
+    @import "solarizedLightTheme";
+    @include standardTheme($base04, $base03, $base03Trs, $base02, $base01, $base00, $base0, $base1, $base2, $base3, $yellow, $orange, $red, $magenta, $violet, $blue, $cyan, $green);
 }

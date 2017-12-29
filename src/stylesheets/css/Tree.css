@@ -1,14 +1,29 @@
-.fileIcon {
+.App.solarized_dark .fileIcon {
   color: #93a1a1; }
 
-.fileIcon.fa-file-text {
+.App.solarized_dark .fileIcon.fa-file-text {
   color: #dc322f; }
 
-.folderIcon {
+.App.solarized_dark .folderIcon {
   color: #268bd2; }
 
-.ant-tree-title {
+.App.solarized_dark .ant-tree-title {
   color: #93a1a1; }
 
-.ant-tree-switcher {
+.App.solarized_dark .ant-tree-switcher {
   color: #586e75; }
+
+.App.solarized_light .fileIcon {
+  color: #073642; }
+
+.App.solarized_light .fileIcon.fa-file-text {
+  color: #d33682; }
+
+.App.solarized_light .folderIcon {
+  color: #6c71c4; }
+
+.App.solarized_light .ant-tree-title {
+  color: #073642; }
+
+.App.solarized_light .ant-tree-switcher {
+  color: #839496; }

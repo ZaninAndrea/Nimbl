@@ -73,29 +73,29 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .hljs-strong {
   font-weight: bold; }
 
-.MDEditorPreview {
+.App.solarized_dark .MDEditorPreview {
   height: calc(100% - 37px);
   width: 100%;
   margin: 0px; }
 
-.editorWrapper {
+.App.solarized_dark .editorWrapper {
   height: 100%;
   padding: 0px; }
 
-.md-container {
+.App.solarized_dark .md-container {
   color: white;
   padding: 5px 10px 2px 10px;
   margin-left: -5px;
   margin-bottom: 5px; }
 
-.markdown-container {
+.App.solarized_dark .markdown-container {
   height: 100%;
   overflow-y: auto;
   padding: 5px 0px 0px 5px;
   margin-right: 0px; }
 
-.successDroppingOverlay,
-.failureDroppingOverlay {
+.App.solarized_dark .successDroppingOverlay,
+.App.solarized_dark .failureDroppingOverlay {
   position: relative;
   top: 0;
   right: 0;
@@ -106,38 +106,99 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   color: #eee8d5;
   z-index: 10; }
 
-.acceptedFilesOverlay .successDroppingOverlay {
+.App.solarized_dark .acceptedFilesOverlay .successDroppingOverlay {
   background: #2aa198; }
 
-.rejectedFilesOverlay .successDroppingOverlay {
+.App.solarized_dark .rejectedFilesOverlay .successDroppingOverlay {
   display: none; }
 
-.acceptedFilesOverlay .failureDroppingOverlay {
+.App.solarized_dark .acceptedFilesOverlay .failureDroppingOverlay {
   display: none; }
 
-.rejectedFilesOverlay .failureDroppingOverlay {
+.App.solarized_dark .rejectedFilesOverlay .failureDroppingOverlay {
   background: #dc322f; }
 
-.fileIcon {
+.App.solarized_light .MDEditorPreview {
+  height: calc(100% - 37px);
+  width: 100%;
+  margin: 0px; }
+
+.App.solarized_light .editorWrapper {
+  height: 100%;
+  padding: 0px; }
+
+.App.solarized_light .md-container {
+  color: white;
+  padding: 5px 10px 2px 10px;
+  margin-left: -5px;
+  margin-bottom: 5px; }
+
+.App.solarized_light .markdown-container {
+  height: 100%;
+  overflow-y: auto;
+  padding: 5px 0px 0px 5px;
+  margin-right: 0px; }
+
+.App.solarized_light .successDroppingOverlay,
+.App.solarized_light .failureDroppingOverlay {
+  position: relative;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  padding: 2.5em 0;
+  text-align: center;
+  color: #002b36;
+  z-index: 10; }
+
+.App.solarized_light .acceptedFilesOverlay .successDroppingOverlay {
+  background: #859900; }
+
+.App.solarized_light .rejectedFilesOverlay .successDroppingOverlay {
+  display: none; }
+
+.App.solarized_light .acceptedFilesOverlay .failureDroppingOverlay {
+  display: none; }
+
+.App.solarized_light .rejectedFilesOverlay .failureDroppingOverlay {
+  background: #d33682; }
+
+.App.solarized_dark .fileIcon {
   color: #93a1a1; }
 
-.fileIcon.fa-file-text {
+.App.solarized_dark .fileIcon.fa-file-text {
   color: #dc322f; }
 
-.folderIcon {
+.App.solarized_dark .folderIcon {
   color: #268bd2; }
 
-.ant-tree-title {
+.App.solarized_dark .ant-tree-title {
   color: #93a1a1; }
 
-.ant-tree-switcher {
+.App.solarized_dark .ant-tree-switcher {
   color: #586e75; }
 
-@font-face {
-  font-family: octicons-link;
-  src: url(data:font/woff;charset=utf-8;base64,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) format("woff"); }
+.App.solarized_light .fileIcon {
+  color: #073642; }
 
-.markdown-body {
+.App.solarized_light .fileIcon.fa-file-text {
+  color: #d33682; }
+
+.App.solarized_light .folderIcon {
+  color: #6c71c4; }
+
+.App.solarized_light .ant-tree-title {
+  color: #073642; }
+
+.App.solarized_light .ant-tree-switcher {
+  color: #839496; }
+
+@font-face {
+  .App.solarized_dark {
+    font-family: octicons-link;
+    src: url(data:font/woff;charset=utf-8;base64,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) format("woff"); } }
+
+.App.solarized_dark .markdown-body {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   color: #93a1a1;
@@ -146,74 +207,74 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   line-height: 1.6;
   word-wrap: break-word; }
 
-.markdown-body a {
+.App.solarized_dark .markdown-body a {
   background-color: transparent; }
 
-.markdown-body a:active,
-.markdown-body a:hover {
+.App.solarized_dark .markdown-body a:active,
+.App.solarized_dark .markdown-body a:hover {
   outline: 0; }
 
-.markdown-body strong {
+.App.solarized_dark .markdown-body strong {
   font-weight: bold; }
 
-.markdown-body h1 {
+.App.solarized_dark .markdown-body h1 {
   font-size: 2em;
   margin: 0.67em 0; }
 
-.markdown-body img {
+.App.solarized_dark .markdown-body img {
   border: 0; }
 
-.markdown-body hr {
+.App.solarized_dark .markdown-body hr {
   box-sizing: content-box;
   height: 0; }
 
-.markdown-body pre {
+.App.solarized_dark .markdown-body pre {
   overflow: auto; }
 
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre {
+.App.solarized_dark .markdown-body code,
+.App.solarized_dark .markdown-body kbd,
+.App.solarized_dark .markdown-body pre {
   font-family: monospace, monospace;
   font-size: 1em; }
 
-.markdown-body input {
+.App.solarized_dark .markdown-body input {
   color: inherit;
   font: inherit;
   margin: 0; }
 
-.markdown-body html input[disabled] {
+.App.solarized_dark .markdown-body html input[disabled] {
   cursor: default; }
 
-.markdown-body input {
+.App.solarized_dark .markdown-body input {
   line-height: normal; }
 
-.markdown-body input[type="checkbox"] {
+.App.solarized_dark .markdown-body input[type="checkbox"] {
   box-sizing: border-box;
   padding: 0; }
 
-.markdown-body table {
+.App.solarized_dark .markdown-body table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-.markdown-body td,
-.markdown-body th {
+.App.solarized_dark .markdown-body td,
+.App.solarized_dark .markdown-body th {
   padding: 0; }
 
-.markdown-body * {
+.App.solarized_dark .markdown-body * {
   box-sizing: border-box; }
 
-.markdown-body input {
+.App.solarized_dark .markdown-body input {
   font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
 
-.markdown-body a {
+.App.solarized_dark .markdown-body a {
   color: #268bd2;
   text-decoration: none; }
 
-.markdown-body a:hover,
-.markdown-body a:active {
+.App.solarized_dark .markdown-body a:hover,
+.App.solarized_dark .markdown-body a:active {
   text-decoration: underline; }
 
-.markdown-body hr {
+.App.solarized_dark .markdown-body hr {
   height: 0;
   margin: 15px 0;
   overflow: hidden;
@@ -221,78 +282,78 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   border: 0;
   border-bottom: 1px solid #073642; }
 
-.markdown-body hr:before {
+.App.solarized_dark .markdown-body hr:before {
   display: table;
   content: ""; }
 
-.markdown-body hr:after {
+.App.solarized_dark .markdown-body hr:after {
   display: table;
   clear: both;
   content: ""; }
 
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
+.App.solarized_dark .markdown-body h1,
+.App.solarized_dark .markdown-body h2,
+.App.solarized_dark .markdown-body h3,
+.App.solarized_dark .markdown-body h4,
+.App.solarized_dark .markdown-body h5,
+.App.solarized_dark .markdown-body h6 {
   margin-top: 15px;
   margin-bottom: 15px;
   line-height: 1.1; }
 
-.markdown-body h1 {
+.App.solarized_dark .markdown-body h1 {
   font-size: 30px; }
 
-.markdown-body h2 {
+.App.solarized_dark .markdown-body h2 {
   font-size: 21px; }
 
-.markdown-body h3 {
+.App.solarized_dark .markdown-body h3 {
   font-size: 16px; }
 
-.markdown-body h4 {
+.App.solarized_dark .markdown-body h4 {
   font-size: 14px; }
 
-.markdown-body h5 {
+.App.solarized_dark .markdown-body h5 {
   font-size: 12px; }
 
-.markdown-body h6 {
+.App.solarized_dark .markdown-body h6 {
   font-size: 11px; }
 
-.markdown-body blockquote {
+.App.solarized_dark .markdown-body blockquote {
   margin: 0; }
 
-.markdown-body ul,
-.markdown-body ol {
+.App.solarized_dark .markdown-body ul,
+.App.solarized_dark .markdown-body ol {
   padding: 0;
   margin-top: 0;
   margin-bottom: 0; }
 
-.markdown-body ol ol,
-.markdown-body ul ol {
+.App.solarized_dark .markdown-body ol ol,
+.App.solarized_dark .markdown-body ul ol {
   list-style-type: lower-roman; }
 
-.markdown-body ul ul ol,
-.markdown-body ul ol ol,
-.markdown-body ol ul ol,
-.markdown-body ol ol ol {
+.App.solarized_dark .markdown-body ul ul ol,
+.App.solarized_dark .markdown-body ul ol ol,
+.App.solarized_dark .markdown-body ol ul ol,
+.App.solarized_dark .markdown-body ol ol ol {
   list-style-type: lower-alpha; }
 
-.markdown-body dd {
+.App.solarized_dark .markdown-body dd {
   margin-left: 0; }
 
-.markdown-body code {
+.App.solarized_dark .markdown-body code {
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 12px; }
 
-.markdown-body pre {
+.App.solarized_dark .markdown-body pre {
   margin-top: 0;
   margin-bottom: 0;
   font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace; }
 
-.markdown-body .select::-ms-expand {
+.App.solarized_dark .markdown-body .select::-ms-expand {
   opacity: 0; }
 
-.markdown-body .octicon {
+.App.solarized_dark .markdown-body .octicon {
   font: normal normal normal 16px/1 octicons-link;
   display: inline-block;
   text-decoration: none;
@@ -304,201 +365,201 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   -ms-user-select: none;
   user-select: none; }
 
-.markdown-body .octicon-link:before {
+.App.solarized_dark .markdown-body .octicon-link:before {
   content: "\f05c"; }
 
-.markdown-body:before {
+.App.solarized_dark .markdown-body:before {
   display: table;
   content: ""; }
 
-.markdown-body:after {
+.App.solarized_dark .markdown-body:after {
   display: table;
   clear: both;
   content: ""; }
 
-.markdown-body > *:first-child {
+.App.solarized_dark .markdown-body > *:first-child {
   margin-top: 0 !important; }
 
-.markdown-body > *:last-child {
+.App.solarized_dark .markdown-body > *:last-child {
   margin-bottom: 0 !important; }
 
-.markdown-body a:not([href]) {
+.App.solarized_dark .markdown-body a:not([href]) {
   color: inherit;
   text-decoration: none; }
 
-.markdown-body .anchor {
+.App.solarized_dark .markdown-body .anchor {
   display: inline-block;
   padding-right: 2px;
   margin-left: -18px; }
 
-.markdown-body .anchor:focus {
+.App.solarized_dark .markdown-body .anchor:focus {
   outline: none; }
 
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
+.App.solarized_dark .markdown-body h1,
+.App.solarized_dark .markdown-body h2,
+.App.solarized_dark .markdown-body h3,
+.App.solarized_dark .markdown-body h4,
+.App.solarized_dark .markdown-body h5,
+.App.solarized_dark .markdown-body h6 {
   margin-top: 1em;
   margin-bottom: 16px;
   font-weight: bold;
   line-height: 1.4; }
 
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
+.App.solarized_dark .markdown-body h1 .octicon-link,
+.App.solarized_dark .markdown-body h2 .octicon-link,
+.App.solarized_dark .markdown-body h3 .octicon-link,
+.App.solarized_dark .markdown-body h4 .octicon-link,
+.App.solarized_dark .markdown-body h5 .octicon-link,
+.App.solarized_dark .markdown-body h6 .octicon-link {
   color: #93a1a1;
   vertical-align: middle;
   visibility: hidden; }
 
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
+.App.solarized_dark .markdown-body h1:hover .anchor,
+.App.solarized_dark .markdown-body h2:hover .anchor,
+.App.solarized_dark .markdown-body h3:hover .anchor,
+.App.solarized_dark .markdown-body h4:hover .anchor,
+.App.solarized_dark .markdown-body h5:hover .anchor,
+.App.solarized_dark .markdown-body h6:hover .anchor {
   text-decoration: none; }
 
-.markdown-body h1:hover .anchor .octicon-link,
-.markdown-body h2:hover .anchor .octicon-link,
-.markdown-body h3:hover .anchor .octicon-link,
-.markdown-body h4:hover .anchor .octicon-link,
-.markdown-body h5:hover .anchor .octicon-link,
-.markdown-body h6:hover .anchor .octicon-link {
+.App.solarized_dark .markdown-body h1:hover .anchor .octicon-link,
+.App.solarized_dark .markdown-body h2:hover .anchor .octicon-link,
+.App.solarized_dark .markdown-body h3:hover .anchor .octicon-link,
+.App.solarized_dark .markdown-body h4:hover .anchor .octicon-link,
+.App.solarized_dark .markdown-body h5:hover .anchor .octicon-link,
+.App.solarized_dark .markdown-body h6:hover .anchor .octicon-link {
   visibility: visible; }
 
-.markdown-body h1 {
+.App.solarized_dark .markdown-body h1 {
   padding-bottom: 0.3em;
   font-size: 2.25em;
   line-height: 1.2;
   border-bottom: 1px solid #073642; }
 
-.markdown-body h1 .anchor {
+.App.solarized_dark .markdown-body h1 .anchor {
   line-height: 1; }
 
-.markdown-body h2 {
+.App.solarized_dark .markdown-body h2 {
   padding-bottom: 0.3em;
   font-size: 1.75em;
   line-height: 1.225;
   border-bottom: 1px solid #073642; }
 
-.markdown-body h2 .anchor {
+.App.solarized_dark .markdown-body h2 .anchor {
   line-height: 1; }
 
-.markdown-body h3 {
+.App.solarized_dark .markdown-body h3 {
   font-size: 1.5em;
   line-height: 1.43; }
 
-.markdown-body h3 .anchor {
+.App.solarized_dark .markdown-body h3 .anchor {
   line-height: 1.2; }
 
-.markdown-body h4 {
+.App.solarized_dark .markdown-body h4 {
   font-size: 1.25em; }
 
-.markdown-body h4 .anchor {
+.App.solarized_dark .markdown-body h4 .anchor {
   line-height: 1.2; }
 
-.markdown-body h5 {
+.App.solarized_dark .markdown-body h5 {
   font-size: 1em; }
 
-.markdown-body h5 .anchor {
+.App.solarized_dark .markdown-body h5 .anchor {
   line-height: 1.1; }
 
-.markdown-body h6 {
+.App.solarized_dark .markdown-body h6 {
   font-size: 1em;
   color: #657b83; }
 
-.markdown-body h6 .anchor {
+.App.solarized_dark .markdown-body h6 .anchor {
   line-height: 1.1; }
 
-.markdown-body p,
-.markdown-body blockquote,
-.markdown-body ul,
-.markdown-body ol,
-.markdown-body dl,
-.markdown-body table,
-.markdown-body pre {
+.App.solarized_dark .markdown-body p,
+.App.solarized_dark .markdown-body blockquote,
+.App.solarized_dark .markdown-body ul,
+.App.solarized_dark .markdown-body ol,
+.App.solarized_dark .markdown-body dl,
+.App.solarized_dark .markdown-body table,
+.App.solarized_dark .markdown-body pre {
   margin-top: 0;
   margin-bottom: 16px; }
 
-.markdown-body hr {
+.App.solarized_dark .markdown-body hr {
   height: 4px;
   padding: 0;
   margin: 16px 0;
   background-color: #073642;
   border: 0 none; }
 
-.markdown-body ul,
-.markdown-body ol {
+.App.solarized_dark .markdown-body ul,
+.App.solarized_dark .markdown-body ol {
   padding-left: 2em; }
 
-.markdown-body ul ul,
-.markdown-body ul ol,
-.markdown-body ol ol,
-.markdown-body ol ul {
+.App.solarized_dark .markdown-body ul ul,
+.App.solarized_dark .markdown-body ul ol,
+.App.solarized_dark .markdown-body ol ol,
+.App.solarized_dark .markdown-body ol ul {
   margin-top: 0;
   margin-bottom: 0; }
 
-.markdown-body li > p {
+.App.solarized_dark .markdown-body li > p {
   margin-top: 16px; }
 
-.markdown-body dl {
+.App.solarized_dark .markdown-body dl {
   padding: 0; }
 
-.markdown-body dl dt {
+.App.solarized_dark .markdown-body dl dt {
   padding: 0;
   margin-top: 16px;
   font-size: 1em;
   font-style: italic;
   font-weight: bold; }
 
-.markdown-body dl dd {
+.App.solarized_dark .markdown-body dl dd {
   padding: 0 16px;
   margin-bottom: 16px; }
 
-.markdown-body blockquote {
+.App.solarized_dark .markdown-body blockquote {
   padding: 0 15px;
   color: #839496;
   border-left: 4px solid #586e75; }
 
-.markdown-body blockquote > :first-child {
+.App.solarized_dark .markdown-body blockquote > :first-child {
   margin-top: 0; }
 
-.markdown-body blockquote > :last-child {
+.App.solarized_dark .markdown-body blockquote > :last-child {
   margin-bottom: 0; }
 
-.markdown-body table {
+.App.solarized_dark .markdown-body table {
   display: block;
   width: 100%;
   overflow: auto;
   word-break: normal;
   word-break: keep-all; }
 
-.markdown-body table th {
+.App.solarized_dark .markdown-body table th {
   font-weight: bold; }
 
-.markdown-body table th,
-.markdown-body table td {
+.App.solarized_dark .markdown-body table th,
+.App.solarized_dark .markdown-body table td {
   padding: 6px 13px;
   border: 1px solid #586e75; }
 
-.markdown-body table tr {
+.App.solarized_dark .markdown-body table tr {
   background-color: #002b36;
   border-top: 1px solid #839496; }
 
-.markdown-body table tr:nth-child(2n) {
+.App.solarized_dark .markdown-body table tr:nth-child(2n) {
   background-color: #073642; }
 
-.markdown-body img {
+.App.solarized_dark .markdown-body img {
   max-width: 100%;
   box-sizing: content-box;
   background-color: #002b36; }
 
-.markdown-body code {
+.App.solarized_dark .markdown-body code {
   padding: 0;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
@@ -507,12 +568,12 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   background-color: rgba(0, 0, 0, 0.04);
   border-radius: 3px; }
 
-.markdown-body code:before,
-.markdown-body code:after {
+.App.solarized_dark .markdown-body code:before,
+.App.solarized_dark .markdown-body code:after {
   letter-spacing: -0.2em;
   content: "\00a0"; }
 
-.markdown-body pre > code {
+.App.solarized_dark .markdown-body pre > code {
   padding: 0;
   margin: 0;
   font-size: 100%;
@@ -521,11 +582,11 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   background: transparent;
   border: 0; }
 
-.markdown-body .highlight {
+.App.solarized_dark .markdown-body .highlight {
   margin-bottom: 16px; }
 
-.markdown-body .highlight pre,
-.markdown-body pre {
+.App.solarized_dark .markdown-body .highlight pre,
+.App.solarized_dark .markdown-body pre {
   padding: 16px;
   overflow: auto;
   font-size: 85%;
@@ -533,14 +594,14 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   background-color: #073642;
   border-radius: 3px; }
 
-.markdown-body .highlight pre {
+.App.solarized_dark .markdown-body .highlight pre {
   margin-bottom: 0;
   word-break: normal; }
 
-.markdown-body pre {
+.App.solarized_dark .markdown-body pre {
   word-wrap: normal; }
 
-.markdown-body pre code {
+.App.solarized_dark .markdown-body pre code {
   display: inline;
   max-width: initial;
   padding: 0;
@@ -551,11 +612,11 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   background-color: transparent;
   border: 0; }
 
-.markdown-body pre code:before,
-.markdown-body pre code:after {
+.App.solarized_dark .markdown-body pre code:before,
+.App.solarized_dark .markdown-body pre code:after {
   content: normal; }
 
-.markdown-body kbd {
+.App.solarized_dark .markdown-body kbd {
   display: inline-block;
   padding: 3px 5px;
   font-size: 11px;
@@ -568,86 +629,86 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 #839496; }
 
-.markdown-body .pl-c {
+.App.solarized_dark .markdown-body .pl-c {
   color: #586e75; }
 
-.markdown-body .pl-c1,
-.markdown-body .pl-s .pl-v {
+.App.solarized_dark .markdown-body .pl-c1,
+.App.solarized_dark .markdown-body .pl-s .pl-v {
   color: #268bd2; }
 
-.markdown-body .pl-e,
-.markdown-body .pl-en {
+.App.solarized_dark .markdown-body .pl-e,
+.App.solarized_dark .markdown-body .pl-en {
   color: #6c71c4; }
 
-.markdown-body .pl-s .pl-s1,
-.markdown-body .pl-smi {
+.App.solarized_dark .markdown-body .pl-s .pl-s1,
+.App.solarized_dark .markdown-body .pl-smi {
   color: #93a1a1; }
 
-.markdown-body .pl-ent {
+.App.solarized_dark .markdown-body .pl-ent {
   color: #859900; }
 
-.markdown-body .pl-k {
+.App.solarized_dark .markdown-body .pl-k {
   color: #d33682; }
 
-.markdown-body .pl-pds,
-.markdown-body .pl-s,
-.markdown-body .pl-s .pl-pse .pl-s1,
-.markdown-body .pl-sr,
-.markdown-body .pl-sr .pl-cce,
-.markdown-body .pl-sr .pl-sra,
-.markdown-body .pl-sr .pl-sre {
+.App.solarized_dark .markdown-body .pl-pds,
+.App.solarized_dark .markdown-body .pl-s,
+.App.solarized_dark .markdown-body .pl-s .pl-pse .pl-s1,
+.App.solarized_dark .markdown-body .pl-sr,
+.App.solarized_dark .markdown-body .pl-sr .pl-cce,
+.App.solarized_dark .markdown-body .pl-sr .pl-sra,
+.App.solarized_dark .markdown-body .pl-sr .pl-sre {
   color: #268bd2; }
 
-.markdown-body .pl-v {
+.App.solarized_dark .markdown-body .pl-v {
   color: #cb4b16; }
 
-.markdown-body .pl-id {
+.App.solarized_dark .markdown-body .pl-id {
   color: #dc322f; }
 
-.markdown-body .pl-ii {
+.App.solarized_dark .markdown-body .pl-ii {
   background-color: #dc322f;
   color: #002b36; }
 
-.markdown-body .pl-sr .pl-cce {
+.App.solarized_dark .markdown-body .pl-sr .pl-cce {
   color: #859900;
   font-weight: bold; }
 
-.markdown-body .pl-ml {
+.App.solarized_dark .markdown-body .pl-ml {
   color: #b58900; }
 
-.markdown-body .pl-mh,
-.markdown-body .pl-mh .pl-en,
-.markdown-body .pl-ms {
+.App.solarized_dark .markdown-body .pl-mh,
+.App.solarized_dark .markdown-body .pl-mh .pl-en,
+.App.solarized_dark .markdown-body .pl-ms {
   color: #268bd2;
   font-weight: bold; }
 
-.markdown-body .pl-mq {
+.App.solarized_dark .markdown-body .pl-mq {
   color: #2aa198; }
 
-.markdown-body .pl-mi {
+.App.solarized_dark .markdown-body .pl-mi {
   color: #93a1a1;
   font-style: italic; }
 
-.markdown-body .pl-mb {
+.App.solarized_dark .markdown-body .pl-mb {
   color: #93a1a1;
   font-weight: bold; }
 
-.markdown-body .pl-md {
+.App.solarized_dark .markdown-body .pl-md {
   background-color: #073642;
   color: #dc322f; }
 
-.markdown-body .pl-mi1 {
+.App.solarized_dark .markdown-body .pl-mi1 {
   background-color: #dc322f;
   color: #859900; }
 
-.markdown-body .pl-mdr {
+.App.solarized_dark .markdown-body .pl-mdr {
   color: #6c71c4;
   font-weight: bold; }
 
-.markdown-body .pl-mo {
+.App.solarized_dark .markdown-body .pl-mo {
   color: #268bd2; }
 
-.markdown-body kbd {
+.App.solarized_dark .markdown-body kbd {
   display: inline-block;
   padding: 3px 5px;
   font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
@@ -660,60 +721,603 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 #839496; }
 
-.markdown-body .task-list-item {
+.App.solarized_dark .markdown-body .task-list-item {
   list-style-type: none; }
 
-.markdown-body .task-list-item + .task-list-item {
+.App.solarized_dark .markdown-body .task-list-item + .task-list-item {
   margin-top: 3px; }
 
-.markdown-body .task-list-item input {
+.App.solarized_dark .markdown-body .task-list-item input {
   margin: 0 0.35em 0.25em -1.6em;
   vertical-align: middle; }
 
-.markdown-body :checked + .radio-label {
+.App.solarized_dark .markdown-body :checked + .radio-label {
   z-index: 1;
   position: relative;
   border-color: #268bd2; }
 
-.md-body h3 {
+@font-face {
+  .App.solarized_light {
+    font-family: octicons-link;
+    src: url(data:font/woff;charset=utf-8;base64,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) format("woff"); } }
+
+.App.solarized_light .markdown-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: #073642;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word; }
+
+.App.solarized_light .markdown-body a {
+  background-color: transparent; }
+
+.App.solarized_light .markdown-body a:active,
+.App.solarized_light .markdown-body a:hover {
+  outline: 0; }
+
+.App.solarized_light .markdown-body strong {
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+.App.solarized_light .markdown-body img {
+  border: 0; }
+
+.App.solarized_light .markdown-body hr {
+  box-sizing: content-box;
+  height: 0; }
+
+.App.solarized_light .markdown-body pre {
+  overflow: auto; }
+
+.App.solarized_light .markdown-body code,
+.App.solarized_light .markdown-body kbd,
+.App.solarized_light .markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em; }
+
+.App.solarized_light .markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0; }
+
+.App.solarized_light .markdown-body html input[disabled] {
+  cursor: default; }
+
+.App.solarized_light .markdown-body input {
+  line-height: normal; }
+
+.App.solarized_light .markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0; }
+
+.App.solarized_light .markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.App.solarized_light .markdown-body td,
+.App.solarized_light .markdown-body th {
+  padding: 0; }
+
+.App.solarized_light .markdown-body * {
+  box-sizing: border-box; }
+
+.App.solarized_light .markdown-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+
+.App.solarized_light .markdown-body a {
+  color: #6c71c4;
+  text-decoration: none; }
+
+.App.solarized_light .markdown-body a:hover,
+.App.solarized_light .markdown-body a:active {
+  text-decoration: underline; }
+
+.App.solarized_light .markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #93a1a1; }
+
+.App.solarized_light .markdown-body hr:before {
+  display: table;
+  content: ""; }
+
+.App.solarized_light .markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: ""; }
+
+.App.solarized_light .markdown-body h1,
+.App.solarized_light .markdown-body h2,
+.App.solarized_light .markdown-body h3,
+.App.solarized_light .markdown-body h4,
+.App.solarized_light .markdown-body h5,
+.App.solarized_light .markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1; }
+
+.App.solarized_light .markdown-body h1 {
+  font-size: 30px; }
+
+.App.solarized_light .markdown-body h2 {
+  font-size: 21px; }
+
+.App.solarized_light .markdown-body h3 {
+  font-size: 16px; }
+
+.App.solarized_light .markdown-body h4 {
+  font-size: 14px; }
+
+.App.solarized_light .markdown-body h5 {
+  font-size: 12px; }
+
+.App.solarized_light .markdown-body h6 {
+  font-size: 11px; }
+
+.App.solarized_light .markdown-body blockquote {
+  margin: 0; }
+
+.App.solarized_light .markdown-body ul,
+.App.solarized_light .markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.App.solarized_light .markdown-body ol ol,
+.App.solarized_light .markdown-body ul ol {
+  list-style-type: lower-roman; }
+
+.App.solarized_light .markdown-body ul ul ol,
+.App.solarized_light .markdown-body ul ol ol,
+.App.solarized_light .markdown-body ol ul ol,
+.App.solarized_light .markdown-body ol ol ol {
+  list-style-type: lower-alpha; }
+
+.App.solarized_light .markdown-body dd {
+  margin-left: 0; }
+
+.App.solarized_light .markdown-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px; }
+
+.App.solarized_light .markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+
+.App.solarized_light .markdown-body .select::-ms-expand {
+  opacity: 0; }
+
+.App.solarized_light .markdown-body .octicon {
+  font: normal normal normal 16px/1 octicons-link;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.App.solarized_light .markdown-body .octicon-link:before {
+  content: "\f05c"; }
+
+.App.solarized_light .markdown-body:before {
+  display: table;
+  content: ""; }
+
+.App.solarized_light .markdown-body:after {
+  display: table;
+  clear: both;
+  content: ""; }
+
+.App.solarized_light .markdown-body > *:first-child {
+  margin-top: 0 !important; }
+
+.App.solarized_light .markdown-body > *:last-child {
+  margin-bottom: 0 !important; }
+
+.App.solarized_light .markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none; }
+
+.App.solarized_light .markdown-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px; }
+
+.App.solarized_light .markdown-body .anchor:focus {
+  outline: none; }
+
+.App.solarized_light .markdown-body h1,
+.App.solarized_light .markdown-body h2,
+.App.solarized_light .markdown-body h3,
+.App.solarized_light .markdown-body h4,
+.App.solarized_light .markdown-body h5,
+.App.solarized_light .markdown-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4; }
+
+.App.solarized_light .markdown-body h1 .octicon-link,
+.App.solarized_light .markdown-body h2 .octicon-link,
+.App.solarized_light .markdown-body h3 .octicon-link,
+.App.solarized_light .markdown-body h4 .octicon-link,
+.App.solarized_light .markdown-body h5 .octicon-link,
+.App.solarized_light .markdown-body h6 .octicon-link {
+  color: #073642;
+  vertical-align: middle;
+  visibility: hidden; }
+
+.App.solarized_light .markdown-body h1:hover .anchor,
+.App.solarized_light .markdown-body h2:hover .anchor,
+.App.solarized_light .markdown-body h3:hover .anchor,
+.App.solarized_light .markdown-body h4:hover .anchor,
+.App.solarized_light .markdown-body h5:hover .anchor,
+.App.solarized_light .markdown-body h6:hover .anchor {
+  text-decoration: none; }
+
+.App.solarized_light .markdown-body h1:hover .anchor .octicon-link,
+.App.solarized_light .markdown-body h2:hover .anchor .octicon-link,
+.App.solarized_light .markdown-body h3:hover .anchor .octicon-link,
+.App.solarized_light .markdown-body h4:hover .anchor .octicon-link,
+.App.solarized_light .markdown-body h5:hover .anchor .octicon-link,
+.App.solarized_light .markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible; }
+
+.App.solarized_light .markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #93a1a1; }
+
+.App.solarized_light .markdown-body h1 .anchor {
+  line-height: 1; }
+
+.App.solarized_light .markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #93a1a1; }
+
+.App.solarized_light .markdown-body h2 .anchor {
+  line-height: 1; }
+
+.App.solarized_light .markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43; }
+
+.App.solarized_light .markdown-body h3 .anchor {
+  line-height: 1.2; }
+
+.App.solarized_light .markdown-body h4 {
+  font-size: 1.25em; }
+
+.App.solarized_light .markdown-body h4 .anchor {
+  line-height: 1.2; }
+
+.App.solarized_light .markdown-body h5 {
+  font-size: 1em; }
+
+.App.solarized_light .markdown-body h5 .anchor {
+  line-height: 1.1; }
+
+.App.solarized_light .markdown-body h6 {
+  font-size: 1em;
+  color: #657b83; }
+
+.App.solarized_light .markdown-body h6 .anchor {
+  line-height: 1.1; }
+
+.App.solarized_light .markdown-body p,
+.App.solarized_light .markdown-body blockquote,
+.App.solarized_light .markdown-body ul,
+.App.solarized_light .markdown-body ol,
+.App.solarized_light .markdown-body dl,
+.App.solarized_light .markdown-body table,
+.App.solarized_light .markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px; }
+
+.App.solarized_light .markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #93a1a1;
+  border: 0 none; }
+
+.App.solarized_light .markdown-body ul,
+.App.solarized_light .markdown-body ol {
+  padding-left: 2em; }
+
+.App.solarized_light .markdown-body ul ul,
+.App.solarized_light .markdown-body ul ol,
+.App.solarized_light .markdown-body ol ol,
+.App.solarized_light .markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.App.solarized_light .markdown-body li > p {
+  margin-top: 16px; }
+
+.App.solarized_light .markdown-body dl {
+  padding: 0; }
+
+.App.solarized_light .markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px; }
+
+.App.solarized_light .markdown-body blockquote {
+  padding: 0 15px;
+  color: #586e75;
+  border-left: 4px solid #839496; }
+
+.App.solarized_light .markdown-body blockquote > :first-child {
+  margin-top: 0; }
+
+.App.solarized_light .markdown-body blockquote > :last-child {
+  margin-bottom: 0; }
+
+.App.solarized_light .markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all; }
+
+.App.solarized_light .markdown-body table th {
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body table th,
+.App.solarized_light .markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #839496; }
+
+.App.solarized_light .markdown-body table tr {
+  background-color: #eee8d5;
+  border-top: 1px solid #586e75; }
+
+.App.solarized_light .markdown-body table tr:nth-child(2n) {
+  background-color: #93a1a1; }
+
+.App.solarized_light .markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #eee8d5; }
+
+.App.solarized_light .markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 3px; }
+
+.App.solarized_light .markdown-body code:before,
+.App.solarized_light .markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0"; }
+
+.App.solarized_light .markdown-body pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0; }
+
+.App.solarized_light .markdown-body .highlight {
+  margin-bottom: 16px; }
+
+.App.solarized_light .markdown-body .highlight pre,
+.App.solarized_light .markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #93a1a1;
+  border-radius: 3px; }
+
+.App.solarized_light .markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal; }
+
+.App.solarized_light .markdown-body pre {
+  word-wrap: normal; }
+
+.App.solarized_light .markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0; }
+
+.App.solarized_light .markdown-body pre code:before,
+.App.solarized_light .markdown-body pre code:after {
+  content: normal; }
+
+.App.solarized_light .markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #073642;
+  vertical-align: middle;
+  background-color: #93a1a1;
+  border: solid 1px #839496;
+  border-bottom-color: #586e75;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #586e75; }
+
+.App.solarized_light .markdown-body .pl-c {
+  color: #839496; }
+
+.App.solarized_light .markdown-body .pl-c1,
+.App.solarized_light .markdown-body .pl-s .pl-v {
+  color: #6c71c4; }
+
+.App.solarized_light .markdown-body .pl-e,
+.App.solarized_light .markdown-body .pl-en {
+  color: #268bd2; }
+
+.App.solarized_light .markdown-body .pl-s .pl-s1,
+.App.solarized_light .markdown-body .pl-smi {
+  color: #073642; }
+
+.App.solarized_light .markdown-body .pl-ent {
+  color: #2aa198; }
+
+.App.solarized_light .markdown-body .pl-k {
+  color: #dc322f; }
+
+.App.solarized_light .markdown-body .pl-pds,
+.App.solarized_light .markdown-body .pl-s,
+.App.solarized_light .markdown-body .pl-s .pl-pse .pl-s1,
+.App.solarized_light .markdown-body .pl-sr,
+.App.solarized_light .markdown-body .pl-sr .pl-cce,
+.App.solarized_light .markdown-body .pl-sr .pl-sra,
+.App.solarized_light .markdown-body .pl-sr .pl-sre {
+  color: #6c71c4; }
+
+.App.solarized_light .markdown-body .pl-v {
+  color: #b58900; }
+
+.App.solarized_light .markdown-body .pl-id {
+  color: #d33682; }
+
+.App.solarized_light .markdown-body .pl-ii {
+  background-color: #d33682;
+  color: #eee8d5; }
+
+.App.solarized_light .markdown-body .pl-sr .pl-cce {
+  color: #2aa198;
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body .pl-ml {
+  color: #cb4b16; }
+
+.App.solarized_light .markdown-body .pl-mh,
+.App.solarized_light .markdown-body .pl-mh .pl-en,
+.App.solarized_light .markdown-body .pl-ms {
+  color: #6c71c4;
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body .pl-mq {
+  color: #859900; }
+
+.App.solarized_light .markdown-body .pl-mi {
+  color: #073642;
+  font-style: italic; }
+
+.App.solarized_light .markdown-body .pl-mb {
+  color: #073642;
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body .pl-md {
+  background-color: #93a1a1;
+  color: #d33682; }
+
+.App.solarized_light .markdown-body .pl-mi1 {
+  background-color: #d33682;
+  color: #2aa198; }
+
+.App.solarized_light .markdown-body .pl-mdr {
+  color: #268bd2;
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body .pl-mo {
+  color: #6c71c4; }
+
+.App.solarized_light .markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #073642;
+  vertical-align: middle;
+  background-color: #93a1a1;
+  border: solid 1px #839496;
+  border-bottom-color: #586e75;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #586e75; }
+
+.App.solarized_light .markdown-body .task-list-item {
+  list-style-type: none; }
+
+.App.solarized_light .markdown-body .task-list-item + .task-list-item {
+  margin-top: 3px; }
+
+.App.solarized_light .markdown-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle; }
+
+.App.solarized_light .markdown-body :checked + .radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #6c71c4; }
+
+.App.solarized_dark .md-body h3 {
   margin-top: 5px; }
 
-.warning {
+.App.solarized_dark .warning {
   background-color: #e84e40; }
 
-.warning table td,
-.warning table th {
+.App.solarized_dark .warning table td,
+.App.solarized_dark .warning table th {
   border: 1px solid #b72315; }
 
-.warning table tr {
+.App.solarized_dark .warning table tr {
   background-color: #e84e40; }
 
-.warning table tr:nth-child(2n) {
+.App.solarized_dark .warning table tr:nth-child(2n) {
   background-color: #e74132; }
 
-.note {
+.App.solarized_dark .note {
   background-color: #29b6f6; }
 
-.note table td,
-.note table th {
+.App.solarized_dark .note table td,
+.App.solarized_dark .note table th {
   border: 1px solid #0888c4; }
 
-.note table tr {
+.App.solarized_dark .note table tr {
   background-color: #29b6f6; }
 
-.note table tr:nth-child(2n) {
+.App.solarized_dark .note table tr:nth-child(2n) {
   background-color: #0aabf5; }
 
-pre {
+.App.solarized_dark pre {
   padding: 5px 10px 2px 10px;
   margin-left: -5px;
   margin-bottom: 5px;
   border: none; }
 
-.markdown-body pre > code {
+.App.solarized_dark .markdown-body pre > code {
   font-family: "Source Code Pro", monospace; }
 
-.linkPreviewContainer {
+.App.solarized_dark .linkPreviewContainer {
   font-family: medium-ui-sans-serif-text-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   letter-spacing: 0;
   font-weight: 400;
@@ -731,7 +1335,7 @@ pre {
   margin-bottom: 10px;
   background-color: #073642; }
 
-.linkPreviewImage {
+.App.solarized_dark .linkPreviewImage {
   display: table-cell;
   vertical-align: middle;
   width: 160px;
@@ -742,17 +1346,17 @@ pre {
   box-sizing: border-box;
   box-shadow: inset 0 0 0 1px #586e75; }
 
-a.linkPreviewText {
+.App.solarized_dark a.linkPreviewText {
   display: table-cell;
   vertical-align: middle;
   padding: 20px;
   font-style: normal;
   color: #586e75; }
 
-a.linkPreviewText:hover {
+.App.solarized_dark a.linkPreviewText:hover {
   text-decoration: none; }
 
-.linkPreviewText strong {
+.App.solarized_dark .linkPreviewText strong {
   font-family: medium-ui-sans-serif-text-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   letter-spacing: 0;
   font-weight: 400;
@@ -763,7 +1367,7 @@ a.linkPreviewText:hover {
   display: block;
   margin-bottom: -8px; }
 
-.linkPreviewText em {
+.App.solarized_dark .linkPreviewText em {
   font-size: 14px;
   font-style: normal;
   color: #657b83;
@@ -773,39 +1377,165 @@ a.linkPreviewText:hover {
   max-height: 120px;
   overflow: hidden; }
 
-.youtubePreview {
+.App.solarized_dark .youtubePreview {
   margin-left: auto;
   margin-right: auto;
   width: 560px;
   height: 315px; }
 
-.spoiler {
+.App.solarized_dark .spoiler {
   background-color: #f0df75;
   color: black; }
 
-.spoilerContent {
+.App.solarized_dark .spoilerContent {
   opacity: 0;
   transition: opacity 0.5s ease-out; }
 
-.spoiler:hover .spoilerContent {
+.App.solarized_dark .spoiler:hover .spoilerContent {
   opacity: 1;
   transition: opacity 0.25s ease-in; }
 
-.spoilerContent table td,
-.spoilerContent table th {
+.App.solarized_dark .spoilerContent table td,
+.App.solarized_dark .spoilerContent table th {
   border: 1px solid #e6ca19; }
 
-.spoilerContent table tr {
+.App.solarized_dark .spoilerContent table tr {
   background-color: #f0df75; }
 
-.spoilerContent table tr:nth-child(2n) {
+.App.solarized_dark .spoilerContent table tr:nth-child(2n) {
   background-color: #ebd547; }
 
-.ant-modal-footer {
+.App.solarized_light .md-body h3 {
+  margin-top: 5px; }
+
+.App.solarized_light .warning {
+  background-color: #e84e40; }
+
+.App.solarized_light .warning table td,
+.App.solarized_light .warning table th {
+  border: 1px solid #b72315; }
+
+.App.solarized_light .warning table tr {
+  background-color: #e84e40; }
+
+.App.solarized_light .warning table tr:nth-child(2n) {
+  background-color: #e74132; }
+
+.App.solarized_light .note {
+  background-color: #29b6f6; }
+
+.App.solarized_light .note table td,
+.App.solarized_light .note table th {
+  border: 1px solid #0888c4; }
+
+.App.solarized_light .note table tr {
+  background-color: #29b6f6; }
+
+.App.solarized_light .note table tr:nth-child(2n) {
+  background-color: #0aabf5; }
+
+.App.solarized_light pre {
+  padding: 5px 10px 2px 10px;
+  margin-left: -5px;
+  margin-bottom: 5px;
+  border: none; }
+
+.App.solarized_light .markdown-body pre > code {
+  font-family: "Source Code Pro", monospace; }
+
+.App.solarized_light .linkPreviewContainer {
+  font-family: medium-ui-sans-serif-text-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: 0;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  position: relative;
+  overflow: hidden;
+  max-height: 280px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(0, 0, 0, 0.09);
+  display: table;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  background-color: #93a1a1; }
+
+.App.solarized_light .linkPreviewImage {
+  display: table-cell;
+  vertical-align: middle;
+  width: 160px;
+  height: 160px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 1px #839496; }
+
+.App.solarized_light a.linkPreviewText {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 20px;
+  font-style: normal;
+  color: #839496; }
+
+.App.solarized_light a.linkPreviewText:hover {
+  text-decoration: none; }
+
+.App.solarized_light .linkPreviewText strong {
+  font-family: medium-ui-sans-serif-text-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: 0;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.3;
+  color: #073642;
+  display: block;
+  margin-bottom: -8px; }
+
+.App.solarized_light .linkPreviewText em {
+  font-size: 14px;
+  font-style: normal;
+  color: #657b83;
+  display: block;
+  margin-top: -1px;
+  margin-bottom: 10px;
+  max-height: 120px;
+  overflow: hidden; }
+
+.App.solarized_light .youtubePreview {
+  margin-left: auto;
+  margin-right: auto;
+  width: 560px;
+  height: 315px; }
+
+.App.solarized_light .spoiler {
+  background-color: #f0df75;
+  color: black; }
+
+.App.solarized_light .spoilerContent {
+  opacity: 0;
+  transition: opacity 0.5s ease-out; }
+
+.App.solarized_light .spoiler:hover .spoilerContent {
+  opacity: 1;
+  transition: opacity 0.25s ease-in; }
+
+.App.solarized_light .spoilerContent table td,
+.App.solarized_light .spoilerContent table th {
+  border: 1px solid #e6ca19; }
+
+.App.solarized_light .spoilerContent table tr {
+  background-color: #f0df75; }
+
+.App.solarized_light .spoilerContent table tr:nth-child(2n) {
+  background-color: #ebd547; }
+
+.solarized_dark .ant-modal-footer {
   background: #002b36;
   border: 0; }
 
-.ant-modal-header {
+.solarized_dark .ant-modal-header {
   padding: 13px 16px;
   border-radius: 4px 4px 0 0;
   background: #002b36;
@@ -813,43 +1543,95 @@ a.linkPreviewText:hover {
   border-top-color: #002b36;
   border-bottom: 1px solid #586e75; }
 
-.ant-modal-body {
+.solarized_dark .ant-modal-body {
   background: #002b36;
   padding: 16px;
   font-size: 12px;
   line-height: 1.5; }
 
-.ant-modal-title {
+.solarized_dark .ant-modal-title {
   margin: 0;
   font-size: 14px;
   line-height: 21px;
   font-weight: 500;
   color: #93a1a1; }
 
-.ant-modal-content {
-  border-radius: 5px; }
+.solarized_dark .ant-modal-content {
+  border-radius: 5px;
+  color: #93a1a1; }
 
-.ant-modal-close {
+.solarized_dark .ant-modal-close {
   color: #586e75; }
 
-.ant-modal-close:hover {
+.solarized_dark .ant-modal-close:hover {
   background: transparent;
   color: #fdf6e3; }
 
-.ant-checkbox-inner {
+.solarized_dark .ant-checkbox-inner {
   background-color: #eee8d5;
   border-color: #fdf6e3; }
 
-.ant-checkbox-checked .ant-checkbox-inner,
-.ant-checkbox-indeterminate .ant-checkbox-inner {
+.solarized_dark .ant-checkbox-checked .ant-checkbox-inner,
+.solarized_dark .ant-checkbox-indeterminate .ant-checkbox-inner {
   background-color: #268bd2;
   border-color: #268bd2; }
 
-.ant-checkbox-checked .ant-checkbox-inner:after {
+.solarized_dark .ant-checkbox-checked .ant-checkbox-inner:after {
   border-color: #eee8d5; }
 
-.ant-slider-mark-text {
+.solarized_dark .ant-slider-mark-text {
   color: #93a1a1; }
+
+.solarized_light .ant-modal-footer {
+  background: #eee8d5;
+  border: 0; }
+
+.solarized_light .ant-modal-header {
+  padding: 13px 16px;
+  border-radius: 4px 4px 0 0;
+  background: #eee8d5;
+  color: #073642;
+  border-top-color: #eee8d5;
+  border-bottom: 1px solid #839496; }
+
+.solarized_light .ant-modal-body {
+  background: #eee8d5;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.5; }
+
+.solarized_light .ant-modal-title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: #073642; }
+
+.solarized_light .ant-modal-content {
+  border-radius: 5px;
+  color: #073642; }
+
+.solarized_light .ant-modal-close {
+  color: #839496; }
+
+.solarized_light .ant-modal-close:hover {
+  background: transparent;
+  color: #001f27; }
+
+.solarized_light .ant-checkbox-inner {
+  background-color: #002b36;
+  border-color: #001f27; }
+
+.solarized_light .ant-checkbox-checked .ant-checkbox-inner,
+.solarized_light .ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #6c71c4;
+  border-color: #6c71c4; }
+
+.solarized_light .ant-checkbox-checked .ant-checkbox-inner:after {
+  border-color: #002b36; }
+
+.solarized_light .ant-slider-mark-text {
+  color: #073642; }
 
 @font-face {
   font-family: "Material Icons";
@@ -859,179 +1641,146 @@ a.linkPreviewText:hover {
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url("../font/MaterialIcons-Regular.woff") format("woff"); }
 
-.material-icons {
-  font-family: "Material Icons";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 16px;
-  /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-  /* Support for IE. */
-  font-feature-settings: "liga"; }
-
-body {
+.App.solarized_dark {
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
   background-color: #002b36;
   color: #93a1a1; }
-
-#root {
-  height: 100vh;
-  width: 100vw; }
-
-.AppBody {
-  height: 100vh;
-  width: 100vw;
-  margin: 0px; }
-
-.App {
-  height: 100vh;
-  width: 100vw;
-  margin: 0px; }
-
-.divider div {
-  cursor: col-resize !important; }
-
-.mainEditor {
-  height: 100%;
-  margin: 0px;
-  width: 100%;
-  padding-right: 0px;
-  padding-left: 0px; }
-
-.sidebar {
-  height: 100%;
-  width: 100%;
-  background-color: #001f27; }
-
-.sidebarTree {
-  height: calc(100% - 30px - 37px);
-  width: 100%;
-  overflow: auto; }
-
-.sidebarTypeSwitch {
-  height: 32px;
-  width: 100%; }
-
-.imageContainer {
-  /*CHECKERBOARD PATTER FOR TRASNPARENT IMAGES*/
-  background-color: #e6e6e6;
-  background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
-  background-size: 40px 40px;
-  background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
-  max-width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
-  margin-bottom: 40px; }
-
-.imagePreview {
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  overflow-y: auto; }
-
-.row {
-  margin-left: 0px;
-  margin-right: 0px; }
-
-.rdTabAddButton {
-  visibility: hidden; }
-
-ul {
-  list-style: disc; }
-
-ol {
-  list-style: decimal; }
-
-button {
-  background-color: #001f27;
-  transition: background-color 0.5s ease;
-  color: #93a1a1;
-  border: 0px;
-  outline: none; }
-
-button:hover {
-  background-color: #073642; }
-
-.sidebarTypeSwitch .fluid-button {
-  width: 50%;
-  height: 32px;
-  text-overflow: ellipsis;
-  line-height: 32px;
-  padding-top: 4px; }
-
-.sidebarTypeSwitch .fluid-button .material-icons {
-  font-size: 24px;
-  /* Preferred icon size */ }
-
-.projectTitle {
-  background-color: #001f27;
-  width: 100%;
-  height: 35px;
-  color: #93a1a1;
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
-  vertical-align: middle; }
-
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px; }
-
-::-webkit-scrollbar-corner {
-  background: #001f27; }
-
-::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  border: 3px solid #001f27;
-  background: #073642;
-  background-clip: content-box; }
-
-::-webkit-scrollbar-track {
-  background: #001f27; }
-
-.appBarButtonBlock {
-  margin-top: -7px;
-  text-align: center;
-  margin-right: -7px; }
-
-.appBarButtonBlock div {
-  width: 35px;
-  height: 35px;
-  line-height: 35px; }
-
-button :focus {
-  border: 0px; }
-
-i.primary {
-  color: #268bd2; }
-
-.react-tabs-tab-close {
-  box-sizing: content-box; }
-
-.react-tabs-tab-content span {
-  transition: color 0.5s ease; }
-
-.unsavedTab {
-  color: #268bd2; }
-
-div:hover > .fa-cog {
-  animation: fa-spin 2s infinite linear; }
+  .App.solarized_dark .material-icons {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 16px;
+    /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    /* Support for IE. */
+    font-feature-settings: "liga"; }
+  .App.solarized_dark #root {
+    height: 100vh;
+    width: 100vw; }
+  .App.solarized_dark .AppBody {
+    height: 100vh;
+    width: 100vw;
+    margin: 0px; }
+  .App.solarized_dark .divider div {
+    cursor: col-resize !important; }
+  .App.solarized_dark .mainEditor {
+    height: 100%;
+    margin: 0px;
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px; }
+  .App.solarized_dark .sidebar {
+    height: 100%;
+    width: 100%;
+    background-color: #001f27; }
+  .App.solarized_dark .sidebarTree {
+    height: calc(100% - 30px - 37px);
+    width: 100%;
+    overflow: auto; }
+  .App.solarized_dark .sidebarTypeSwitch {
+    height: 32px;
+    width: 100%; }
+  .App.solarized_dark .imageContainer {
+    /* CHECKERBOARD PATTER FOR TRASNPARENT IMAGES */
+    background-color: #e6e6e6;
+    background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
+    background-size: 40px 40px;
+    background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    margin-bottom: 40px; }
+  .App.solarized_dark .imagePreview {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    overflow-y: auto; }
+  .App.solarized_dark .row {
+    margin-left: 0px;
+    margin-right: 0px; }
+  .App.solarized_dark .rdTabAddButton {
+    visibility: hidden; }
+  .App.solarized_dark ul {
+    list-style: disc; }
+  .App.solarized_dark ol {
+    list-style: decimal; }
+  .App.solarized_dark button {
+    background-color: #001f27;
+    transition: background-color 0.5s ease;
+    color: #93a1a1;
+    border: 0px;
+    outline: none; }
+  .App.solarized_dark button:hover {
+    background-color: #073642; }
+  .App.solarized_dark .sidebarTypeSwitch .fluid-button {
+    width: 50%;
+    height: 32px;
+    text-overflow: ellipsis;
+    line-height: 32px;
+    padding-top: 4px; }
+  .App.solarized_dark .sidebarTypeSwitch .fluid-button .material-icons {
+    font-size: 24px;
+    /* Preferred icon size */ }
+  .App.solarized_dark .projectTitle {
+    background-color: #001f27;
+    width: 100%;
+    height: 35px;
+    color: #93a1a1;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    vertical-align: middle; }
+  .App.solarized_dark ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px; }
+  .App.solarized_dark ::-webkit-scrollbar-corner {
+    background: #001f27; }
+  .App.solarized_dark ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    border: 3px solid #001f27;
+    background: #073642;
+    background-clip: content-box; }
+  .App.solarized_dark ::-webkit-scrollbar-track {
+    background: #001f27; }
+  .App.solarized_dark .appBarButtonBlock {
+    margin-top: -7px;
+    text-align: center;
+    margin-right: -7px; }
+  .App.solarized_dark .appBarButtonBlock div {
+    width: 35px;
+    height: 35px;
+    line-height: 35px; }
+  .App.solarized_dark button :focus {
+    border: 0px; }
+  .App.solarized_dark i.primary {
+    color: #268bd2; }
+  .App.solarized_dark .react-tabs-tab-close {
+    box-sizing: content-box; }
+  .App.solarized_dark .react-tabs-tab-content span {
+    transition: color 0.5s ease; }
+  .App.solarized_dark .unsavedTab {
+    color: #268bd2; }
+  .App.solarized_dark div:hover > .fa-cog {
+    animation: fa-spin 2s infinite linear; }
 
 @keyframes fa-spin {
   0% {
@@ -1040,15 +1789,228 @@ div:hover > .fa-cog {
   100% {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
+  .App.solarized_dark .placeholderLogo {
+    opacity: 0.5;
+    background-image: url("../../assets/placeholder.png");
+    height: calc(100% - 77px);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    margin: 20px; }
+  .App.solarized_dark .react-tabs-container {
+    border-bottom: 0 !important; }
+  .App.solarized_dark .fluid-button-container {
+    background: #001f27; }
+  .App.solarized_dark .fluid-button-highlight {
+    background: #073642; }
+  .App.solarized_dark .fluid-button {
+    color: #93a1a1; }
+  .App.solarized_dark .react-tabs-container {
+    background-color: #001f27;
+    border-color: #002b36; }
+  .App.solarized_dark .react-tabs-active {
+    background-color: #002b36; }
+  .App.solarized_dark .react-tabs-tab-close {
+    color: #fdf6e3;
+    border-color: #001f27; }
+  .App.solarized_dark .react-tabs-active .react-tabs-tab-close {
+    border-color: #002b36; }
+  .App.solarized_dark .react-tabs-tab {
+    color: #657b83; }
+  .App.solarized_dark .react-tabs-active.react-tabs-tab {
+    color: #eee8d5; }
+  .App.solarized_dark .react-tabs-tab-close:hover {
+    background-color: #268bd2;
+    color: #001f27;
+    border-color: #268bd2; }
+  .App.solarized_dark .react-tabs-active .react-tabs-tab-close:hover {
+    background-color: #268bd2;
+    color: #002b36;
+    border-color: #268bd2; }
 
-.placeholderLogo {
-  opacity: 0.5;
-  background-image: url("../../assets/placeholder.png");
-  height: calc(100% - 77px);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  margin: 20px; }
+.App.solarized_light {
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #eee8d5;
+  color: #073642; }
+  .App.solarized_light .material-icons {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 16px;
+    /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    /* Support for IE. */
+    font-feature-settings: "liga"; }
+  .App.solarized_light #root {
+    height: 100vh;
+    width: 100vw; }
+  .App.solarized_light .AppBody {
+    height: 100vh;
+    width: 100vw;
+    margin: 0px; }
+  .App.solarized_light .divider div {
+    cursor: col-resize !important; }
+  .App.solarized_light .mainEditor {
+    height: 100%;
+    margin: 0px;
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px; }
+  .App.solarized_light .sidebar {
+    height: 100%;
+    width: 100%;
+    background-color: #fdf6e3; }
+  .App.solarized_light .sidebarTree {
+    height: calc(100% - 30px - 37px);
+    width: 100%;
+    overflow: auto; }
+  .App.solarized_light .sidebarTypeSwitch {
+    height: 32px;
+    width: 100%; }
+  .App.solarized_light .imageContainer {
+    /* CHECKERBOARD PATTER FOR TRASNPARENT IMAGES */
+    background-color: #e6e6e6;
+    background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
+    background-size: 40px 40px;
+    background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    margin-bottom: 40px; }
+  .App.solarized_light .imagePreview {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    overflow-y: auto; }
+  .App.solarized_light .row {
+    margin-left: 0px;
+    margin-right: 0px; }
+  .App.solarized_light .rdTabAddButton {
+    visibility: hidden; }
+  .App.solarized_light ul {
+    list-style: disc; }
+  .App.solarized_light ol {
+    list-style: decimal; }
+  .App.solarized_light button {
+    background-color: #fdf6e3;
+    transition: background-color 0.5s ease;
+    color: #073642;
+    border: 0px;
+    outline: none; }
+  .App.solarized_light button:hover {
+    background-color: #93a1a1; }
+  .App.solarized_light .sidebarTypeSwitch .fluid-button {
+    width: 50%;
+    height: 32px;
+    text-overflow: ellipsis;
+    line-height: 32px;
+    padding-top: 4px; }
+  .App.solarized_light .sidebarTypeSwitch .fluid-button .material-icons {
+    font-size: 24px;
+    /* Preferred icon size */ }
+  .App.solarized_light .projectTitle {
+    background-color: #fdf6e3;
+    width: 100%;
+    height: 35px;
+    color: #073642;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    vertical-align: middle; }
+  .App.solarized_light ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px; }
+  .App.solarized_light ::-webkit-scrollbar-corner {
+    background: #fdf6e3; }
+  .App.solarized_light ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    border: 3px solid #fdf6e3;
+    background: #93a1a1;
+    background-clip: content-box; }
+  .App.solarized_light ::-webkit-scrollbar-track {
+    background: #fdf6e3; }
+  .App.solarized_light .appBarButtonBlock {
+    margin-top: -7px;
+    text-align: center;
+    margin-right: -7px; }
+  .App.solarized_light .appBarButtonBlock div {
+    width: 35px;
+    height: 35px;
+    line-height: 35px; }
+  .App.solarized_light button :focus {
+    border: 0px; }
+  .App.solarized_light i.primary {
+    color: #6c71c4; }
+  .App.solarized_light .react-tabs-tab-close {
+    box-sizing: content-box; }
+  .App.solarized_light .react-tabs-tab-content span {
+    transition: color 0.5s ease; }
+  .App.solarized_light .unsavedTab {
+    color: #6c71c4; }
+  .App.solarized_light div:hover > .fa-cog {
+    animation: fa-spin 2s infinite linear; }
 
-.react-tabs-container {
-  border-bottom: 0 !important; }
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg); } }
+  .App.solarized_light .placeholderLogo {
+    opacity: 0.5;
+    background-image: url("../../assets/placeholder.png");
+    height: calc(100% - 77px);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    margin: 20px; }
+  .App.solarized_light .react-tabs-container {
+    border-bottom: 0 !important; }
+  .App.solarized_light .fluid-button-container {
+    background: #fdf6e3; }
+  .App.solarized_light .fluid-button-highlight {
+    background: #93a1a1; }
+  .App.solarized_light .fluid-button {
+    color: #073642; }
+  .App.solarized_light .react-tabs-container {
+    background-color: #fdf6e3;
+    border-color: #eee8d5; }
+  .App.solarized_light .react-tabs-active {
+    background-color: #eee8d5; }
+  .App.solarized_light .react-tabs-tab-close {
+    color: #001f27;
+    border-color: #fdf6e3; }
+  .App.solarized_light .react-tabs-active .react-tabs-tab-close {
+    border-color: #eee8d5; }
+  .App.solarized_light .react-tabs-tab {
+    color: #657b83; }
+  .App.solarized_light .react-tabs-active.react-tabs-tab {
+    color: #002b36; }
+  .App.solarized_light .react-tabs-tab-close:hover {
+    background-color: #6c71c4;
+    color: #fdf6e3;
+    border-color: #6c71c4; }
+  .App.solarized_light .react-tabs-active .react-tabs-tab-close:hover {
+    background-color: #6c71c4;
+    color: #eee8d5;
+    border-color: #6c71c4; }

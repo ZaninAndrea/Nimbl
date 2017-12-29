@@ -1,8 +1,8 @@
-.ant-modal-footer {
+.solarized_dark .ant-modal-footer {
   background: #002b36;
   border: 0; }
 
-.ant-modal-header {
+.solarized_dark .ant-modal-header {
   padding: 13px 16px;
   border-radius: 4px 4px 0 0;
   background: #002b36;
@@ -10,40 +10,92 @@
   border-top-color: #002b36;
   border-bottom: 1px solid #586e75; }
 
-.ant-modal-body {
+.solarized_dark .ant-modal-body {
   background: #002b36;
   padding: 16px;
   font-size: 12px;
   line-height: 1.5; }
 
-.ant-modal-title {
+.solarized_dark .ant-modal-title {
   margin: 0;
   font-size: 14px;
   line-height: 21px;
   font-weight: 500;
   color: #93a1a1; }
 
-.ant-modal-content {
-  border-radius: 5px; }
+.solarized_dark .ant-modal-content {
+  border-radius: 5px;
+  color: #93a1a1; }
 
-.ant-modal-close {
+.solarized_dark .ant-modal-close {
   color: #586e75; }
 
-.ant-modal-close:hover {
+.solarized_dark .ant-modal-close:hover {
   background: transparent;
   color: #fdf6e3; }
 
-.ant-checkbox-inner {
+.solarized_dark .ant-checkbox-inner {
   background-color: #eee8d5;
   border-color: #fdf6e3; }
 
-.ant-checkbox-checked .ant-checkbox-inner,
-.ant-checkbox-indeterminate .ant-checkbox-inner {
+.solarized_dark .ant-checkbox-checked .ant-checkbox-inner,
+.solarized_dark .ant-checkbox-indeterminate .ant-checkbox-inner {
   background-color: #268bd2;
   border-color: #268bd2; }
 
-.ant-checkbox-checked .ant-checkbox-inner:after {
+.solarized_dark .ant-checkbox-checked .ant-checkbox-inner:after {
   border-color: #eee8d5; }
 
-.ant-slider-mark-text {
+.solarized_dark .ant-slider-mark-text {
   color: #93a1a1; }
+
+.solarized_light .ant-modal-footer {
+  background: #eee8d5;
+  border: 0; }
+
+.solarized_light .ant-modal-header {
+  padding: 13px 16px;
+  border-radius: 4px 4px 0 0;
+  background: #eee8d5;
+  color: #073642;
+  border-top-color: #eee8d5;
+  border-bottom: 1px solid #839496; }
+
+.solarized_light .ant-modal-body {
+  background: #eee8d5;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.5; }
+
+.solarized_light .ant-modal-title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: #073642; }
+
+.solarized_light .ant-modal-content {
+  border-radius: 5px;
+  color: #073642; }
+
+.solarized_light .ant-modal-close {
+  color: #839496; }
+
+.solarized_light .ant-modal-close:hover {
+  background: transparent;
+  color: #001f27; }
+
+.solarized_light .ant-checkbox-inner {
+  background-color: #002b36;
+  border-color: #001f27; }
+
+.solarized_light .ant-checkbox-checked .ant-checkbox-inner,
+.solarized_light .ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #6c71c4;
+  border-color: #6c71c4; }
+
+.solarized_light .ant-checkbox-checked .ant-checkbox-inner:after {
+  border-color: #002b36; }
+
+.solarized_light .ant-slider-mark-text {
+  color: #073642; }

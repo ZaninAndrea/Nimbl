@@ -16,6 +16,7 @@ class Settings extends Component {
                     footer={null} // disable footer
                     visible={this.props.visible}
                     onCancel={this.props.handleSettingsModalClose}
+                    className={this.props.settings.editorTheme}
                 >
                     <Button onClick={this.props.toggleAdvancedSettings}>
                         Hide Advanced Settings
@@ -430,6 +431,7 @@ class Settings extends Component {
                     footer={null} // disable footer
                     visible={this.props.visible}
                     onCancel={this.props.handleSettingsModalClose}
+                    className={this.props.settings.editorTheme}
                 >
                     <b>Interface complexity</b>
                     <Slider

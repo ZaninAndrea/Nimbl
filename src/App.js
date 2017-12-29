@@ -774,8 +774,9 @@ class App extends Component {
         }
 
         return (
-            <div className="App solarizedDarkTheme">
+            <div className={"App " + this.state.settings.editorTheme}>
                 <Modal
+                    className={this.state.settings.editorTheme}
                     title="Close"
                     visible={this.state.app.quitting}
                     closable={false}
@@ -796,6 +797,7 @@ class App extends Component {
                 </Modal>
 
                 <Modal
+                    className={this.state.settings.editorTheme}
                     title="Create new file"
                     visible={this.state.app.newFileModalOpen}
                     closable={true}
@@ -822,6 +824,7 @@ class App extends Component {
                     TODO
                 </Modal>
                 <Modal
+                    className={this.state.settings.editorTheme}
                     title="Create new folder"
                     visible={this.state.app.newFolderModalOpen}
                     closable={true}
@@ -861,6 +864,7 @@ class App extends Component {
                     showAdvancedSettings={this.state.app.showAdvancedSettings}
                     toggleAdvancedSettings={this.handleAdvancedSettingsToggle}
                     autoSaveToggle={this.autoSaveToggle}
+                    theme={this.state.settings.editorTheme}
                 />
                 <div className="AppBody">
                     <PanelGroup
