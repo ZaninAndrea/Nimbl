@@ -17,6 +17,7 @@ import Tabs from "react-draggable-tabs"
 import {Button, ButtonGroup} from "react-fluid-buttons"
 import CreateFileModal from "./components/CreateFileModal"
 import CreateFolderModal from "./components/CreateFolderModal"
+import EditorFooter from "./components/EditorFooter"
 
 const electron = window.require("electron") // little trick to import electron in react
 const fs = electron.remote.require("fs")
@@ -360,41 +361,38 @@ class App extends Component {
                 properties: ["openDirectory"],
             },
             folders => {
-                if (!folders) {
-                    // if no folder selected
-                    return
-                }
-                if (this.state.app.watcher !== null) {
-                    // stop tracking changes in the previous directory
-                    this.state.app.watcher.close()
-                }
-
-                this.setState((oldState, props) => {
-                    let newApp = {
-                        ...oldState.app,
-                        ...{
-                            dir: folders[0],
-                            tree: buildDirTree(folders[0], []),
-                            currentFileIndex: 0,
-                            treeExpandedKeys: [],
-                            file: [],
-                            value: [],
-                            preview: [],
-                            unsavedChanges: [],
-                            tabs: [],
-                            watcher: fs.watch(
-                                folders[0],
-                                {
-                                    recursive: true,
-                                },
-                                this.handleDirChange
-                            ),
-                        },
+                if (folders && folders[0] !== this.state.app.dir) {
+                    if (this.state.app.watcher !== null) {
+                        // stop tracking changes in the previous directory
+                        this.state.app.watcher.close()
                     }
-                    this.md = newMd(oldState.settings.mdSettings, newApp.dir) // update md renderer
-                    ipcRenderer.send("gitPull", folders[0]) // pull updates
-                    return {app: newApp}
-                })
+                    this.setState((oldState, props) => {
+                        let newApp = {
+                            ...oldState.app,
+                            ...{
+                                dir: folders[0],
+                                tree: buildDirTree(folders[0], []),
+                                currentFileIndex: 0,
+                                treeExpandedKeys: [],
+                                file: [],
+                                value: [],
+                                preview: [],
+                                unsavedChanges: [],
+                                tabs: [],
+                                watcher: fs.watch(
+                                    folders[0],
+                                    {
+                                        recursive: true,
+                                    },
+                                    this.handleDirChange
+                                ),
+                            },
+                        }
+                        this.md = newMd(oldState.settings.mdSettings, newApp.dir) // update md renderer
+                        ipcRenderer.send("gitPull", folders[0]) // pull updates
+                        return {app: newApp}
+                    })
+                }
             }
         )
     }
@@ -703,36 +701,51 @@ class App extends Component {
             const lookup = mime.lookup(this.state.app.file[this.state.app.currentFileIndex])
             editor =
                 lookup === "text/x-markdown" || lookup === "text/markdown" ? (
-                    <MDEditorPreview
-                        handleSave={this.handleSaveShortcut}
-                        theme={this.state.settings.editorTheme}
-                        value={this.state.app.value[this.state.app.currentFileIndex]}
-                        handleChange={this.handleChange}
-                        preview={this.state.app.preview[this.state.app.currentFileIndex]}
-                        showPreview={this.state.settings.showPreview}
-                        currentDir={this.state.app.dir}
-                        onDrop={this.onFileDrop}
-                    />
+                    <div style={{width: "100%", height: "100%"}}>
+                        <MDEditorPreview
+                            handleSave={this.handleSaveShortcut}
+                            theme={this.state.settings.editorTheme}
+                            value={this.state.app.value[this.state.app.currentFileIndex]}
+                            handleChange={this.handleChange}
+                            preview={this.state.app.preview[this.state.app.currentFileIndex]}
+                            showPreview={this.state.settings.showPreview}
+                            currentDir={this.state.app.dir}
+                            onDrop={this.onFileDrop}
+                        />
+                        <EditorFooter
+                            value={this.state.app.value[this.state.app.currentFileIndex]}
+                            settings={this.state.settings}
+                            handleSidebarToggle={this.handleSidebarToggle}
+                            handleShowPreviewToggle={this.handleShowPreviewToggle}
+                            autoSaveToggle={this.autoSaveToggle}
+                        />
+                    </div>
                 ) : lookup.startsWith("image") ? (
-                    <div className="imagePreview">
-                        <div className="imageContainer">
-                            <img
-                                className="img-responsive"
-                                src={this.state.app.value[this.state.app.currentFileIndex]}
-                            />
+                    <div style={{width: "100%", height: "100%"}}>
+                        <div className="imagePreview">
+                            <div className="imageContainer">
+                                <img
+                                    className="img-responsive"
+                                    src={this.state.app.value[this.state.app.currentFileIndex]}
+                                />
+                            </div>
                         </div>
                     </div>
                 ) : (
                     "SELECT A SUPPORTED FILE"
                 )
         } else {
-            editor = <div className="placeholderLogo" />
+            editor = (
+                <div style={{width: "100%", height: "100%"}}>
+                    <div className="placeholderLogo" />
+                </div>
+            )
         }
 
         let sidebar
         if (this.state.settings.showSidebar && this.state.app.dir) {
             sidebar = (
-                <div className="sidebar">
+                <div className="sidebar" key="sidebar">
                     <div className="projectTitle">PROJECT</div>
                     <DirTree
                         treeData={this.state.app.tree}
@@ -851,7 +864,7 @@ class App extends Component {
                     >
                         {sidebar}
 
-                        <div className="mainEditor">
+                        <div className="mainEditor" key="mainEditor">
                             <Tabs
                                 selectTab={this.handleTabSelect}
                                 closeTab={this.handleClosedTab}
@@ -959,7 +972,7 @@ class App extends Component {
                                     )}
                                 </ButtonGroup>
                             </Tabs>
-                            <div style={{width: "100%", height: "100%"}}>{editor}</div>
+                            {editor}
                         </div>
                     </PanelGroup>
                 </div>

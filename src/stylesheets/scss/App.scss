@@ -116,14 +116,57 @@
     button:hover {
         background-color: $base02;
     }
-    .sidebarTypeSwitch .fluid-button {
+    .editorFooter {
+        line-height: 32px;
+        vertical-align: middle;
+        display: grid;
+        grid-template-columns: [start] 140px [charCount] auto [leftAligned] 150px [end];
+    }
+    .editorFooter > p {
+        margin: 0 5px 13px 5px;
+        display: inline-block;
+        line-height: 32px;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .editorFooter .charCount {
+        grid-column-start: start;
+        grid-column-end: charCount;
+    }
+    .editorFooter .leftAligned {
+        .fluid-button-container {
+            background: $base03;
+        }
+
+        .fluid-button-highlight {
+            background: $base04;
+        }
+
+        .fluid-button {
+            color: $base1;
+            .active {
+                color: $blue;
+            }
+            .material-icons {
+                transition: linear 0.5s color;
+            }
+        }
+
+        grid-column-start: leftAligned;
+        grid-column-end: end;
+    }
+
+    .sidebarTypeSwitch .fluid-button,
+    .editorFooter .fluid-button {
         width: 50%;
         height: 32px;
         text-overflow: ellipsis;
         line-height: 32px;
         padding-top: 4px;
     }
-    .sidebarTypeSwitch .fluid-button .material-icons {
+    .sidebarTypeSwitch .fluid-button .material-icons,
+    .editorFooter .fluid-button .material-icons {
         font-size: 24px; /* Preferred icon size */
     }
     .projectTitle {

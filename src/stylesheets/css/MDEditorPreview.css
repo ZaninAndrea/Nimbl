@@ -1,5 +1,5 @@
 .App.solarized_dark .MDEditorPreview {
-  height: calc(100% - 37px);
+  height: calc(100% - 69px);
   width: 100%;
   margin: 0px; }
 
@@ -44,7 +44,7 @@
   background: #dc322f; }
 
 .App.solarized_light .MDEditorPreview {
-  height: calc(100% - 37px);
+  height: calc(100% - 69px);
   width: 100%;
   margin: 0px; }
 

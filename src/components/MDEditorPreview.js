@@ -180,7 +180,7 @@ class MDEditorPreview extends Component {
                             acceptClassName="acceptedFilesOverlay"
                             rejectClassName="rejectedFilesOverlay"
                         >
-                            {dropzoneActive
+                            {/* {dropzoneActive
                                 ? [
                                       <div className="failureDroppingOverlay" key="failure">
                                           Only images allowed
@@ -189,7 +189,7 @@ class MDEditorPreview extends Component {
                                           Drop files...
                                       </div>,
                                   ]
-                                : ""}
+                                : ""} */}
                             {aceEditor}
                         </Dropzone>
                     </div>
@@ -207,7 +207,30 @@ class MDEditorPreview extends Component {
         } else {
             return (
                 <div className="MDEditorPreview row">
-                    <div className="editorWrapper col-xs-12">{aceEditor}</div>
+                    <div className="editorWrapper col-xs-12">
+                        <Dropzone
+                            disableClick
+                            accept="image/*"
+                            style={{height: "100%", width: "100%"}}
+                            onDrop={this.onDrop.bind(this)}
+                            onDragEnter={this.onDragEnter.bind(this)}
+                            onDragLeave={this.onDragLeave.bind(this)}
+                            acceptClassName="acceptedFilesOverlay"
+                            rejectClassName="rejectedFilesOverlay"
+                        >
+                            {/* {dropzoneActive
+                                ? [
+                                      <div className="failureDroppingOverlay" key="failure">
+                                          Only images allowed
+                                      </div>,
+                                      <div className="successDroppingOverlay" key="success">
+                                          Drop files...
+                                      </div>,
+                                  ]
+                                : ""} */}
+                            {aceEditor}
+                        </Dropzone>
+                    </div>
                 </div>
             )
         }

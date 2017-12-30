@@ -74,7 +74,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   font-weight: bold; }
 
 .App.solarized_dark .MDEditorPreview {
-  height: calc(100% - 37px);
+  height: calc(100% - 69px);
   width: 100%;
   margin: 0px; }
 
@@ -119,7 +119,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   background: #dc322f; }
 
 .App.solarized_light .MDEditorPreview {
-  height: calc(100% - 37px);
+  height: calc(100% - 69px);
   width: 100%;
   margin: 0px; }
 
@@ -1728,13 +1728,42 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     outline: none; }
   .App.solarized_dark button:hover {
     background-color: #073642; }
-  .App.solarized_dark .sidebarTypeSwitch .fluid-button {
+  .App.solarized_dark .editorFooter {
+    line-height: 32px;
+    vertical-align: middle;
+    display: grid;
+    grid-template-columns: [start] 140px [charCount] auto [leftAligned] 150px [end]; }
+  .App.solarized_dark .editorFooter > p {
+    margin: 0 5px 13px 5px;
+    display: inline-block;
+    line-height: 32px;
+    vertical-align: middle;
+    text-align: center; }
+  .App.solarized_dark .editorFooter .charCount {
+    grid-column-start: start;
+    grid-column-end: charCount; }
+  .App.solarized_dark .editorFooter .leftAligned {
+    grid-column-start: leftAligned;
+    grid-column-end: end; }
+    .App.solarized_dark .editorFooter .leftAligned .fluid-button-container {
+      background: #002b36; }
+    .App.solarized_dark .editorFooter .leftAligned .fluid-button-highlight {
+      background: #001f27; }
+    .App.solarized_dark .editorFooter .leftAligned .fluid-button {
+      color: #93a1a1; }
+      .App.solarized_dark .editorFooter .leftAligned .fluid-button .active {
+        color: #268bd2; }
+      .App.solarized_dark .editorFooter .leftAligned .fluid-button .material-icons {
+        transition: linear 0.5s color; }
+  .App.solarized_dark .sidebarTypeSwitch .fluid-button,
+  .App.solarized_dark .editorFooter .fluid-button {
     width: 50%;
     height: 32px;
     text-overflow: ellipsis;
     line-height: 32px;
     padding-top: 4px; }
-  .App.solarized_dark .sidebarTypeSwitch .fluid-button .material-icons {
+  .App.solarized_dark .sidebarTypeSwitch .fluid-button .material-icons,
+  .App.solarized_dark .editorFooter .fluid-button .material-icons {
     font-size: 24px;
     /* Preferred icon size */ }
   .App.solarized_dark .projectTitle {
@@ -1913,13 +1942,42 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     outline: none; }
   .App.solarized_light button:hover {
     background-color: #93a1a1; }
-  .App.solarized_light .sidebarTypeSwitch .fluid-button {
+  .App.solarized_light .editorFooter {
+    line-height: 32px;
+    vertical-align: middle;
+    display: grid;
+    grid-template-columns: [start] 140px [charCount] auto [leftAligned] 150px [end]; }
+  .App.solarized_light .editorFooter > p {
+    margin: 0 5px 13px 5px;
+    display: inline-block;
+    line-height: 32px;
+    vertical-align: middle;
+    text-align: center; }
+  .App.solarized_light .editorFooter .charCount {
+    grid-column-start: start;
+    grid-column-end: charCount; }
+  .App.solarized_light .editorFooter .leftAligned {
+    grid-column-start: leftAligned;
+    grid-column-end: end; }
+    .App.solarized_light .editorFooter .leftAligned .fluid-button-container {
+      background: #eee8d5; }
+    .App.solarized_light .editorFooter .leftAligned .fluid-button-highlight {
+      background: #fdf6e3; }
+    .App.solarized_light .editorFooter .leftAligned .fluid-button {
+      color: #073642; }
+      .App.solarized_light .editorFooter .leftAligned .fluid-button .active {
+        color: #6c71c4; }
+      .App.solarized_light .editorFooter .leftAligned .fluid-button .material-icons {
+        transition: linear 0.5s color; }
+  .App.solarized_light .sidebarTypeSwitch .fluid-button,
+  .App.solarized_light .editorFooter .fluid-button {
     width: 50%;
     height: 32px;
     text-overflow: ellipsis;
     line-height: 32px;
     padding-top: 4px; }
-  .App.solarized_light .sidebarTypeSwitch .fluid-button .material-icons {
+  .App.solarized_light .sidebarTypeSwitch .fluid-button .material-icons,
+  .App.solarized_light .editorFooter .fluid-button .material-icons {
     font-size: 24px;
     /* Preferred icon size */ }
   .App.solarized_light .projectTitle {
