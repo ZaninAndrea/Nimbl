@@ -80,6 +80,7 @@ function createWindow() {
         height: 680,
         icon: `${path.join(__dirname, "../build/icon.ico")}`,
         backgroundColor: "#002b36",
+        frame: false,
     })
     mainWindow.loadURL(
         isDev ? "http://localhost:3000" : `file://${path.join(__dirname, "../build/index.html")}`

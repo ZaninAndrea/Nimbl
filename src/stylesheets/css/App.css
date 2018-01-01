@@ -1675,7 +1675,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     height: 100vh;
     width: 100vw; }
   .App.solarized_dark .AppBody {
-    height: 100vh;
+    height: calc(100vh - 31px);
     width: 100vw;
     margin: 0px; }
   .App.solarized_dark .divider div {
@@ -1889,7 +1889,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     height: 100vh;
     width: 100vw; }
   .App.solarized_light .AppBody {
-    height: 100vh;
+    height: calc(100vh - 31px);
     width: 100vw;
     margin: 0px; }
   .App.solarized_light .divider div {

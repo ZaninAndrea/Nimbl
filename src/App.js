@@ -18,6 +18,7 @@ import {Button, ButtonGroup} from "react-fluid-buttons"
 import CreateFileModal from "./components/CreateFileModal"
 import CreateFolderModal from "./components/CreateFolderModal"
 import EditorFooter from "./components/EditorFooter"
+import {TitleBar} from "react-desktop/windows"
 
 const electron = window.require("electron") // little trick to import electron in react
 const fs = electron.remote.require("fs")
@@ -29,7 +30,11 @@ const store = new Store()
 class App extends Component {
     constructor(props) {
         super(props)
+
+        this._mainWindow = electron.remote.getCurrentWindow()
+
         // binding all the functions
+        this.handleResize = this.handleResize.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleDirChange = this.handleDirChange.bind(this)
         this.handleTreeSelect = this.handleTreeSelect.bind(this)
@@ -95,6 +100,7 @@ class App extends Component {
 
         this.state = {
             app: {
+                maximized: this._mainWindow.isMaximized(),
                 dir: "",
                 file: [],
                 tree: {
@@ -184,6 +190,24 @@ class App extends Component {
                 return {app: newApp}
             })
         })
+    }
+
+    componentDidMount() {
+        this._mainWindow.addListener("resize", this.handleResize)
+    }
+    componentWillUnmount() {
+        this._mainWindow.removeListener("resize", this.handleResize)
+    }
+    handleResize() {
+        let maximizedState = this._mainWindow.isMaximized()
+        console.log(maximizedState)
+        if (this.state.maximized !== maximizedState) {
+            this.setState(oldState => {
+                const newApp = {...oldState.app}
+                newApp.maximized = maximizedState
+                return {app: newApp}
+            })
+        }
     }
 
     // handle CTRL+S shortcut
@@ -790,6 +814,25 @@ class App extends Component {
 
         return (
             <div className={"App " + this.state.settings.editorTheme}>
+                <TitleBar
+                    title="Nimbl"
+                    controls
+                    isMaximized={this.state.app.maximized}
+                    theme="dark"
+                    background={"#000000"}
+                    onCloseClick={() => {
+                        this._mainWindow.close()
+                    }}
+                    onMinimizeClick={() => {
+                        this._mainWindow.minimize()
+                    }}
+                    onMaximizeClick={() => {
+                        this._mainWindow.maximize()
+                    }}
+                    onRestoreDownClick={() => {
+                        this._mainWindow.unmaximize()
+                    }}
+                />
                 <Modal
                     className={this.state.settings.editorTheme}
                     title="Close"

@@ -44,7 +44,7 @@
         width: 100vw;
     }
     .AppBody {
-        height: 100vh;
+        height: calc(100vh - 31px);
         width: 100vw;
         margin: 0px;
     }
