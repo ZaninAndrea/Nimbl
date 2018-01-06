@@ -1732,19 +1732,19 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     line-height: 32px;
     vertical-align: middle;
     display: grid;
-    grid-template-columns: [start] 140px [charCount] auto [leftAligned] 150px [end]; }
+    grid-template-columns: 160px 160px auto 150px;
+    grid-template-areas: "charCount wordCount . leftAligned";
+    grid-gap: 5px; }
   .App.solarized_dark .editorFooter > p {
-    margin: 0 5px 13px 5px;
-    display: inline-block;
     line-height: 32px;
     vertical-align: middle;
     text-align: center; }
   .App.solarized_dark .editorFooter .charCount {
-    grid-column-start: start;
-    grid-column-end: charCount; }
+    grid-area: charCount; }
+  .App.solarized_dark .editorFooter .wordCount {
+    grid-area: wordCount; }
   .App.solarized_dark .editorFooter .leftAligned {
-    grid-column-start: leftAligned;
-    grid-column-end: end; }
+    grid-area: leftAligned; }
     .App.solarized_dark .editorFooter .leftAligned .fluid-button-container {
       background: #002b36; }
     .App.solarized_dark .editorFooter .leftAligned .fluid-button-highlight {
@@ -1946,19 +1946,19 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     line-height: 32px;
     vertical-align: middle;
     display: grid;
-    grid-template-columns: [start] 140px [charCount] auto [leftAligned] 150px [end]; }
+    grid-template-columns: 160px 160px auto 150px;
+    grid-template-areas: "charCount wordCount . leftAligned";
+    grid-gap: 5px; }
   .App.solarized_light .editorFooter > p {
-    margin: 0 5px 13px 5px;
-    display: inline-block;
     line-height: 32px;
     vertical-align: middle;
     text-align: center; }
   .App.solarized_light .editorFooter .charCount {
-    grid-column-start: start;
-    grid-column-end: charCount; }
+    grid-area: charCount; }
+  .App.solarized_light .editorFooter .wordCount {
+    grid-area: wordCount; }
   .App.solarized_light .editorFooter .leftAligned {
-    grid-column-start: leftAligned;
-    grid-column-end: end; }
+    grid-area: leftAligned; }
     .App.solarized_light .editorFooter .leftAligned .fluid-button-container {
       background: #eee8d5; }
     .App.solarized_light .editorFooter .leftAligned .fluid-button-highlight {

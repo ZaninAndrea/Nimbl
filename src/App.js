@@ -127,6 +127,7 @@ class App extends Component {
                 updateReady: false,
                 committing: false,
                 isGitRepo: true,
+                selectedText: "",
             },
             settings: settings,
         }
@@ -322,6 +323,7 @@ class App extends Component {
                             currentFileIndex: newFile.length - 1,
                             tabs: tabs,
                             unsavedChanges: newUnsavedChanges,
+                            selectedText: "",
                         },
                     }
 
@@ -410,6 +412,7 @@ class App extends Component {
                                     },
                                     this.handleDirChange
                                 ),
+                                selectedText: "",
                             },
                         }
                         this.md = newMd(oldState.settings.mdSettings, newApp.dir) // update md renderer
@@ -735,9 +738,15 @@ class App extends Component {
                             showPreview={this.state.settings.showPreview}
                             currentDir={this.state.app.dir}
                             onDrop={this.onFileDrop}
+                            changeSelection={newSelectedText =>
+                                this.setState(({app}) => ({
+                                    app: {...app, selectedText: newSelectedText},
+                                }))
+                            }
                         />
                         <EditorFooter
                             value={this.state.app.value[this.state.app.currentFileIndex]}
+                            selection={this.state.app.selectedText}
                             settings={this.state.settings}
                             handleSidebarToggle={this.handleSidebarToggle}
                             handleShowPreviewToggle={this.handleShowPreviewToggle}

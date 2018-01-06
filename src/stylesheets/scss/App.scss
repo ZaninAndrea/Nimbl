@@ -120,20 +120,23 @@
         line-height: 32px;
         vertical-align: middle;
         display: grid;
-        grid-template-columns: [start] 140px [charCount] auto [leftAligned] 150px [end];
+        grid-template-columns: 160px 160px auto 150px;
+        grid-template-areas: "charCount wordCount . leftAligned";
+        grid-gap: 5px;
     }
     .editorFooter > p {
-        margin: 0 5px 13px 5px;
-        display: inline-block;
         line-height: 32px;
         vertical-align: middle;
         text-align: center;
     }
 
     .editorFooter .charCount {
-        grid-column-start: start;
-        grid-column-end: charCount;
+        grid-area: charCount;
     }
+    .editorFooter .wordCount {
+        grid-area: wordCount;
+    }
+
     .editorFooter .leftAligned {
         .fluid-button-container {
             background: $base03;
@@ -153,8 +156,7 @@
             }
         }
 
-        grid-column-start: leftAligned;
-        grid-column-end: end;
+        grid-area: leftAligned;
     }
 
     .sidebarTypeSwitch .fluid-button,

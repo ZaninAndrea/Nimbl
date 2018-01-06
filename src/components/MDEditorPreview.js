@@ -78,6 +78,36 @@ class MDEditorPreview extends Component {
             var preview = findDOMNode(this.refs["markdown-container"])
             preview.scrollTop = Math.max(0, elements[0].offsetTop - 50)
         }
+
+        const selection = findDOMNode(this.refs["editor"]).env.editor.selection
+        const lines = selection.doc.$lines
+        const startLine = Math.min(selection.anchor.row, selection.lead.row)
+        const endLine = Math.max(selection.anchor.row, selection.lead.row)
+        const startColumn =
+            selection.anchor.row < selection.lead.row
+                ? selection.anchor.column
+                : selection.anchor.row < selection.lead.row
+                  ? selection.lead.column
+                  : Math.min(selection.lead.column, selection.anchor.column)
+        const endColumn =
+            selection.anchor.row > selection.lead.row
+                ? selection.anchor.column
+                : selection.anchor.row > selection.lead.row
+                  ? selection.lead.column
+                  : Math.max(selection.lead.column, selection.anchor.column)
+
+        let selectionText = ""
+        for (let i in lines) {
+            i = parseInt(i)
+            if (i >= startLine && i <= endLine) {
+                const startChar = i === startLine ? startColumn : 0
+                const endChar = i === endLine ? endColumn : lines[i].length
+                selectionText += lines[i].slice(startChar, endChar)
+
+                if (i !== endLine) selectionText += "\n"
+            }
+        }
+        this.props.changeSelection(selectionText)
     }
 
     handleScroll() {
