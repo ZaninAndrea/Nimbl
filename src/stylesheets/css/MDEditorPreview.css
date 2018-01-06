@@ -73,11 +73,11 @@
   height: 100%;
   padding: 2.5em 0;
   text-align: center;
-  color: #002b36;
+  color: #073642;
   z-index: 10; }
 
 .App.solarized_light .acceptedFilesOverlay .successDroppingOverlay {
-  background: #859900; }
+  background: #2aa198; }
 
 .App.solarized_light .rejectedFilesOverlay .successDroppingOverlay {
   display: none; }
@@ -86,4 +86,4 @@
   display: none; }
 
 .App.solarized_light .rejectedFilesOverlay .failureDroppingOverlay {
-  background: #d33682; }
+  background: #dc322f; }

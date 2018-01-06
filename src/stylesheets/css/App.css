@@ -148,11 +148,11 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   height: 100%;
   padding: 2.5em 0;
   text-align: center;
-  color: #002b36;
+  color: #073642;
   z-index: 10; }
 
 .App.solarized_light .acceptedFilesOverlay .successDroppingOverlay {
-  background: #859900; }
+  background: #2aa198; }
 
 .App.solarized_light .rejectedFilesOverlay .successDroppingOverlay {
   display: none; }
@@ -161,7 +161,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   display: none; }
 
 .App.solarized_light .rejectedFilesOverlay .failureDroppingOverlay {
-  background: #d33682; }
+  background: #dc322f; }
 
 .App.solarized_dark .fileIcon {
   color: #93a1a1; }
@@ -179,19 +179,19 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   color: #586e75; }
 
 .App.solarized_light .fileIcon {
-  color: #073642; }
+  color: #586e75; }
 
 .App.solarized_light .fileIcon.fa-file-text {
-  color: #d33682; }
+  color: #dc322f; }
 
 .App.solarized_light .folderIcon {
-  color: #6c71c4; }
+  color: #268bd2; }
 
 .App.solarized_light .ant-tree-title {
-  color: #073642; }
+  color: #586e75; }
 
 .App.solarized_light .ant-tree-switcher {
-  color: #839496; }
+  color: #93a1a1; }
 
 @font-face {
   .App.solarized_dark {
@@ -744,7 +744,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .App.solarized_light .markdown-body {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  color: #073642;
+  color: #586e75;
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
   line-height: 1.6;
@@ -810,7 +810,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
 
 .App.solarized_light .markdown-body a {
-  color: #6c71c4;
+  color: #268bd2;
   text-decoration: none; }
 
 .App.solarized_light .markdown-body a:hover,
@@ -823,7 +823,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   overflow: hidden;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #93a1a1; }
+  border-bottom: 1px solid #eee8d5; }
 
 .App.solarized_light .markdown-body hr:before {
   display: table;
@@ -955,7 +955,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .App.solarized_light .markdown-body h4 .octicon-link,
 .App.solarized_light .markdown-body h5 .octicon-link,
 .App.solarized_light .markdown-body h6 .octicon-link {
-  color: #073642;
+  color: #586e75;
   vertical-align: middle;
   visibility: hidden; }
 
@@ -979,7 +979,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   padding-bottom: 0.3em;
   font-size: 2.25em;
   line-height: 1.2;
-  border-bottom: 1px solid #93a1a1; }
+  border-bottom: 1px solid #eee8d5; }
 
 .App.solarized_light .markdown-body h1 .anchor {
   line-height: 1; }
@@ -988,7 +988,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   padding-bottom: 0.3em;
   font-size: 1.75em;
   line-height: 1.225;
-  border-bottom: 1px solid #93a1a1; }
+  border-bottom: 1px solid #eee8d5; }
 
 .App.solarized_light .markdown-body h2 .anchor {
   line-height: 1; }
@@ -1014,7 +1014,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 
 .App.solarized_light .markdown-body h6 {
   font-size: 1em;
-  color: #657b83; }
+  color: #839496; }
 
 .App.solarized_light .markdown-body h6 .anchor {
   line-height: 1.1; }
@@ -1033,7 +1033,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   height: 4px;
   padding: 0;
   margin: 16px 0;
-  background-color: #93a1a1;
+  background-color: #eee8d5;
   border: 0 none; }
 
 .App.solarized_light .markdown-body ul,
@@ -1066,8 +1066,8 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 
 .App.solarized_light .markdown-body blockquote {
   padding: 0 15px;
-  color: #586e75;
-  border-left: 4px solid #839496; }
+  color: #657b83;
+  border-left: 4px solid #93a1a1; }
 
 .App.solarized_light .markdown-body blockquote > :first-child {
   margin-top: 0; }
@@ -1088,19 +1088,19 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .App.solarized_light .markdown-body table th,
 .App.solarized_light .markdown-body table td {
   padding: 6px 13px;
-  border: 1px solid #839496; }
+  border: 1px solid #93a1a1; }
 
 .App.solarized_light .markdown-body table tr {
-  background-color: #eee8d5;
-  border-top: 1px solid #586e75; }
+  background-color: #fdf6e3;
+  border-top: 1px solid #657b83; }
 
 .App.solarized_light .markdown-body table tr:nth-child(2n) {
-  background-color: #93a1a1; }
+  background-color: #eee8d5; }
 
 .App.solarized_light .markdown-body img {
   max-width: 100%;
   box-sizing: content-box;
-  background-color: #eee8d5; }
+  background-color: #fdf6e3; }
 
 .App.solarized_light .markdown-body code {
   padding: 0;
@@ -1134,7 +1134,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #93a1a1;
+  background-color: #eee8d5;
   border-radius: 3px; }
 
 .App.solarized_light .markdown-body .highlight pre {
@@ -1164,34 +1164,34 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   padding: 3px 5px;
   font-size: 11px;
   line-height: 10px;
-  color: #073642;
+  color: #586e75;
   vertical-align: middle;
-  background-color: #93a1a1;
-  border: solid 1px #839496;
-  border-bottom-color: #586e75;
+  background-color: #eee8d5;
+  border: solid 1px #93a1a1;
+  border-bottom-color: #657b83;
   border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #586e75; }
+  box-shadow: inset 0 -1px 0 #657b83; }
 
 .App.solarized_light .markdown-body .pl-c {
-  color: #839496; }
+  color: #93a1a1; }
 
 .App.solarized_light .markdown-body .pl-c1,
 .App.solarized_light .markdown-body .pl-s .pl-v {
-  color: #6c71c4; }
+  color: #268bd2; }
 
 .App.solarized_light .markdown-body .pl-e,
 .App.solarized_light .markdown-body .pl-en {
-  color: #268bd2; }
+  color: #6c71c4; }
 
 .App.solarized_light .markdown-body .pl-s .pl-s1,
 .App.solarized_light .markdown-body .pl-smi {
-  color: #073642; }
+  color: #586e75; }
 
 .App.solarized_light .markdown-body .pl-ent {
-  color: #2aa198; }
+  color: #859900; }
 
 .App.solarized_light .markdown-body .pl-k {
-  color: #dc322f; }
+  color: #d33682; }
 
 .App.solarized_light .markdown-body .pl-pds,
 .App.solarized_light .markdown-body .pl-s,
@@ -1200,69 +1200,69 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .App.solarized_light .markdown-body .pl-sr .pl-cce,
 .App.solarized_light .markdown-body .pl-sr .pl-sra,
 .App.solarized_light .markdown-body .pl-sr .pl-sre {
-  color: #6c71c4; }
+  color: #268bd2; }
 
 .App.solarized_light .markdown-body .pl-v {
-  color: #b58900; }
+  color: #cb4b16; }
 
 .App.solarized_light .markdown-body .pl-id {
-  color: #d33682; }
+  color: #dc322f; }
 
 .App.solarized_light .markdown-body .pl-ii {
-  background-color: #d33682;
-  color: #eee8d5; }
+  background-color: #dc322f;
+  color: #fdf6e3; }
 
 .App.solarized_light .markdown-body .pl-sr .pl-cce {
-  color: #2aa198;
+  color: #859900;
   font-weight: bold; }
 
 .App.solarized_light .markdown-body .pl-ml {
-  color: #cb4b16; }
+  color: #b58900; }
 
 .App.solarized_light .markdown-body .pl-mh,
 .App.solarized_light .markdown-body .pl-mh .pl-en,
 .App.solarized_light .markdown-body .pl-ms {
-  color: #6c71c4;
-  font-weight: bold; }
-
-.App.solarized_light .markdown-body .pl-mq {
-  color: #859900; }
-
-.App.solarized_light .markdown-body .pl-mi {
-  color: #073642;
-  font-style: italic; }
-
-.App.solarized_light .markdown-body .pl-mb {
-  color: #073642;
-  font-weight: bold; }
-
-.App.solarized_light .markdown-body .pl-md {
-  background-color: #93a1a1;
-  color: #d33682; }
-
-.App.solarized_light .markdown-body .pl-mi1 {
-  background-color: #d33682;
-  color: #2aa198; }
-
-.App.solarized_light .markdown-body .pl-mdr {
   color: #268bd2;
   font-weight: bold; }
 
+.App.solarized_light .markdown-body .pl-mq {
+  color: #2aa198; }
+
+.App.solarized_light .markdown-body .pl-mi {
+  color: #586e75;
+  font-style: italic; }
+
+.App.solarized_light .markdown-body .pl-mb {
+  color: #586e75;
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body .pl-md {
+  background-color: #eee8d5;
+  color: #dc322f; }
+
+.App.solarized_light .markdown-body .pl-mi1 {
+  background-color: #dc322f;
+  color: #859900; }
+
+.App.solarized_light .markdown-body .pl-mdr {
+  color: #6c71c4;
+  font-weight: bold; }
+
 .App.solarized_light .markdown-body .pl-mo {
-  color: #6c71c4; }
+  color: #268bd2; }
 
 .App.solarized_light .markdown-body kbd {
   display: inline-block;
   padding: 3px 5px;
   font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
   line-height: 10px;
-  color: #073642;
+  color: #586e75;
   vertical-align: middle;
-  background-color: #93a1a1;
-  border: solid 1px #839496;
-  border-bottom-color: #586e75;
+  background-color: #eee8d5;
+  border: solid 1px #93a1a1;
+  border-bottom-color: #657b83;
   border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #586e75; }
+  box-shadow: inset 0 -1px 0 #657b83; }
 
 .App.solarized_light .markdown-body .task-list-item {
   list-style-type: none; }
@@ -1277,7 +1277,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .App.solarized_light .markdown-body :checked + .radio-label {
   z-index: 1;
   position: relative;
-  border-color: #6c71c4; }
+  border-color: #268bd2; }
 
 .App.solarized_dark .md-body h3 {
   margin-top: 5px; }
@@ -1459,7 +1459,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10px;
-  background-color: #93a1a1; }
+  background-color: #eee8d5; }
 
 .App.solarized_light .linkPreviewImage {
   display: table-cell;
@@ -1470,14 +1470,14 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   background-repeat: no-repeat;
   background-position: center center;
   box-sizing: border-box;
-  box-shadow: inset 0 0 0 1px #839496; }
+  box-shadow: inset 0 0 0 1px #93a1a1; }
 
 .App.solarized_light a.linkPreviewText {
   display: table-cell;
   vertical-align: middle;
   padding: 20px;
   font-style: normal;
-  color: #839496; }
+  color: #93a1a1; }
 
 .App.solarized_light a.linkPreviewText:hover {
   text-decoration: none; }
@@ -1489,14 +1489,14 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   font-style: normal;
   font-size: 16px;
   line-height: 1.3;
-  color: #073642;
+  color: #586e75;
   display: block;
   margin-bottom: -8px; }
 
 .App.solarized_light .linkPreviewText em {
   font-size: 14px;
   font-style: normal;
-  color: #657b83;
+  color: #839496;
   display: block;
   margin-top: -1px;
   margin-bottom: 10px;
@@ -1583,19 +1583,19 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   color: #93a1a1; }
 
 .solarized_light .ant-modal-footer {
-  background: #eee8d5;
+  background: #fdf6e3;
   border: 0; }
 
 .solarized_light .ant-modal-header {
   padding: 13px 16px;
   border-radius: 4px 4px 0 0;
-  background: #eee8d5;
-  color: #073642;
-  border-top-color: #eee8d5;
-  border-bottom: 1px solid #839496; }
+  background: #fdf6e3;
+  color: #586e75;
+  border-top-color: #fdf6e3;
+  border-bottom: 1px solid #93a1a1; }
 
 .solarized_light .ant-modal-body {
-  background: #eee8d5;
+  background: #fdf6e3;
   padding: 16px;
   font-size: 12px;
   line-height: 1.5; }
@@ -1605,33 +1605,33 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   font-size: 14px;
   line-height: 21px;
   font-weight: 500;
-  color: #073642; }
+  color: #586e75; }
 
 .solarized_light .ant-modal-content {
   border-radius: 5px;
-  color: #073642; }
+  color: #586e75; }
 
 .solarized_light .ant-modal-close {
-  color: #839496; }
+  color: #93a1a1; }
 
 .solarized_light .ant-modal-close:hover {
   background: transparent;
-  color: #001f27; }
+  color: #002b36; }
 
 .solarized_light .ant-checkbox-inner {
-  background-color: #002b36;
-  border-color: #001f27; }
+  background-color: #073642;
+  border-color: #002b36; }
 
 .solarized_light .ant-checkbox-checked .ant-checkbox-inner,
 .solarized_light .ant-checkbox-indeterminate .ant-checkbox-inner {
-  background-color: #6c71c4;
-  border-color: #6c71c4; }
+  background-color: #268bd2;
+  border-color: #268bd2; }
 
 .solarized_light .ant-checkbox-checked .ant-checkbox-inner:after {
-  border-color: #002b36; }
+  border-color: #073642; }
 
 .solarized_light .ant-slider-mark-text {
-  color: #073642; }
+  color: #586e75; }
 
 @font-face {
   font-family: "Material Icons";
@@ -1689,7 +1689,8 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   .App.solarized_dark .sidebar {
     height: 100%;
     width: 100%;
-    background-color: #001f27; }
+    background-color: #001f27;
+    user-select: none; }
   .App.solarized_dark .sidebarTree {
     height: calc(100% - 30px - 37px);
     width: 100%;
@@ -1729,12 +1730,14 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   .App.solarized_dark button:hover {
     background-color: #073642; }
   .App.solarized_dark .editorFooter {
+    user-select: none;
     line-height: 32px;
     vertical-align: middle;
     display: grid;
     grid-template-columns: 160px 160px auto 150px;
     grid-template-areas: "charCount wordCount . leftAligned";
-    grid-gap: 5px; }
+    grid-gap: 5px;
+    background: #001f27; }
   .App.solarized_dark .editorFooter > p {
     line-height: 32px;
     vertical-align: middle;
@@ -1745,10 +1748,6 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     grid-area: wordCount; }
   .App.solarized_dark .editorFooter .leftAligned {
     grid-area: leftAligned; }
-    .App.solarized_dark .editorFooter .leftAligned .fluid-button-container {
-      background: #002b36; }
-    .App.solarized_dark .editorFooter .leftAligned .fluid-button-highlight {
-      background: #001f27; }
     .App.solarized_dark .editorFooter .leftAligned .fluid-button {
       color: #93a1a1; }
       .App.solarized_dark .editorFooter .leftAligned .fluid-button .active {
@@ -1862,8 +1861,8 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #eee8d5;
-  color: #073642; }
+  background-color: #fdf6e3;
+  color: #586e75; }
   .App.solarized_light .material-icons {
     font-family: "Material Icons";
     font-weight: normal;
@@ -1903,7 +1902,8 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   .App.solarized_light .sidebar {
     height: 100%;
     width: 100%;
-    background-color: #fdf6e3; }
+    background-color: #fcf0cf;
+    user-select: none; }
   .App.solarized_light .sidebarTree {
     height: calc(100% - 30px - 37px);
     width: 100%;
@@ -1935,20 +1935,22 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   .App.solarized_light ol {
     list-style: decimal; }
   .App.solarized_light button {
-    background-color: #fdf6e3;
+    background-color: #fcf0cf;
     transition: background-color 0.5s ease;
-    color: #073642;
+    color: #586e75;
     border: 0px;
     outline: none; }
   .App.solarized_light button:hover {
-    background-color: #93a1a1; }
+    background-color: #eee8d5; }
   .App.solarized_light .editorFooter {
+    user-select: none;
     line-height: 32px;
     vertical-align: middle;
     display: grid;
     grid-template-columns: 160px 160px auto 150px;
     grid-template-areas: "charCount wordCount . leftAligned";
-    grid-gap: 5px; }
+    grid-gap: 5px;
+    background: #fcf0cf; }
   .App.solarized_light .editorFooter > p {
     line-height: 32px;
     vertical-align: middle;
@@ -1959,14 +1961,10 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     grid-area: wordCount; }
   .App.solarized_light .editorFooter .leftAligned {
     grid-area: leftAligned; }
-    .App.solarized_light .editorFooter .leftAligned .fluid-button-container {
-      background: #eee8d5; }
-    .App.solarized_light .editorFooter .leftAligned .fluid-button-highlight {
-      background: #fdf6e3; }
     .App.solarized_light .editorFooter .leftAligned .fluid-button {
-      color: #073642; }
+      color: #586e75; }
       .App.solarized_light .editorFooter .leftAligned .fluid-button .active {
-        color: #6c71c4; }
+        color: #268bd2; }
       .App.solarized_light .editorFooter .leftAligned .fluid-button .material-icons {
         transition: linear 0.5s color; }
   .App.solarized_light .sidebarTypeSwitch .fluid-button,
@@ -1981,10 +1979,10 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     font-size: 24px;
     /* Preferred icon size */ }
   .App.solarized_light .projectTitle {
-    background-color: #fdf6e3;
+    background-color: #fcf0cf;
     width: 100%;
     height: 35px;
-    color: #073642;
+    color: #586e75;
     font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1994,14 +1992,14 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     width: 10px;
     height: 10px; }
   .App.solarized_light ::-webkit-scrollbar-corner {
-    background: #fdf6e3; }
+    background: #fcf0cf; }
   .App.solarized_light ::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    border: 3px solid #fdf6e3;
-    background: #93a1a1;
+    border: 3px solid #fcf0cf;
+    background: #eee8d5;
     background-clip: content-box; }
   .App.solarized_light ::-webkit-scrollbar-track {
-    background: #fdf6e3; }
+    background: #fcf0cf; }
   .App.solarized_light .appBarButtonBlock {
     margin-top: -7px;
     text-align: center;
@@ -2013,13 +2011,13 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   .App.solarized_light button :focus {
     border: 0px; }
   .App.solarized_light i.primary {
-    color: #6c71c4; }
+    color: #268bd2; }
   .App.solarized_light .react-tabs-tab-close {
     box-sizing: content-box; }
   .App.solarized_light .react-tabs-tab-content span {
     transition: color 0.5s ease; }
   .App.solarized_light .unsavedTab {
-    color: #6c71c4; }
+    color: #268bd2; }
   .App.solarized_light div:hover > .fa-cog {
     animation: fa-spin 2s infinite linear; }
 
@@ -2041,30 +2039,30 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   .App.solarized_light .react-tabs-container {
     border-bottom: 0 !important; }
   .App.solarized_light .fluid-button-container {
-    background: #fdf6e3; }
+    background: #fcf0cf; }
   .App.solarized_light .fluid-button-highlight {
-    background: #93a1a1; }
+    background: #eee8d5; }
   .App.solarized_light .fluid-button {
-    color: #073642; }
+    color: #586e75; }
   .App.solarized_light .react-tabs-container {
-    background-color: #fdf6e3;
-    border-color: #eee8d5; }
-  .App.solarized_light .react-tabs-active {
-    background-color: #eee8d5; }
-  .App.solarized_light .react-tabs-tab-close {
-    color: #001f27;
+    background-color: #fcf0cf;
     border-color: #fdf6e3; }
+  .App.solarized_light .react-tabs-active {
+    background-color: #fdf6e3; }
+  .App.solarized_light .react-tabs-tab-close {
+    color: #002b36;
+    border-color: #fcf0cf; }
   .App.solarized_light .react-tabs-active .react-tabs-tab-close {
-    border-color: #eee8d5; }
+    border-color: #fdf6e3; }
   .App.solarized_light .react-tabs-tab {
-    color: #657b83; }
+    color: #839496; }
   .App.solarized_light .react-tabs-active.react-tabs-tab {
-    color: #002b36; }
+    color: #073642; }
   .App.solarized_light .react-tabs-tab-close:hover {
-    background-color: #6c71c4;
-    color: #fdf6e3;
-    border-color: #6c71c4; }
+    background-color: #268bd2;
+    color: #fcf0cf;
+    border-color: #268bd2; }
   .App.solarized_light .react-tabs-active .react-tabs-tab-close:hover {
-    background-color: #6c71c4;
-    color: #eee8d5;
-    border-color: #6c71c4; }
+    background-color: #268bd2;
+    color: #fdf6e3;
+    border-color: #268bd2; }

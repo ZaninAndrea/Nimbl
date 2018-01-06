@@ -549,7 +549,7 @@
 .App.solarized_light .markdown-body {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  color: #073642;
+  color: #586e75;
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
   line-height: 1.6;
@@ -615,7 +615,7 @@
   font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
 
 .App.solarized_light .markdown-body a {
-  color: #6c71c4;
+  color: #268bd2;
   text-decoration: none; }
 
 .App.solarized_light .markdown-body a:hover,
@@ -628,7 +628,7 @@
   overflow: hidden;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #93a1a1; }
+  border-bottom: 1px solid #eee8d5; }
 
 .App.solarized_light .markdown-body hr:before {
   display: table;
@@ -760,7 +760,7 @@
 .App.solarized_light .markdown-body h4 .octicon-link,
 .App.solarized_light .markdown-body h5 .octicon-link,
 .App.solarized_light .markdown-body h6 .octicon-link {
-  color: #073642;
+  color: #586e75;
   vertical-align: middle;
   visibility: hidden; }
 
@@ -784,7 +784,7 @@
   padding-bottom: 0.3em;
   font-size: 2.25em;
   line-height: 1.2;
-  border-bottom: 1px solid #93a1a1; }
+  border-bottom: 1px solid #eee8d5; }
 
 .App.solarized_light .markdown-body h1 .anchor {
   line-height: 1; }
@@ -793,7 +793,7 @@
   padding-bottom: 0.3em;
   font-size: 1.75em;
   line-height: 1.225;
-  border-bottom: 1px solid #93a1a1; }
+  border-bottom: 1px solid #eee8d5; }
 
 .App.solarized_light .markdown-body h2 .anchor {
   line-height: 1; }
@@ -819,7 +819,7 @@
 
 .App.solarized_light .markdown-body h6 {
   font-size: 1em;
-  color: #657b83; }
+  color: #839496; }
 
 .App.solarized_light .markdown-body h6 .anchor {
   line-height: 1.1; }
@@ -838,7 +838,7 @@
   height: 4px;
   padding: 0;
   margin: 16px 0;
-  background-color: #93a1a1;
+  background-color: #eee8d5;
   border: 0 none; }
 
 .App.solarized_light .markdown-body ul,
@@ -871,8 +871,8 @@
 
 .App.solarized_light .markdown-body blockquote {
   padding: 0 15px;
-  color: #586e75;
-  border-left: 4px solid #839496; }
+  color: #657b83;
+  border-left: 4px solid #93a1a1; }
 
 .App.solarized_light .markdown-body blockquote > :first-child {
   margin-top: 0; }
@@ -893,19 +893,19 @@
 .App.solarized_light .markdown-body table th,
 .App.solarized_light .markdown-body table td {
   padding: 6px 13px;
-  border: 1px solid #839496; }
+  border: 1px solid #93a1a1; }
 
 .App.solarized_light .markdown-body table tr {
-  background-color: #eee8d5;
-  border-top: 1px solid #586e75; }
+  background-color: #fdf6e3;
+  border-top: 1px solid #657b83; }
 
 .App.solarized_light .markdown-body table tr:nth-child(2n) {
-  background-color: #93a1a1; }
+  background-color: #eee8d5; }
 
 .App.solarized_light .markdown-body img {
   max-width: 100%;
   box-sizing: content-box;
-  background-color: #eee8d5; }
+  background-color: #fdf6e3; }
 
 .App.solarized_light .markdown-body code {
   padding: 0;
@@ -939,7 +939,7 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #93a1a1;
+  background-color: #eee8d5;
   border-radius: 3px; }
 
 .App.solarized_light .markdown-body .highlight pre {
@@ -969,34 +969,34 @@
   padding: 3px 5px;
   font-size: 11px;
   line-height: 10px;
-  color: #073642;
+  color: #586e75;
   vertical-align: middle;
-  background-color: #93a1a1;
-  border: solid 1px #839496;
-  border-bottom-color: #586e75;
+  background-color: #eee8d5;
+  border: solid 1px #93a1a1;
+  border-bottom-color: #657b83;
   border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #586e75; }
+  box-shadow: inset 0 -1px 0 #657b83; }
 
 .App.solarized_light .markdown-body .pl-c {
-  color: #839496; }
+  color: #93a1a1; }
 
 .App.solarized_light .markdown-body .pl-c1,
 .App.solarized_light .markdown-body .pl-s .pl-v {
-  color: #6c71c4; }
+  color: #268bd2; }
 
 .App.solarized_light .markdown-body .pl-e,
 .App.solarized_light .markdown-body .pl-en {
-  color: #268bd2; }
+  color: #6c71c4; }
 
 .App.solarized_light .markdown-body .pl-s .pl-s1,
 .App.solarized_light .markdown-body .pl-smi {
-  color: #073642; }
+  color: #586e75; }
 
 .App.solarized_light .markdown-body .pl-ent {
-  color: #2aa198; }
+  color: #859900; }
 
 .App.solarized_light .markdown-body .pl-k {
-  color: #dc322f; }
+  color: #d33682; }
 
 .App.solarized_light .markdown-body .pl-pds,
 .App.solarized_light .markdown-body .pl-s,
@@ -1005,69 +1005,69 @@
 .App.solarized_light .markdown-body .pl-sr .pl-cce,
 .App.solarized_light .markdown-body .pl-sr .pl-sra,
 .App.solarized_light .markdown-body .pl-sr .pl-sre {
-  color: #6c71c4; }
+  color: #268bd2; }
 
 .App.solarized_light .markdown-body .pl-v {
-  color: #b58900; }
+  color: #cb4b16; }
 
 .App.solarized_light .markdown-body .pl-id {
-  color: #d33682; }
+  color: #dc322f; }
 
 .App.solarized_light .markdown-body .pl-ii {
-  background-color: #d33682;
-  color: #eee8d5; }
+  background-color: #dc322f;
+  color: #fdf6e3; }
 
 .App.solarized_light .markdown-body .pl-sr .pl-cce {
-  color: #2aa198;
+  color: #859900;
   font-weight: bold; }
 
 .App.solarized_light .markdown-body .pl-ml {
-  color: #cb4b16; }
+  color: #b58900; }
 
 .App.solarized_light .markdown-body .pl-mh,
 .App.solarized_light .markdown-body .pl-mh .pl-en,
 .App.solarized_light .markdown-body .pl-ms {
-  color: #6c71c4;
-  font-weight: bold; }
-
-.App.solarized_light .markdown-body .pl-mq {
-  color: #859900; }
-
-.App.solarized_light .markdown-body .pl-mi {
-  color: #073642;
-  font-style: italic; }
-
-.App.solarized_light .markdown-body .pl-mb {
-  color: #073642;
-  font-weight: bold; }
-
-.App.solarized_light .markdown-body .pl-md {
-  background-color: #93a1a1;
-  color: #d33682; }
-
-.App.solarized_light .markdown-body .pl-mi1 {
-  background-color: #d33682;
-  color: #2aa198; }
-
-.App.solarized_light .markdown-body .pl-mdr {
   color: #268bd2;
   font-weight: bold; }
 
+.App.solarized_light .markdown-body .pl-mq {
+  color: #2aa198; }
+
+.App.solarized_light .markdown-body .pl-mi {
+  color: #586e75;
+  font-style: italic; }
+
+.App.solarized_light .markdown-body .pl-mb {
+  color: #586e75;
+  font-weight: bold; }
+
+.App.solarized_light .markdown-body .pl-md {
+  background-color: #eee8d5;
+  color: #dc322f; }
+
+.App.solarized_light .markdown-body .pl-mi1 {
+  background-color: #dc322f;
+  color: #859900; }
+
+.App.solarized_light .markdown-body .pl-mdr {
+  color: #6c71c4;
+  font-weight: bold; }
+
 .App.solarized_light .markdown-body .pl-mo {
-  color: #6c71c4; }
+  color: #268bd2; }
 
 .App.solarized_light .markdown-body kbd {
   display: inline-block;
   padding: 3px 5px;
   font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
   line-height: 10px;
-  color: #073642;
+  color: #586e75;
   vertical-align: middle;
-  background-color: #93a1a1;
-  border: solid 1px #839496;
-  border-bottom-color: #586e75;
+  background-color: #eee8d5;
+  border: solid 1px #93a1a1;
+  border-bottom-color: #657b83;
   border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #586e75; }
+  box-shadow: inset 0 -1px 0 #657b83; }
 
 .App.solarized_light .markdown-body .task-list-item {
   list-style-type: none; }
@@ -1082,4 +1082,4 @@
 .App.solarized_light .markdown-body :checked + .radio-label {
   z-index: 1;
   position: relative;
-  border-color: #6c71c4; }
+  border-color: #268bd2; }

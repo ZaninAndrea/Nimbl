@@ -62,6 +62,7 @@
         height: 100%;
         width: 100%;
         background-color: $base04;
+        user-select: none;
     }
     .sidebarTree {
         height: calc(100% - 30px - 37px);
@@ -117,12 +118,14 @@
         background-color: $base02;
     }
     .editorFooter {
+        user-select: none;
         line-height: 32px;
         vertical-align: middle;
         display: grid;
         grid-template-columns: 160px 160px auto 150px;
         grid-template-areas: "charCount wordCount . leftAligned";
         grid-gap: 5px;
+        background: $base04;
     }
     .editorFooter > p {
         line-height: 32px;
@@ -138,14 +141,6 @@
     }
 
     .editorFooter .leftAligned {
-        .fluid-button-container {
-            background: $base03;
-        }
-
-        .fluid-button-highlight {
-            background: $base04;
-        }
-
         .fluid-button {
             color: $base1;
             .active {
