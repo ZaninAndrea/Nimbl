@@ -1,3 +1,5 @@
+
+codeSigning
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
@@ -23,5 +25,3 @@ yarn-error.log*
 
 # yarn
 package-lock.json
-
-electron-builder.yml

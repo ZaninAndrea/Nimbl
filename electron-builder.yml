@@ -1,0 +1,23 @@
+appId: com.Nimbl
+files:
+    - build/**/*
+    - node_modules/**/*"
+directories:
+    buildResources: assets
+    output: dist
+productName: Nimbl
+extraMetadata:
+    main: build/electron.js
+win: 
+    icon: build/icon.ico
+    target:
+        - appx
+target:
+    - appx
+appx:
+    applicationId: com.Nimbl
+    backgroundColor: "#073642"
+    displayName: Nimbl
+    identityName: 48363AndreaZanin.NimblNotes
+    publisher: CN=CCFAD946-9153-4EE0-B202-640EA1BB9886
+    publisherDisplayName: Andrea Zanin
