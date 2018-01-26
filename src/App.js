@@ -19,9 +19,11 @@ import CreateFileModal from "./components/CreateFileModal"
 import CreateFolderModal from "./components/CreateFolderModal"
 import EditorFooter from "./components/EditorFooter"
 import {TitleBar} from "react-desktop/windows"
+import githubMarkdownCss from "./utilities/markdownGithubStylesheet"
 
 const electron = window.require("electron") // little trick to import electron in react
 const fs = electron.remote.require("fs")
+const htmlPdf = electron.remote.require("html-pdf")
 const dialog = electron.remote.dialog
 const ipcRenderer = electron.ipcRenderer
 const Store = electron.remote.require("electron-store")
@@ -201,7 +203,6 @@ class App extends Component {
     }
     handleResize() {
         let maximizedState = this._mainWindow.isMaximized()
-        console.log(maximizedState)
         if (this.state.maximized !== maximizedState) {
             this.setState(oldState => {
                 const newApp = {...oldState.app}
@@ -657,9 +658,7 @@ class App extends Component {
             newApp.preview = [...newApp.preview]
             newApp.value = [...newApp.value]
 
-            console.log(newApp)
             const lookup = mime.lookup(newApp.file[newApp.currentFileIndex])
-            console.log("successful lookup")
             if (
                 state.settings.autoSave &&
                 removedIndex === newApp.currentFileIndex &&
@@ -718,6 +717,34 @@ class App extends Component {
             store.set("settings.autoSave", newSettings.autoSave)
             return {settings: newSettings}
         })
+    }
+
+    exportToPdf = () => {
+        dialog.showSaveDialog(
+            {
+                title: "Export to pdf",
+                filters: [
+                    {
+                        name: "Adobe PDF",
+                        extensions: ["pdf"],
+                    },
+                ],
+                buttonLabel: "Export",
+            },
+            file => {
+                if (file) {
+                    const options = {border: "1cm"}
+
+                    const htmlInput = `<html><style>${githubMarkdownCss}</style><body class="markdown-body">${
+                        this.state.app.preview[this.state.app.currentFileIndex]
+                    }</body></html>`
+                    htmlPdf.create(htmlInput, options).toFile(file, function(err, res) {
+                        if (err) return console.log(err)
+                        else electron.shell.openItem(file)
+                    })
+                }
+            }
+        )
     }
 
     render() {
@@ -963,6 +990,7 @@ class App extends Component {
                                                         ? 1
                                                         : 0) +
                                                     (this.state.app.dir ? 1 : 0) +
+                                                    (this.state.app.file.length > 0 ? 1 : 0) +
                                                     (this.state.app.updateReady ? 1 : 0)) +
                                             "px",
                                     }}
@@ -1000,9 +1028,16 @@ class App extends Component {
                                     {this.state.app.dir ? (
                                         <Button
                                             onClick={this.handleSiteBuild}
-                                            disabled={this.state.app.dir === ""}
+                                            title="build website"
                                         >
                                             <i className="fa fa-paper-plane" aria-hidden="true" />
+                                        </Button>
+                                    ) : (
+                                        ""
+                                    )}
+                                    {this.state.app.file.length > 0 ? (
+                                        <Button onClick={this.exportToPdf} title="Export to PDF">
+                                            <i className="fa fa-share" aria-hidden="true" />
                                         </Button>
                                     ) : (
                                         ""
