@@ -92,10 +92,12 @@
         "dev":
             "concurrently \"yarn watch-css\" \"SET BROWSER=none&& yarn start\" \"wait-on http://localhost:3000 && electron .\"",
         "appx": "build --em.main=build/electron.js --win --ia32 -c electron-builder.yml",
-        "prepack": "yarn build-css && yarn build",
+        "preappx": "yarn build-css && yarn build",
         "ship": "build --em.main=build/electron.js --win --ia32 -p always -c electron-builder.yml",
         "preship": "yarn build-css && yarn build",
-        "pretty": "prettier --write \"{{public,src}/**/*.{scss,js,json},package.json}\""
+        "pretty": "prettier --write \"{{public,src}/**/*.{scss,js,json},package.json}\"",
+        "sign":
+            "SignTool sign -fd SHA256 -a -f .\\codeSigning\\key.pfx .\\dist\\Nimbl-0.8.4-ia32.appx"
     },
     "devDependencies": {
         "concurrently": "^3.5.0",
