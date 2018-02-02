@@ -1405,6 +1405,10 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .App.solarized_dark .spoilerContent table tr:nth-child(2n) {
   background-color: #ebd547; }
 
+.App.solarized_dark mark {
+  color: #eee8d5;
+  background: #268bd2; }
+
 .App.solarized_light .md-body h3 {
   margin-top: 5px; }
 
@@ -1530,6 +1534,10 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 
 .App.solarized_light .spoilerContent table tr:nth-child(2n) {
   background-color: #ebd547; }
+
+.App.solarized_light mark {
+  color: #073642;
+  background: #268bd2; }
 
 .solarized_dark .ant-modal-footer {
   background: #002b36;

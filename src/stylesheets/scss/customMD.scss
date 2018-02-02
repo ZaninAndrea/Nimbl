@@ -148,6 +148,11 @@
     .spoilerContent table tr:nth-child(2n) {
         background-color: #ebd547;
     }
+
+    mark {
+        color: $base2;
+        background: $blue;
+    }
 }
 
 .App.solarized_dark {

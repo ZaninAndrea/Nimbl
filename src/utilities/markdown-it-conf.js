@@ -28,6 +28,7 @@ let newMd = (opts, workingDir) => {
         url: true,
         video: true,
         graph: true,
+        highlighter: true,
     }
 
     const settings = opts ? {...defaultSettings, ...opts} : defaultSettings // merge received opts with default settings
@@ -66,6 +67,9 @@ let newMd = (opts, workingDir) => {
             throwOnError: false,
             errorColor: " #cc0000",
         })
+    }
+    if (settings.highlighter) {
+        md.use(require("markdown-it-mark"))
     }
 
     if (settings.smartarrows) {

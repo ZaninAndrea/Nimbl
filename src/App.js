@@ -94,6 +94,7 @@ class App extends Component {
                     url: true,
                     video: true,
                     graph: true,
+                    highlighter: true,
                 },
             }
 
