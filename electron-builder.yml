@@ -21,3 +21,9 @@ appx:
     identityName: 48363AndreaZanin.NimblNotes
     publisher: CN=CCFAD946-9153-4EE0-B202-640EA1BB9886
     publisherDisplayName: Andrea Zanin
+fileAssociations:
+    - ext: "md"
+      name: "Markdown"
+      description: "Nimbl markdown file"
+      role: "Editor"
+asar: false
