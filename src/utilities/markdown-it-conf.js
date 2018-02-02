@@ -29,6 +29,7 @@ let newMd = (opts, workingDir) => {
         video: true,
         graph: true,
         highlighter: true,
+        reviewQuestion: true,
     }
 
     const settings = opts ? {...defaultSettings, ...opts} : defaultSettings // merge received opts with default settings
@@ -70,6 +71,10 @@ let newMd = (opts, workingDir) => {
     }
     if (settings.highlighter) {
         md.use(require("markdown-it-mark"))
+    }
+
+    if (settings.reviewQuestion) {
+        md.use(require("./markdown-it-question"))
     }
 
     if (settings.smartarrows) {

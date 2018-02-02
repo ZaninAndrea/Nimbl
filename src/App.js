@@ -95,6 +95,7 @@ class App extends Component {
                     video: true,
                     graph: true,
                     highlighter: true,
+                    reviewQuestion: true,
                 },
             }
 

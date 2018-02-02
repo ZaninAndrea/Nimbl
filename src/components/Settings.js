@@ -108,6 +108,18 @@ class Settings extends Component {
                     </Checkbox>
                     <br />
                     <Checkbox
+                        checked={this.props.settings.mdSettings.reviewQuestion}
+                        onClick={() =>
+                            this.props.handleMdSettingsChange(
+                                "reviewQuestion",
+                                !this.props.settings.mdSettings.reviewQuestion
+                            )
+                        }
+                    >
+                        review question
+                    </Checkbox>
+                    <br />
+                    <Checkbox
                         checked={this.props.settings.mdSettings.breaks}
                         onClick={() =>
                             this.props.handleMdSettingsChange(
